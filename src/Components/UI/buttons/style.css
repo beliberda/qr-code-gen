@@ -1,0 +1,20 @@
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
+  letter-spacing: 0.36px;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid var(--dark-blue);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.button-enter {
+  text-transform: uppercase;
+}
+.button-enter:hover {
+  background-color: var(--green);
+  border: 1px solid var(--green);
+}
