@@ -10,6 +10,11 @@ button {
   border: 1px solid var(--dark-blue);
   border-radius: 5px;
   cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 .button-enter {
   text-transform: uppercase;
@@ -17,4 +22,26 @@ button {
 .button-enter:hover {
   background-color: var(--green);
   border: 1px solid var(--green);
+}
+.button-create-qr {
+  background-color: var(--green);
+  border: 1px solid var(--green);
+}
+.button-create-qr:hover path {
+  fill: var(--white);
+}
+.button-create-qr:hover {
+  background-color: var(--dark-blue);
+  border: 1px solid var(--dark-blue);
+  color: var(--white);
+}
+.button-disable-qr {
+  padding: 6px 12px;
+}
+.button-disable-qr:hover {
+  background-color: var(--dark-blue);
+  color: var(--white);
+}
+.button-disable-qr:hover path {
+  fill: var(--white);
 }

@@ -1,4 +1,8 @@
-import buttonEnter from "Components/UI/buttons";
+import {
+  ButtonEnter,
+  ButtonCreateQr,
+  ButtonDisableQr,
+} from "Components/UI/Buttons";
 import "./App.css";
 function App() {
   return (
@@ -9,7 +13,9 @@ function App() {
       <h4>Заголовок 4</h4>
       <h5>Заголовок 5</h5>
       <p>Текст рыба обычный текст</p>
-      <buttonEnter></buttonEnter>
+      <ButtonEnter />
+      <ButtonCreateQr text="Создать QR CODE" />
+      <ButtonDisableQr text="Отключить QR-код" />
       <input type="text" />
       <select name="select" id="select_id">
         <option value="" key="" selected>
