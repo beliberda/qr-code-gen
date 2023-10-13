@@ -29,4 +29,5 @@
   --red: #ff0d0d;
   --transition: 0.3s;
   --input-label: rgba(24, 24, 24, 0.6);
+  --input-placeholder: rgba(19, 20, 28, 0.4);
 }

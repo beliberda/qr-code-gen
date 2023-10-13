@@ -3,6 +3,7 @@ import {
   ButtonCreateQr,
   ButtonDisableQr,
 } from "Components/UI/Buttons";
+import { Input } from "Components/UI/input";
 import "./App.css";
 function App() {
   return (
@@ -16,7 +17,10 @@ function App() {
       <ButtonEnter />
       <ButtonCreateQr text="Создать QR CODE" />
       <ButtonDisableQr text="Отключить QR-код" />
-      <input type="text" />
+      <Input
+        label="Индентификационный номер"
+        text="Введите индентификационный номер"
+      />
       <select name="select" id="select_id">
         <option value="" key="" selected>
           опция 1
