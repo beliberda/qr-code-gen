@@ -16,6 +16,14 @@
   font-weight: 500;
   font-style: normal;
 }
+@font-face {
+  font-family: "Pixel";
+  src: local("pixel digivolve cyrillic"), local("pixel-digivolve-cyrillic"),
+    url("../src/assets/fonts/pixeldigivolvecyrillic.woff2") format("woff2"),
+    url("../src/assets/fonts/pixeldigivolvecyrillic.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
 * {
   font-family: "TT Norms";
 }

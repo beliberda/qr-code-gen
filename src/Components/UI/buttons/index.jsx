@@ -1,7 +1,12 @@
+import { Link } from "react-router-dom";
 import "./style.css";
 
 const ButtonEnter = () => {
-  return <button className="button-enter">Войти</button>;
+  return (
+    <button className="button-enter">
+      <Link to="/products">Войти</Link>
+    </button>
+  );
 };
 const ButtonCreateQr = (props) => {
   return (
@@ -43,4 +48,7 @@ const ButtonDisableQr = (props) => {
     </button>
   );
 };
-export { ButtonEnter, ButtonCreateQr, ButtonDisableQr };
+const ButtonDefault = (props) => {
+  return <button className="button-enter">{props.text}</button>;
+};
+export { ButtonEnter, ButtonCreateQr, ButtonDisableQr, ButtonDefault };

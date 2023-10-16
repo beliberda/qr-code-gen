@@ -1,0 +1,29 @@
+.banner {
+  width: 100%;
+  background-image: url("../../../assets/images/banner.png");
+  height: 314px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  background-size: cover;
+  background-position: center;
+}
+.banner-title {
+  font-size: 26px;
+  color: var(--white);
+  font-family: "Pixel";
+  text-align: center;
+  text-transform: uppercase;
+  width: 260px;
+  font-weight: 400;
+}
+.banner-title span {
+  font-family: "Pixel";
+  color: var(--green);
+}
+.banner img {
+  width: 48px;
+  height: 48px;
+}

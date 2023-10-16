@@ -1,0 +1,26 @@
+thead {
+  background-color: var(--gray);
+  height: 54px;
+  display: flex;
+  align-items: center;
+  padding: 20px 15px;
+}
+tr {
+  width: 100%;
+  /* display: flex;
+  justify-content: space-between  ; */
+}
+table h2 {
+  font-weight: 500;
+}
+.table__head-th {
+}
+.filter-sort {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  cursor: pointer;
+}
