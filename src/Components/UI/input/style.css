@@ -7,16 +7,17 @@
   color: var(--input-label);
 }
 .input-id {
+  border-bottom: 1px solid var(--dark);
+}
+input {
   color: var(--dark-blue);
   padding: 0 0 10px 0;
   border: none;
-  border-bottom: 1px solid var(--dark);
+
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   width: 100%;
-}
-input {
   outline: none;
 }
 input::placeholder {
@@ -28,4 +29,26 @@ input::placeholder {
 }
 .input--error {
   border-bottom: 1px solid var(--red);
+}
+.input-block__bottom {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 10px;
+}
+.input-block__bottom input {
+  padding: 0;
+}
+.input-block__bottom button {
+  gap: 6px;
+  border-radius: 5px;
+  padding: 6px 8px;
+  background: #f9f9f9;
+  border: none;
+}
+@media (max-width: 425px) {
+  .input-block__bottom {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 }

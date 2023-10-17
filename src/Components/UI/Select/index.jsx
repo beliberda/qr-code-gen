@@ -4,8 +4,11 @@ const Select = (props) => {
   return (
     <div className="input-block">
       <h2 className="input-block__title">{props.label}</h2>
+
       <select name="" id="">
-        <option value="" key="" ></option>
+        <option value="" key="">
+          {props.placeholder}
+        </option>
       </select>
     </div>
   );

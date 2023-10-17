@@ -1,0 +1,12 @@
+.main-top {
+  padding-top: 30px;
+  border-top: 1px solid rgba(24, 24, 24, 0.2);
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+@media (max-width: 768px) {
+  .main-top {
+    flex-wrap: wrap;
+  }
+}

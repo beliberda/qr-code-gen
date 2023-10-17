@@ -1,6 +1,7 @@
 import { Header } from "Components/Layout/Header";
 import "./style.css";
 import { MainTop } from "Components/Layout/MainTop";
+import { InputList } from "Components/Layout/InputList";
 
 export default function CreateQr(params) {
   return (
@@ -8,6 +9,7 @@ export default function CreateQr(params) {
       <Header isAuth={true} />
       <main className="main container">
         <MainTop />
+        <InputList />
       </main>
     </>
   );

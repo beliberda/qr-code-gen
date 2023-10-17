@@ -6,7 +6,7 @@
 .input-block__title {
   color: var(--input-label);
 }
-.input-id {
+select {
   color: var(--dark-blue);
   padding: 0 0 10px 0;
   border: none;
@@ -15,14 +15,15 @@
   font-style: normal;
   font-weight: 400;
   width: 100%;
+  max-width: 550px;
 }
-input {
+select {
   outline: none;
 }
-input::placeholder {
-  color: var(--input-placeholder);
+option {
+  outline: none;
+  padding: 10px 0 10px 0;
 }
-
 .input--access {
   border-bottom: 1px solid var(--green);
 }

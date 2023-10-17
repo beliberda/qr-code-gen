@@ -1,0 +1,14 @@
+.input-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 60px;
+  row-gap: 40px;
+  border-top: 1px solid rgba(24, 24, 24, 0.2);
+  padding-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .input-list {
+    grid-template-columns: 1fr;
+  }
+}
