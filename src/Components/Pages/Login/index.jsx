@@ -14,7 +14,6 @@ export default function Login(params) {
         <div className="login-auth__form">
           <Input type="text" placeholder="Логин или E-mail" />
           <Input type="password" placeholder="Пароль" />
-
           <ButtonEnter />
         </div>
       </main>

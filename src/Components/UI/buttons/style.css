@@ -45,3 +45,8 @@ button {
 .button-disable-qr:hover path {
   fill: var(--white);
 }
+@media (max-width: 600px) {
+  .button-enter {
+    width: 100%;
+  }
+}
