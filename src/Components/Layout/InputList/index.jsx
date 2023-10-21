@@ -1,4 +1,3 @@
-import { ButtonCreateQr, ButtonDefault } from "Components/UI/buttons";
 import "./style.css";
 import { Select } from "Components/UI/Select";
 import { InputId } from "Components/UI/input";

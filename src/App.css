@@ -24,6 +24,7 @@ h3 {
   text-transform: uppercase;
 }
 a {
+  display: contents;
   text-decoration: none;
   color: inherit;
   width: 100%;
