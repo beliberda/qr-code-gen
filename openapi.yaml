@@ -1,0 +1,828 @@
+openapi: 3.0.3
+info:
+  title: QR Generator
+  version: ver 1.0
+servers:
+  - url: https://localhost:8225
+tags:
+  - name: User
+    description: Запросы по пользователям
+  - name: QR
+    description: Запросы по QR кодам
+  - name: Product
+    description: Запросы по шаблонам продуктов
+
+paths:
+  /user:
+    post:
+      tags:
+        - User
+      summary: Создание пользователя
+      description: Создание пользователя
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Созданный пользователь
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags:
+        - User
+      summary: Получить список пользователей
+      description: Получить список пользователей
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Фильтр
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: John
+                email:
+                  type: string
+                  example: johndoe@email.com
+                role:
+                  type: string
+                  enum:
+                    - admin
+                    - User
+                  example: admin
+                limit:
+                  type: integer
+                  example: 50
+                page:
+                  type: integer
+                  example: 0
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /user/{userID}:
+    get:
+      tags:
+        - User
+      summary: Получить пользователя
+      description: Получить пользователя
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userID
+          in: path
+          description: ID пользователя для получения
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        401:
+          description: Требуется авторизация
+        404:
+          description: Пользователь не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - User
+      summary: Обновить пользователя
+      description: Обновить пользователя
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Обновленные данные пользователя
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        404:
+          description: Пользователь не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - User
+      summary: Удалить пользователя
+      description: Удалить пользователя
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userID
+          in: path
+          description: ID пользователя для удаления
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        401:
+          description: Требуется авторизация
+        404:
+          description: Пользователь не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: Авторизация пользователя
+      description: Авторизация пользователя по эл.почте и паролю
+      requestBody:
+        description: Эл.почта и пароль пользователя
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: johndoe@email.com
+                password:
+                  type: string
+                  example: somepass
+      responses:
+        200:
+          description: Success
+          headers:
+            Authorization:
+              description: Bearer token
+              schema:
+                type: string
+                example: Bearer hlkfhklsadfhlkiue
+
+        400:
+          description: Плохой запрос или неправильная пара эл.почта и пароль
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /qr:
+    post:
+      tags:
+        - QR
+      summary: Создание QR кода
+      description: Создание QR кода
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Привязанный товар к QR коду
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QR"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags:
+        - QR
+      summary: Получить список QR кодов
+      description: Получить список QR кодов
+      requestBody:
+        description: Фильтр
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disabled:
+                  type: boolean
+                  example: false
+                limit:
+                  type: integer
+                  example: 50
+                page:
+                  type: integer
+                  example: 0
+                sort_by:
+                  type: string
+                  enum:
+                    - created_at
+                    - use_count
+                    - first_used_at
+                    - last_used_at
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QR"
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /qr/{qrID}:
+    post:
+      tags:
+        - QR
+      summary: Получить сгенерированный QR код
+      description: Получить сгенерированный QR код
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: qrID
+          in: path
+          description: ID QR кода
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                size:
+                  type: integer
+                  example: 500
+                foreground_color:
+                  $ref: "#/components/schemas/Color"
+                background_color:
+                  $ref: "#/components/schemas/Color"
+      responses:
+        200:
+          description: Success
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags:
+        - QR
+      summary: Получить информацию по QR коду
+      description: Получить информацию по QR коду
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: qrID
+          in: path
+          description: ID QR кода
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QR"
+        401:
+          description: Требуется авторизация
+        404:
+          description: QR код не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - QR
+      summary: Отключить QR код
+      description: Отключить QR код
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: qrID
+          in: path
+          description: ID QR кода
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      responses:
+        200:
+          description: Success
+        401:
+          description: Требуется авторизация
+        404:
+          description: QR код не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - QR
+      summary: Удалить QR код
+      description: Удалить QR код
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: qrID
+          in: path
+          description: ID QR кода
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      responses:
+        200:
+          description: Success
+        401:
+          description: Требуется авторизация
+        404:
+          description: QR код не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /qr/check:
+    get:
+      tags:
+        - QR
+      summary: Проверить QR код
+      description: Если QR код не устаревший, то отдаются данные о нем.
+        В ином случае, отправляется текст о том, что код устарел или невалиден.
+      parameters:
+        - name: eid
+          in: query
+          required: true
+          schema:
+            type: string
+            example: 724aa8b572f5497baeb1904178abdd14db2d3ca8177e73cc03e4594406cc9ff1
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QR"
+        403:
+          description: QR код невалиден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+        404:
+          description: QR код не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /product:
+    post:
+      tags:
+        - Product
+      summary: Создание продукта
+      description: Создание продукта
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Созданный продукт
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags:
+        - Product
+      summary: Получить список продуктов
+      description: Получить список продуктов
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Фильтр
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disabled:
+                  type: boolean
+                  example: false
+                limit:
+                  type: integer
+                  example: 50
+                page:
+                  type: integer
+                  example: 0
+                sort_by:
+                  type: string
+                  enum:
+                    - created_at
+                    - use_count
+                    - first_used_at
+                    - last_used_at
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /product/{productID}:
+    get:
+      tags:
+        - Product
+      summary: Получение продукта
+      description: Получение продукта
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: productID
+          in: path
+          description: ID продукта для получения
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        401:
+          description: Требуется авторизация
+        404:
+          description: Продукт не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Product
+      summary: Изменение продукта
+      description: Изменение продукта
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: productID
+          in: path
+          description: ID продукта для получения
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      requestBody:
+        description: Изменение продукта
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        404:
+          description: Продукт не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Product
+      summary: Удаление продукта
+      description: Удаление продукта
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: productID
+          in: path
+          description: ID продукта для удаления
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      responses:
+        200:
+          description: Success
+        401:
+          description: Требуется авторизация
+        404:
+          description: Продукт не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 65046106121361691e6861de
+          readOnly: true
+        username:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: johndoe@email.com
+        role:
+          type: string
+          enum:
+            - admin
+            - User
+          example: admin
+        password:
+          type: string
+          example: somepass
+          writeOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+    QR:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 65046106121361691e6861de
+          readOnly: true
+        eid:
+          type: string
+          example: 724aa8b572f5497baeb1904178abdd14db2d3ca8177e73cc03e4594406cc9ff1
+          readOnly: true
+        product_id:
+          type: string
+          example: 65046106121361691e6861de
+          writeOnly: true
+        product:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/Product"
+        disabled:
+          type: boolean
+          example: false
+          readOnly: true
+        use_count:
+          type: integer
+          example: 0
+          readOnly: true
+        first_used_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+        used_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 65046106121361691e6861de
+          readOnly: true
+        name:
+          type: string
+          example: KNITTED SWEATSHIRT ROCK
+        description:
+          type: string
+          example: Very cool sweater!
+        category:
+          type: string
+          example: sweaters
+        color:
+          type: string
+          example: blue
+        size:
+          type: string
+          example: OS
+        materials:
+          type: string
+          example: 50% cotton 50% acrylic
+        photo:
+          type: string
+          example: https://thumb.tildacdn.com/stor3638-3335-4133-a438-303038353930/-/format/webp/68102468.png
+        updated_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+    Color:
+      type: object
+      properties:
+        r:
+          type: integer
+          example: 0
+        g:
+          type: integer
+          example: 0
+        b:
+          type: integer
+          example: 0
+        a:
+          type: integer
+          example: 0
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: some error
+
+security:
+  - bearerAuth: []
