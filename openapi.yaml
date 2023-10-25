@@ -3,7 +3,7 @@ info:
   title: QR Generator
   version: ver 1.0
 servers:
-  - url: https://localhost:8225
+  - url: http://86.102.19.21:8225
 tags:
   - name: User
     description: Запросы по пользователям

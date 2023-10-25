@@ -3,7 +3,12 @@ import "./style.css";
 import { ButtonDefault } from "Components/UI/buttons";
 import scan from "assets/images/icons/scan-qr.svg";
 import { Banner } from "Components/UI/banner";
+import { useContext } from "react";
+import { Context } from "index";
+import { useState } from "react";
 export default function CheckProduct(params) {
+  const [id, setId] = useState("");
+  const { store } = useContext(Context);
   return (
     <>
       <Header />
@@ -13,9 +18,21 @@ export default function CheckProduct(params) {
           <div className="check-product__input-block">
             <div className="check-product__input">
               <h2 className="input-block__title">идентификационный номер</h2>
-              <input type="text" placeholder="Введите идентификатор товара" />
+              <input
+                onChange={(e) => setId(e.target.value)}
+                type="text"
+                placeholder="Введите идентификатор товара"
+              />
             </div>
-            <ButtonDefault text="Проверить" />
+            <button
+              onClick={() => {
+                store.getQr(id);
+              }}
+              className="button-enter"
+            >
+              Проверить
+            </button>
+            {/* <ButtonDefault text="Проверить" /> */}
           </div>
           <div className="check-product__download-block">
             <input
