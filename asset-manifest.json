@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/qr-code-gen/static/css/main.1141efc7.css",
+    "main.css": "/qr-code-gen/static/css/main.2a238846.css",
     "main.js": "/qr-code-gen/static/js/main.0c90f846.js",
     "static/js/787.75f96db8.chunk.js": "/qr-code-gen/static/js/787.75f96db8.chunk.js",
     "static/media/photo1.png": "/qr-code-gen/static/media/photo1.c09c92f9b420198b46fc.png",
@@ -24,12 +24,12 @@
     "static/media/logout.svg": "/qr-code-gen/static/media/logout.d7ed08b1f105d0f69a11672f687fad4e.svg",
     "static/media/arrow-right.svg": "/qr-code-gen/static/media/arrow-right.42d13d4da2c52ec2e233341dcf849a42.svg",
     "static/media/arrow-left.svg": "/qr-code-gen/static/media/arrow-left.64f909f8ec7339846efd912873eb9392.svg",
-    "main.1141efc7.css.map": "/qr-code-gen/static/css/main.1141efc7.css.map",
+    "main.2a238846.css.map": "/qr-code-gen/static/css/main.2a238846.css.map",
     "main.0c90f846.js.map": "/qr-code-gen/static/js/main.0c90f846.js.map",
     "787.75f96db8.chunk.js.map": "/qr-code-gen/static/js/787.75f96db8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1141efc7.css",
+    "static/css/main.2a238846.css",
     "static/js/main.0c90f846.js"
   ]
 }
