@@ -1,8 +1,6 @@
 import { Banner } from "Components/UI/banner";
 import "./style.css";
 import { Header } from "Components/Layout/Header";
-import { Input } from "Components/UI/input";
-import { ButtonEnter } from "Components/UI/buttons";
 import { useContext, useState } from "react";
 import { Context } from "index";
 import { observer } from "mobx-react-lite";
@@ -46,12 +44,12 @@ function Login(params) {
           >
             Войти
           </button>
-          <button
+          {/* <button
             onClick={() => store.registration(username, password)}
             className="button-enter"
           >
             Регистрация
-          </button>
+          </button> */}
         </div>
       </main>
     </>
