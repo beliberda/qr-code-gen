@@ -24,7 +24,9 @@ const Header = (props) => {
           </div>
         </div>
       ) : (
-        <></>
+        <Link to="/login">
+          <h3 className="user-block__user">Администратор</h3>
+        </Link>
       )}
     </header>
   );
