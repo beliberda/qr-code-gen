@@ -1,4 +1,4 @@
-import CheckInfo from "Components/Pages/CheckInfo";
+import CheckInfo from "Components/Pages/ProductInfo";
 import CheckProduct from "Components/Pages/CheckProduct";
 import CreateQr from "Components/Pages/CreateQr";
 import ErrorPage from "Components/Pages/ErrorPage";

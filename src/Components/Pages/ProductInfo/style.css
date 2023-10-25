@@ -1,6 +1,7 @@
 .product-info__main {
   display: flex;
   flex-wrap: wrap;
+  padding-top: 40px;
 }
 .product-info__top {
   display: flex;
@@ -15,6 +16,7 @@
   gap: 40px;
   border: 1px solid rgba(24, 24, 24, 0.2);
   padding: 30px;
+  width: 100%;
 }
 .product-info__gallery {
   min-width: 580px;
@@ -65,5 +67,8 @@
   .gallery-list__item {
     width: 60px;
     height: 60px;
+  }
+  .product-info__main {
+    gap: 40px;
   }
 }

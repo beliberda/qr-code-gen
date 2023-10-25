@@ -3,12 +3,18 @@ import "./style.css";
 import { ButtonDefault } from "Components/UI/buttons";
 import scan from "assets/images/icons/scan-qr.svg";
 import { Banner } from "Components/UI/banner";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "index";
 import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 export default function CheckProduct(params) {
-  const [id, setId] = useState("");
+  const [id, setId] = useState("65046106121361691e6861de");
   const { store } = useContext(Context);
+  const navigate = useNavigate();
+  const Check = () => {
+    navigate("/product-info");
+  };
+
   return (
     <>
       <Header />
@@ -21,12 +27,15 @@ export default function CheckProduct(params) {
               <input
                 onChange={(e) => setId(e.target.value)}
                 type="text"
+                value={id}
                 placeholder="Введите идентификатор товара"
               />
             </div>
             <button
               onClick={() => {
-                store.getQr(id);
+                if (store.getQr(id)) {
+                  Check();
+                }
               }}
               className="button-enter"
             >

@@ -5,18 +5,23 @@ import { ProductField } from "Components/UI/productField";
 import photo from "assets/images/photo1.png";
 import arrowLeft from "assets/images/icons/arrow-left.svg";
 import arrowRight from "assets/images/icons/arrow-right.svg";
+import { useContext } from "react";
+import { Context } from "index";
 
-const productInfo = {
-  name: "Blue heaven hoodie",
-  category: "Футболки",
-  size: "M",
-  color: "Черный",
-  material: "95% хлопок, 5% эластан",
-  description:
-    "Более адаптированный оверсайз, не такой широкий как наши предыдущие модели плотность футболки 200г (облегчённый хлопок)",
-};
+// const productInfo = {
+//   name: "Blue heaven hoodie",
+//   category: "Футболки",
+//   size: "M",
+//   color: "Черный",
+//   material: "95% хлопок, 5% эластан",
+//   description:
+//     "Более адаптированный оверсайз, не такой широкий как наши предыдущие модели плотность футболки 200г (облегчённый хлопок)",
+// };
 const gallery = [photo, photo, photo, photo, photo];
-export default function CheckInfo(params) {
+export default function ProductInfo(params) {
+  const { store } = useContext(Context);
+  let productInfo = JSON.parse(JSON.stringify(store.product)).product;
+  console.log(productInfo);
   return (
     <>
       <Header />
@@ -37,7 +42,7 @@ export default function CheckInfo(params) {
             />
             <ProductField text={productInfo.size} title="размера товара" />
             <ProductField text={productInfo.color} title="цвет" />
-            <ProductField text={productInfo.material} title="материал" />
+            <ProductField text={productInfo.materials} title="материал" />
             <ProductField
               text={productInfo.description}
               title="описание товара"
@@ -45,17 +50,26 @@ export default function CheckInfo(params) {
           </div>
           <div className="product-info__gallery">
             <div className="gallery-list">
-              {gallery.map((photo) => {
+              {gallery.map((photo, i) => {
                 return (
                   <>
-                    <img className="gallery-list__item" src={photo} alt="" />
+                    <img
+                      key={i}
+                      className="gallery-list__item"
+                      src={productInfo.photo}
+                      alt=""
+                    />
                   </>
                 );
               })}
             </div>
             <div className="gallery__main-photo">
               <img className="main-photo__arrow" src={arrowLeft} alt="" />
-              <img className="main-photo__photo" src={photo} alt="" />
+              <img
+                className="main-photo__photo"
+                src={productInfo.photo}
+                alt=""
+              />
               <img className="main-photo__arrow" src={arrowRight} alt="" />
             </div>
           </div>

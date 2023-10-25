@@ -11,7 +11,8 @@ const PrivateRoute = (props) => {
   if (store.isAuth) {
     return <Outlet />;
   } else {
-    return <Navigate to="/login" />;
+    // return <Outlet />;
+    return <Navigate to="/" />;
   }
 };
 
