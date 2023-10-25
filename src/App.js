@@ -10,6 +10,7 @@ import CreateQr from "Components/Pages/CreateQr";
 import ErrorPage from "Components/Pages/ErrorPage";
 import CheckProduct from "Components/Pages/CheckProduct";
 import ProductInfo from "Components/Pages/ProductInfo";
+import ListProducts from "Components/Pages/ListProduct";
 
 
 function App() {
@@ -21,19 +22,21 @@ function App() {
     }
   }, []);
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<CheckProduct />} />
         <Route path="/login" element={<Login />} />
         <Route path="/product-info" element={<ProductInfo />} />
 
         <Route path="/user" element={<PrivateRoute />}>
-          <Route path="/user/create-qr" element={<CreateQr />} />
+
+          <Route path="/user/:id" element={<ListProducts />} />
+          <Route path="/user/:id/create-qr" element={<CreateQr />} />
         </Route>
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-    </HashRouter >
+    </BrowserRouter >
   );
 
   // <RouterProvider router={router} />;

@@ -4,15 +4,20 @@ import { Header } from "Components/Layout/Header";
 import { useContext, useState } from "react";
 import { Context } from "index";
 import { observer } from "mobx-react-lite";
+import { useNavigate } from "react-router-dom";
 
 function Login(params) {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const { store } = useContext(Context);
-
+  // Навигация
+  const navigate = useNavigate();
+  const NavUser = () => {
+    navigate("/user/1");
+  };
   return (
     <>
-      <Header />
+      <Header isAdmin={false} />
       <Banner title="QR-код" titleSpan="Генератор" />
       <main className="login-auth container">
         <div className="login-auth__form">
@@ -39,7 +44,12 @@ function Login(params) {
             />
           </div>
           <button
-            onClick={() => store.login(username, password)}
+            onClick={() => {
+              store.login(username, password);
+              if (store.isAuth) {
+                NavUser();
+              }
+            }}
             className="button-enter"
           >
             Войти

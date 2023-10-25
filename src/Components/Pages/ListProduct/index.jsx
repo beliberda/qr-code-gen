@@ -9,7 +9,7 @@ export default function ListProducts(params) {
   const { store } = useContext(Context);
   return (
     <>
-      <Header isAuth={true} />
+      <Header isAdmin={true} />
       <main className="main container">
         <MainTop />
         <ProductTable />

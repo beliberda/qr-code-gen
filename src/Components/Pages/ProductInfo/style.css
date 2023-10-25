@@ -53,6 +53,9 @@
   cursor: pointer;
 }
 @media (max-width: 600px) {
+  .product-info__top {
+    flex-wrap: wrap;
+  }
   .product-info__gallery {
     flex-wrap: wrap-reverse;
     min-width: unset;
@@ -70,5 +73,13 @@
   }
   .product-info__main {
     gap: 40px;
+  }
+  .main-photo__photo {
+    max-width: 300px;
+  }
+}
+@media (max-width: 425px) {
+  .main-photo__photo {
+    max-width: 270px;
   }
 }

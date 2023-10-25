@@ -5,7 +5,7 @@ const MainTop = () => {
   return (
     <>
       <section className="main-top">
-        <ButtonCreateQr text="Создать QR-код" />
+        <ButtonCreateQr id={1} text="Создать QR-код" />
         <ButtonDefault text="Шаблоны описаний товаров" />
       </section>
     </>

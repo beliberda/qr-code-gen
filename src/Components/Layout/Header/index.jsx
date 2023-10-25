@@ -2,17 +2,18 @@ import logo from "assets/images/Logo.svg";
 import user from "assets/images/icons/avatar.svg";
 import logout from "assets/images/icons/logout.svg";
 import "./style.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "index";
 import { Link } from "react-router-dom";
-const Header = () => {
+const Header = (props) => {
   const { store } = useContext(Context);
+
   return (
     <header className="header container">
       <Link to="/">
         <img src={logo} alt="maneken" />
       </Link>
-      {store.isAuth ? (
+      {props.isAdmin ? (
         <div className="header__info">
           <div className="user-block">
             <img className="user-block__avatar" src={user} alt="" />
