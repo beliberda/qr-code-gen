@@ -22,7 +22,7 @@ function App() {
     }
   }, []);
   return (
-    <HashRouter basename="/">
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<CheckProduct />} />
         <Route path="/login" element={<Login />} />
@@ -36,7 +36,7 @@ function App() {
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-    </HashRouter >
+    </BrowserRouter >
   );
 
   // <RouterProvider router={router} />;

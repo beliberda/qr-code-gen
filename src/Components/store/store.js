@@ -6,7 +6,16 @@ import { makeAutoObservable } from "mobx";
 export default class Store {
   user = {};
   isAuth = false;
-  product = { "_id": "65046106121361691e6861de", "eid": "724aa8b572f5497baeb1904178abdd14db2d3ca8177e73cc03e4594406cc9ff1", "product_id": "65046106121361691e6861de", "product": { "_id": "61e02740f35754000750633d", "name": "KNITTED SWEATSHIRT ROCK", "description": "Very cool sweater!", "category": "sweaters", "color": "blue", "size": "OS", "materials": "50% cotton 50% acrylic", "photo": "https://thumb.tildacdn.com/stor3638-3335-4133-a438-303038353930/-/format/webp/68102468.png", "updated_at": "2023-10-25T20:19:14.7252096+10:00", "created_at": "2023-10-25T20:19:14.7252096+10:00" }, "first_used_at": "0001-01-01T00:00:00Z", "used_at": "0001-01-01T00:00:00Z", "updated_at": "2023-10-25T20:19:14.7252096+10:00", "created_at": "2023-10-25T20:19:14.7252096+10:00" };
+  product = {
+    name: null,
+    size: null,
+    color: null,
+    material: null,
+    category: null,
+    photo: null,
+
+  };
+  // product = { "_id": "65046106121361691e6861de", "eid": "724aa8b572f5497baeb1904178abdd14db2d3ca8177e73cc03e4594406cc9ff1", "product_id": "65046106121361691e6861de", "product": { "_id": "61e02740f35754000750633d", "name": "KNITTED SWEATSHIRT ROCK", "description": "Very cool sweater!", "category": "sweaters", "color": "blue", "size": "OS", "materials": "50% cotton 50% acrylic", "photo": "https://thumb.tildacdn.com/stor3638-3335-4133-a438-303038353930/-/format/webp/68102468.png", "updated_at": "2023-10-25T20:19:14.7252096+10:00", "created_at": "2023-10-25T20:19:14.7252096+10:00" }, "first_used_at": "0001-01-01T00:00:00Z", "used_at": "0001-01-01T00:00:00Z", "updated_at": "2023-10-25T20:19:14.7252096+10:00", "created_at": "2023-10-25T20:19:14.7252096+10:00" };
   constructor() {
     makeAutoObservable(this);
   }

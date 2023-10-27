@@ -5,22 +5,17 @@ import { ProductField } from "Components/UI/productField";
 import photo from "assets/images/photo1.png";
 import arrowLeft from "assets/images/icons/arrow-left.svg";
 import arrowRight from "assets/images/icons/arrow-right.svg";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "index";
 
-// const productInfo = {
-//   name: "Blue heaven hoodie",
-//   category: "Футболки",
-//   size: "M",
-//   color: "Черный",
-//   material: "95% хлопок, 5% эластан",
-//   description:
-//     "Более адаптированный оверсайз, не такой широкий как наши предыдущие модели плотность футболки 200г (облегчённый хлопок)",
-// };
 const gallery = [photo, photo, photo, photo, photo];
 export default function ProductInfo(params) {
   const { store } = useContext(Context);
-  let productInfo = JSON.parse(JSON.stringify(store.product)).product;
+  const [productInfo, setProductInfo] = useState({});
+  useEffect(() => {
+    setProductInfo(JSON.parse(JSON.stringify(store.product)));
+  }, [productInfo]);
+  let product = JSON.parse(JSON.stringify(store.product)).product;
   console.log(productInfo);
   return (
     <>
@@ -35,16 +30,28 @@ export default function ProductInfo(params) {
         </div>
         <section className="product-info__main">
           <div className="product-info__info">
-            <ProductField text={productInfo.name} title="Название товара" />
             <ProductField
-              text={productInfo.category}
+              text={productInfo.name ? productInfo.name : ""}
+              title="Название товара"
+            />
+            <ProductField
+              text={productInfo.category ? productInfo.category : ""}
               title="категория товара"
             />
-            <ProductField text={productInfo.size} title="размера товара" />
-            <ProductField text={productInfo.color} title="цвет" />
-            <ProductField text={productInfo.materials} title="материал" />
             <ProductField
-              text={productInfo.description}
+              text={productInfo.size ? productInfo.size : ""}
+              title="размера товара"
+            />
+            <ProductField
+              text={productInfo.color ? productInfo.color : ""}
+              title="цвет"
+            />
+            <ProductField
+              text={productInfo.materials ? productInfo.materials : ""}
+              title="материал"
+            />
+            <ProductField
+              text={productInfo.description ? productInfo.description : ""}
               title="описание товара"
             />
           </div>
@@ -56,7 +63,7 @@ export default function ProductInfo(params) {
                     <img
                       key={i}
                       className="gallery-list__item"
-                      src={productInfo.photo}
+                      src={productInfo.photo ? productInfo.photo : ""}
                       alt=""
                     />
                   </>
@@ -67,7 +74,7 @@ export default function ProductInfo(params) {
               <img className="main-photo__arrow" src={arrowLeft} alt="" />
               <img
                 className="main-photo__photo"
-                src={productInfo.photo}
+                src={productInfo.photo ? productInfo.photo : ""}
                 alt=""
               />
               <img className="main-photo__arrow" src={arrowRight} alt="" />
