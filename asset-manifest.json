@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/qr-code-gen/static/css/main.2a238846.css",
-    "main.js": "/qr-code-gen/static/js/main.7c069703.js",
+    "main.css": "/qr-code-gen/static/css/main.1a007d51.css",
+    "main.js": "/qr-code-gen/static/js/main.b21292c8.js",
     "static/js/787.75f96db8.chunk.js": "/qr-code-gen/static/js/787.75f96db8.chunk.js",
     "static/media/photo1.png": "/qr-code-gen/static/media/photo1.c09c92f9b420198b46fc.png",
     "static/media/banner.png": "/qr-code-gen/static/media/banner.ec8315d386fa165924c9.png",
@@ -17,19 +17,21 @@
     "static/media/generate.svg": "/qr-code-gen/static/media/generate.b81d1742f9c8d0231677e39834548fbb.svg",
     "static/media/avatar.svg": "/qr-code-gen/static/media/avatar.c98e46cb6fedb5a0d236742349fbca57.svg",
     "static/media/icon-check.svg": "/qr-code-gen/static/media/icon-check.fd85a186b1112e6ceb68e3e9ce9da6f8.svg",
+    "static/media/download-create.svg": "/qr-code-gen/static/media/download-create.d76e13d3e670c5d59949f3f93b83c9da.svg",
     "static/media/arrow-sort.svg": "/qr-code-gen/static/media/arrow-sort.37d883273a0ffcf99f99914c97a0822e.svg",
+    "static/media/accordeon-arrow.svg": "/qr-code-gen/static/media/accordeon-arrow.5cc115ac4ecb7d6d9b58636e69e3a0b4.svg",
     "static/media/scan-qr.svg": "/qr-code-gen/static/media/scan-qr.34c04edf2cb4f51f8f6b0643a7b2ac8b.svg",
     "static/media/qr-code-white.svg": "/qr-code-gen/static/media/qr-code-white.030d16656e4744bce0ff8687b1dde1fe.svg",
     "index.html": "/qr-code-gen/index.html",
     "static/media/logout.svg": "/qr-code-gen/static/media/logout.d7ed08b1f105d0f69a11672f687fad4e.svg",
     "static/media/arrow-right.svg": "/qr-code-gen/static/media/arrow-right.42d13d4da2c52ec2e233341dcf849a42.svg",
     "static/media/arrow-left.svg": "/qr-code-gen/static/media/arrow-left.64f909f8ec7339846efd912873eb9392.svg",
-    "main.2a238846.css.map": "/qr-code-gen/static/css/main.2a238846.css.map",
-    "main.7c069703.js.map": "/qr-code-gen/static/js/main.7c069703.js.map",
+    "main.1a007d51.css.map": "/qr-code-gen/static/css/main.1a007d51.css.map",
+    "main.b21292c8.js.map": "/qr-code-gen/static/js/main.b21292c8.js.map",
     "787.75f96db8.chunk.js.map": "/qr-code-gen/static/js/787.75f96db8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2a238846.css",
-    "static/js/main.7c069703.js"
+    "static/css/main.1a007d51.css",
+    "static/js/main.b21292c8.js"
   ]
 }
