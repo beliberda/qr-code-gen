@@ -1,19 +1,18 @@
+.table {
+  border-collapse: collapse;
+}
 thead {
   background-color: var(--gray);
   height: 54px;
-  display: flex;
-  align-items: center;
-  padding: 20px 15px;
 }
 tr {
   width: 100%;
-  /* display: flex;
-  justify-content: space-between  ; */
 }
 table h2 {
   font-weight: 500;
 }
-.table__head-th {
+.table__head-th:first-of-type > .head-th__block {
+  padding-left: 20px;
 }
 .filter-sort {
   display: inline-flex;
@@ -23,4 +22,47 @@ table h2 {
   height: 24px;
   border-radius: 3px;
   cursor: pointer;
+}
+
+.head-th__block {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+.head-th__block h2 {
+  text-transform: capitalize;
+}
+
+.table-name {
+  font-weight: 500;
+}
+.table-accordeon {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+.accordeon-btn {
+  background: var(--dark-blue);
+  width: 36px;
+  height: 36px;
+  padding: 6px 8px;
+}
+
+.table__btn-status {
+  font-size: 16px;
+  text-transform: capitalize;
+  font-weight: 400;
+  gap: 4px;
+  padding: 6px 8px;
+}
+.table-info td {
+  padding: 28px 0;
+}
+.table-info td:first-of-type {
+  padding-left: 20px;
+}
+.table-info td:last-of-type {
+  padding-right: 20px;
 }

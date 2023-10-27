@@ -12,13 +12,17 @@ const Input = (props) => {
     </div>
   );
 };
-const InputId = (props) => {
+const InputId = (props, { handleClick }) => {
   return (
     <div className="input-block">
       <h2 className="input-block__title">{props.label}</h2>
       <div className="input-block__bottom input-id">
-        <input type={props.type} placeholder={props.placeholder} />
-        <button>
+        <input
+          value={props.value}
+          type={props.type}
+          placeholder={props.placeholder}
+        />
+        <button onClick={handleClick}>
           <img src={gen} alt="" />
           Сгенерировать
         </button>

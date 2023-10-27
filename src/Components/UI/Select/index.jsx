@@ -6,9 +6,7 @@ const Select = (props) => {
       <h2 className="input-block__title">{props.label}</h2>
 
       <select name="" id="">
-        <option value="" key="">
-          {props.placeholder}
-        </option>
+        <option value="">{props.placeholder}</option>
       </select>
     </div>
   );

@@ -1,6 +1,8 @@
 import "./style.css";
 import { Select } from "Components/UI/Select";
-import { InputId } from "Components/UI/input";
+import gen from "assets/images/icons/generate.svg";
+import { useState } from "react";
+
 const inputMass = [
   {
     label: "название товара",
@@ -31,18 +33,39 @@ const inputMass = [
     placeholder: "Выберите основные тэги",
   },
 ];
+
 const InputList = () => {
+  const [id, setId] = useState("");
+
+  function GenerateId() {
+    setId(Math.floor(Math.random() * (999999999 - 100000000) + 100000000));
+  }
+
   return (
     <>
       <section className="input-list">
-        {inputMass.map((elem) => {
+        {inputMass.map((elem, i) => {
           return (
-            <>
+            <div key={i}>
               <Select label={elem.label} placeholder={elem.placeholder} />
-            </>
+            </div>
           );
         })}
-        <InputId type="text" placeholder="Введите идентификатор товара" />
+        <div className="input-block">
+          <h2></h2>
+          <div className="input-block__bottom input-id">
+            <input
+              onChange={(e) => setId(e.target.value)}
+              value={id}
+              type="text"
+              placeholder="Введите идентефикатор"
+            />
+            <button onClick={() => console.log(GenerateId())}>
+              <img src={gen} alt="" />
+              Сгенерировать
+            </button>
+          </div>
+        </div>
       </section>
     </>
   );
