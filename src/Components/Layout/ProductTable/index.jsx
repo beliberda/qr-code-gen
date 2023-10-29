@@ -11,7 +11,10 @@ const ProductTable = () => {
 
   useEffect(() => {
     try {
-      axios.get(`${API_URL}product`).then((response) => setProducts(response));
+      axios
+        .get(`${API_URL}product`)
+        .then((response) => setProducts(response.data));
+      console.log("prod:", products);
     } catch (error) {
       console.log(error);
     }

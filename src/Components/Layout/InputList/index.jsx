@@ -12,19 +12,19 @@ const inputMass = [
     label: "название товара",
     placeholder: "Выберите товар",
     name: "name",
-    options: ["джинсы", "фтуболка"],
+    options: ["Jeans", "Sweater"],
   },
   {
     label: "категория товара",
     placeholder: "Выберите категорию",
     name: "category",
-    options: ["старая одежда", "новая одежда"],
+    options: ["Jeans", "Sweater"],
   },
   {
     label: "размера товара",
     placeholder: "Выберите размер",
     name: "size",
-    options: ["m", "mmm"],
+    options: ["XS", "S", "M", "L", "XL", "XXL"],
   },
   {
     label: "цвет",
@@ -36,19 +36,19 @@ const inputMass = [
     label: "материал",
     placeholder: "Выберите материалы",
     name: "material",
-    options: ["хлопок", "полиэстр"],
+    options: ["50% cotton 50% acrylic"],
   },
   {
     label: "описание товара",
     placeholder: "Выберите описание",
     name: "description",
-    options: ["Какое-то говно", "говно получе"],
+    options: ["Very cool sweater!"],
   },
   {
     label: "добавление тэгов",
     placeholder: "Выберите основные тэги",
     name: "tags",
-    options: ["#Дерьмо", "#Говно"],
+    options: ["#sweater", "#cool"],
   },
 ];
 

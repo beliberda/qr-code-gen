@@ -49,7 +49,7 @@
 }
 .create-preview-list {
   display: flex;
-  gap: 20;
+  gap: 20px;
   flex-wrap: wrap;
   padding-bottom: 40px;
   align-items: flex-start;
