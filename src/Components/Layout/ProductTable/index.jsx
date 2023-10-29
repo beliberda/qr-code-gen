@@ -2,8 +2,21 @@ import "./style.css";
 import arrow from "assets/images/icons/arrow-sort.svg";
 import check from "assets/images/icons/icon-check.svg";
 import accordeon from "assets/images/icons/accordeon-arrow.svg";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { API_URL } from "Components/http";
 
 const ProductTable = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    try {
+      axios.get(`${API_URL}product`).then((response) => setProducts(response));
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   return (
     <table className="table">
       <thead>

@@ -7,6 +7,62 @@
   padding-top: 30px;
 }
 
+.create-bottom {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+.create__download-photo {
+  margin-bottom: 22px;
+}
+#create-photo {
+  display: none;
+}
+.btn-download {
+  letter-spacing: 0.36px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  max-width: fit-content;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: capitalize;
+  background-color: var(--green);
+  border: var(--green);
+}
+.btn-download:hover {
+  background-color: var(--dark-blue);
+  border: var(--dark-blue);
+  color: var(--white);
+}
+.create-save:hover {
+  background-color: var(--green);
+  border: 1px solid var(--green);
+}
+.create-preview-list {
+  display: flex;
+  gap: 20;
+  flex-wrap: wrap;
+  padding-bottom: 40px;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.preview {
+  width: 100%;
+  max-width: 275px;
+}
+
+.input-generate {
+  gap: 6px !important;
+}
 @media (max-width: 768px) {
   .input-list {
     grid-template-columns: 1fr;
