@@ -2,6 +2,7 @@
   border-collapse: collapse;
   border: 1px solid rgba(24, 24, 24, 0.2);
 }
+
 thead {
   background-color: var(--gray);
   height: 54px;
@@ -9,6 +10,10 @@ thead {
 }
 tr {
   width: 100%;
+}
+td,
+th {
+  padding-right: 40px;
 }
 table h2 {
   font-weight: 500;
@@ -39,6 +44,15 @@ table h2 {
 
 .table-name {
   font-weight: 500;
+  text-transform: lowercase;
+}
+.table-id {
+  overflow-x: scroll;
+  max-width: 80px;
+  cursor: pointer;
+}
+.table-id::-webkit-scrollbar {
+  display: none;
 }
 .table-accordeon {
   display: flex;
@@ -64,9 +78,49 @@ table h2 {
 .table-info td {
   padding: 28px 0;
 }
-.table-info td:first-of-type {
+tr td:first-of-type {
   padding-left: 20px;
 }
-.table-info td:last-of-type {
+tr td:last-of-type {
   padding-right: 20px;
+}
+
+/* accordeon */
+
+.table__full-info {
+  background-color: var(--grey-light);
+}
+.table__full-info td {
+  padding-top: 20px;
+  vertical-align: top;
+  padding-bottom: 14px;
+}
+.table__full-info h4 {
+  white-space: nowrap;
+}
+.full-info__source,
+.full-info__description {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+}
+.full-info__preview {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+.full-info__qr-code {
+  display: flex;
+  gap: 20px;
+}
+.qr-code__qr-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.qr-options__buttons {
+  display: flex;
+  gap: 20px;
+  align-items: end;
 }

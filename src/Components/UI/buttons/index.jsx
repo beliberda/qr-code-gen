@@ -29,7 +29,7 @@ const ButtonCreateQr = (props) => {
     </button>
   );
 };
-const ButtonDisableQr = (props) => {
+const ButtonDisableQr = ({ text, handlClick }) => {
   return (
     <button className="button-disable-qr">
       <svg
@@ -46,7 +46,7 @@ const ButtonDisableQr = (props) => {
           fill="#13141C"
         />
       </svg>
-      {props.text}
+      {text}
     </button>
   );
 };

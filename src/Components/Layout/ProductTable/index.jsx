@@ -1,10 +1,14 @@
 import "./style.css";
+import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
 import check from "assets/images/icons/icon-check.svg";
+import qr from "assets/images/qrcodeexsample.svg";
+import image from "assets/images/photo1.png";
 import accordeon from "assets/images/icons/accordeon-arrow.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "Components/http";
+import { ButtonDisableQr } from "Components/UI/buttons";
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
@@ -86,40 +90,105 @@ const ProductTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr className="table-info">
-          <td>
-            <h3 className="table-date">10.02.2023 12:32</h3>
-          </td>
-          <td>
-            <h3 className="table-name">Total graphite suit</h3>
-          </td>
-          <td>
-            <h3 className="table-id">609613081</h3>
-          </td>
-          <td>
-            <h3 className="table-status">
-              <button className="button-enter table__btn-status">
-                <img src={check} alt="" />
-                Да
-              </button>
-            </h3>
-          </td>
-          <td>
-            <h3 className="table-first-check">10.02.2023 12:32</h3>
-          </td>
-          <td>
-            <h3 className="table-last-check">12.02.2023 15:32</h3>
-          </td>
-          <td>
-            <div className="table-accordeon">
-              <h3 className="table-count">2</h3>
-              <button className="accordeon-btn">
-                <img src={accordeon} alt="" />
-              </button>
-            </div>
-          </td>
-        </tr>
-        <tr className="table__full-info"></tr>
+        {products.map((product) => {
+          let create = new Date(product.created_at);
+          let update = new Date(product.updated_at);
+          let created_at =
+            create.getDate() +
+            "." +
+            (create.getMonth() + 1) +
+            "." +
+            create.getFullYear() +
+            " " +
+            create.getHours() +
+            ":" +
+            create.getMinutes();
+          let updated_at =
+            update.getDate() +
+            "." +
+            (update.getMonth() + 1) +
+            "." +
+            update.getFullYear() +
+            " " +
+            update.getHours() +
+            ":" +
+            update.getMinutes();
+
+          return (
+            <>
+              <tr className="table-info">
+                <td>
+                  <h3 className="table-date">{created_at}</h3>
+                </td>
+                <td>
+                  <h3 className="table-name">{product.name}</h3>
+                </td>
+                <td>
+                  <h3 className="table-id">{product._id}</h3>
+                </td>
+                <td>
+                  <h3 className="table-status">
+                    <button className="button-enter table__btn-status">
+                      <img src={check} alt="" />
+                      Да
+                    </button>
+                  </h3>
+                </td>
+                <td>
+                  <h3 className="table-first-check">{created_at}</h3>
+                </td>
+                <td>
+                  <h3 className="table-last-check">{updated_at}</h3>
+                </td>
+                <td>
+                  <div className="table-accordeon">
+                    <h3 className="table-count">2</h3>
+                    <button className="accordeon-btn">
+                      <img src={accordeon} alt="" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr className="table__full-info">
+                <td>
+                  <div className="full-info__source">
+                    <h4>Источник QR-кода</h4>
+                    <p>Сгенерирован в ручную </p>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <div className="full-info__description">
+                    <h4>Описание</h4>
+                    <p>{product.description}</p>
+                  </div>
+                </td>
+                <td>
+                  <img
+                    className="full-info__preview"
+                    src={product.photo}
+                    alt=""
+                  />
+                </td>
+                <td colspan="3">
+                  <div className="full-info__qr-code">
+                    <img className="qr-code__qr" src={qr} alt="" />
+                    <div className="qr-code__qr-options">
+                      <h3>Выберите формат файла</h3>
+                      <div className="qr-options__buttons">
+                        <button htmlFor="create-photo" className="btn-download">
+                          <img src={download} alt="" />
+                          Загрузить
+                          <img src={arrow} alt="" />
+                        </button>
+                        <ButtonDisableQr text="Отключить QR-код" />
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </>
+          );
+        })}
       </tbody>
     </table>
   );

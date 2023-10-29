@@ -2,21 +2,27 @@ import { Header } from "Components/Layout/Header";
 import "./style.css";
 import check from "assets/images/icons/icon-check.svg";
 import { ProductField } from "Components/UI/productField";
-import photo from "assets/images/photo1.png";
+// import photo from "assets/images/photo1.png";
 import arrowLeft from "assets/images/icons/arrow-left.svg";
 import arrowRight from "assets/images/icons/arrow-right.svg";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "index";
+import axios from "axios";
+import { API_URL } from "Components/http";
 
-const gallery = [photo, photo, photo, photo, photo];
-export default function ProductInfo(params) {
+export default function ProductInfo() {
   const { store } = useContext(Context);
   const [productInfo, setProductInfo] = useState({});
+  const [photos, setPhoto] = useState([]);
+
   useEffect(() => {
     setProductInfo(JSON.parse(JSON.stringify(store.product)));
-  }, [productInfo]);
-  let product = JSON.parse(JSON.stringify(store.product)).product;
-  console.log(productInfo);
+    axios
+      .get(`${API_URL}product/presets`)
+      .then((response) => setPhoto(response.data))
+      .catch((error) => console.error(error));
+  }, [store.product]);
+
   return (
     <>
       <Header />
@@ -31,50 +37,51 @@ export default function ProductInfo(params) {
         <section className="product-info__main">
           <div className="product-info__info">
             <ProductField
-              text={productInfo.name ? productInfo.name : ""}
+              text={productInfo?.product?.name}
               title="Название товара"
             />
             <ProductField
-              text={productInfo.category ? productInfo.category : ""}
+              text={productInfo?.product?.category}
               title="категория товара"
             />
             <ProductField
-              text={productInfo.size ? productInfo.size : ""}
+              text={productInfo?.product?.size}
               title="размера товара"
             />
+            <ProductField text={productInfo?.product?.color} title="цвет" />
             <ProductField
-              text={productInfo.color ? productInfo.color : ""}
-              title="цвет"
-            />
-            <ProductField
-              text={productInfo.materials ? productInfo.materials : ""}
+              text={productInfo?.product?.materials}
               title="материал"
             />
             <ProductField
-              text={productInfo.description ? productInfo.description : ""}
+              text={productInfo?.product?.description}
               title="описание товара"
             />
           </div>
           <div className="product-info__gallery">
             <div className="gallery-list">
-              {gallery.map((photo, i) => {
-                return (
-                  <>
-                    <img
-                      key={i}
-                      className="gallery-list__item"
-                      src={productInfo.photo ? productInfo.photo : ""}
-                      alt=""
-                    />
-                  </>
-                );
-              })}
+              {photos.length === 0 ? (
+                photos.map((item, i) => {
+                  return (
+                    <>
+                      <img
+                        key={i}
+                        className="gallery-list__item"
+                        src={item}
+                        alt=""
+                      />
+                    </>
+                  );
+                })
+              ) : (
+                <></>
+              )}
             </div>
             <div className="gallery__main-photo">
               <img className="main-photo__arrow" src={arrowLeft} alt="" />
               <img
                 className="main-photo__photo"
-                src={productInfo.photo ? productInfo.photo : ""}
+                src={productInfo?.product?.photo}
                 alt=""
               />
               <img className="main-photo__arrow" src={arrowRight} alt="" />

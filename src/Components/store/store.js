@@ -34,7 +34,7 @@ export default class Store {
       localStorage.setItem("token", response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
-      console.log(response.data);
+
     } catch (error) {
       console.log(error.response?.data?.message);
     }
@@ -74,8 +74,7 @@ export default class Store {
   async getQr(id) {
     try {
       const response = await axios.get(`${API_URL}qr/${id}`);
-      // this.setProduct(response.data);
-      console.log("qr код ", response);
+      this.setProduct(response.data);
       return true
     } catch (error) {
       console.log(error.response?.data?.message);
