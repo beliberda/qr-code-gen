@@ -119,6 +119,7 @@ const ProductTable = () => {
             </div>
           </td>
         </tr>
+        <tr className="table__full-info"></tr>
       </tbody>
     </table>
   );
