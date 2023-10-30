@@ -13,9 +13,7 @@ export default class Store {
     material: null,
     category: null,
     photo: null,
-
   };
-  // product = { "_id": "65046106121361691e6861de", "eid": "724aa8b572f5497baeb1904178abdd14db2d3ca8177e73cc03e4594406cc9ff1", "product_id": "65046106121361691e6861de", "product": { "_id": "61e02740f35754000750633d", "name": "KNITTED SWEATSHIRT ROCK", "description": "Very cool sweater!", "category": "sweaters", "color": "blue", "size": "OS", "materials": "50% cotton 50% acrylic", "photo": "https://thumb.tildacdn.com/stor3638-3335-4133-a438-303038353930/-/format/webp/68102468.png", "updated_at": "2023-10-25T20:19:14.7252096+10:00", "created_at": "2023-10-25T20:19:14.7252096+10:00" }, "first_used_at": "0001-01-01T00:00:00Z", "used_at": "0001-01-01T00:00:00Z", "updated_at": "2023-10-25T20:19:14.7252096+10:00", "created_at": "2023-10-25T20:19:14.7252096+10:00" };
   constructor() {
     makeAutoObservable(this);
   }
@@ -28,20 +26,24 @@ export default class Store {
   setProduct(product) {
     this.product = product;
   }
-  async login(username, password) {
+  async login(email, password) {
     try {
-      const response = await AuthService.login(username, password);
-      localStorage.setItem("token", response.data.accessToken);
+      const response = await AuthService.login(email, password);
+      // localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem(
+        "token",
+        "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtYW5la2VuYnJhbmQtcXIiLCJleHAiOjE3MDEyNjU3MTMsImp0aSI6IjY1M2U0YTMwMTMwMTUxYzVhOGEzNzA2ZSIsImlhdCI6MTY5ODY3MzcxMywiaXNzIjoibWFuZWtlbmJyYW5kLXFyIiwibmJmIjoxNjk4NjczNzEzfQ.pkTtFwHp2nmUTvYxaEBqkEbEjUE2QKSAoxnmN76IWKckae-W07EX80ciyNUYtK4itRlu3VwL3aBf9q9bbWc5OmC6eDMSIUqJZk1wGmJprFs0HMjFSOLpVZpQqdAB-ln5EnKxvbWMz8FjoWVHbkHPXp4LWp_2BNXBax7NG125YbUf3EbGPgkt4Jdf3Dq93ICOSMZXDtcudXnOzLSkUS3G3vSMikhqUmnFgxHKHZvgS6C5JUaursmx0JMh2mwaUDl6OYsfzbPa1OwzwUYB5na6qjp3wv-xmLTINcWsLuGpaiQ7HlbPBCM4Imi4dJJ_Qb1sYy4FDifmtmUC3U6bdsLQ0CAMOnArLXRoP2wg7rItg3XkMotPyBfij4J5IFhxDlB1AyhT49elG1RQsgJI9nHOpbj2bsno3utOU8Js_7th0fTRQEndQ-JYQt_4DdTAMIecV85L22NgBXpjTKX8pgfabcRnD-_0diz_IOTcpRWxM7J0eX3VVzSwiQsTtBshINngDOQ5vD87u5Il8LZwcq_FfYxdoyUjDrQcTQmeiLgjEvv96Pu8iW8tGZSFWTfK98aJbtg0vWpr5jNON7cNPLY51YdojhAiALMP1tQ1hfE_mlg3elxg4iMSNowTVpuJ0MCOAeIhRu5UfTt63ON126jg9I5K3wEi5Vt-duOCSqTO3qg"
+      );
       this.setAuth(true);
       this.setUser(response.data.user);
-
+      console.log("login", response);
     } catch (error) {
       console.log(error.response?.data?.message);
     }
   }
-  async registration(username, password) {
+  async registration(email, password) {
     try {
-      const response = await AuthService.registration(username, password);
+      const response = await AuthService.registration(email, password);
       localStorage.setItem("token", response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
@@ -59,26 +61,19 @@ export default class Store {
       console.log(error.response?.data?.message);
     }
   }
-  async checkAuth() {
-    try {
-      const response = await axios.get(`${API_URL}user/login`, {
-        withCredentials: false,
-      });
-      localStorage.setItem("token", response.data.accessToken);
-      this.setAuth(true);
-      this.setUser(response.data);
-    } catch (error) {
-      console.log(error.response?.data?.message);
-    }
-  }
+  // async checkAuth() {
+  //   if (this) {
+
+  //   }
+  // }
   async getQr(id) {
     try {
       const response = await axios.get(`${API_URL}qr/${id}`);
       this.setProduct(response.data);
-      return true
+      return true;
     } catch (error) {
       console.log(error.response?.data?.message);
-      return false
+      return false;
     }
   }
 }

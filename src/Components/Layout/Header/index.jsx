@@ -10,7 +10,7 @@ const Header = (props) => {
 
   return (
     <header className="header container">
-      <Link to="/">
+      <Link to="/login">
         <img src={logo} alt="maneken" />
       </Link>
       {props.isAdmin ? (

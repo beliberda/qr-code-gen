@@ -12,15 +12,14 @@ import CheckProduct from "Components/Pages/CheckProduct";
 import ProductInfo from "Components/Pages/ProductInfo";
 import ListProducts from "Components/Pages/ListProduct";
 
-
 function App() {
   const { store } = useContext(Context);
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      store.checkAuth();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     store.checkAuth();
+  //   }
+  // }, []);
   return (
     <HashRouter basename="/">
       <Routes>
@@ -29,14 +28,13 @@ function App() {
         <Route path="/product-info" element={<ProductInfo />} />
 
         <Route path="/user" element={<PrivateRoute />}>
-
           <Route path="/user/:id" element={<ListProducts />} />
           <Route path="/user/:id/create-qr" element={<CreateQr />} />
         </Route>
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-    </HashRouter >
+    </HashRouter>
   );
 
   // <RouterProvider router={router} />;

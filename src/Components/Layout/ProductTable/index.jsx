@@ -2,23 +2,50 @@ import "./style.css";
 import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
 import check from "assets/images/icons/icon-check.svg";
-import qr from "assets/images/qrcodeexsample.svg";
-import image from "assets/images/photo1.png";
 import accordeon from "assets/images/icons/accordeon-arrow.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "Components/http";
 import { ButtonDisableQr } from "Components/UI/buttons";
+import getBase64Image from "Components/utils/toImage";
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
+  const [qrCode, setQrCode] = useState([]);
 
   useEffect(() => {
     try {
+      axios.get(`${API_URL}qr`, {}).then((response) => {
+        console.log(response);
+        setProducts(response.data);
+      });
+      console.log("qr:", products);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  useEffect(() => {
+    try {
       axios
-        .get(`${API_URL}product`)
-        .then((response) => setProducts(response.data));
-      console.log("prod:", products);
+        .post(`${API_URL}qr/65046106121361691e6861de`, {
+          size: 500,
+          foreground_color: {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 0,
+          },
+          background_color: {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 0,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          setQrCode(response.data);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -121,7 +148,7 @@ const ProductTable = () => {
                   <h3 className="table-date">{created_at}</h3>
                 </td>
                 <td>
-                  <h3 className="table-name">{product.name}</h3>
+                  <h3 className="table-name">{product.product.name}</h3>
                 </td>
                 <td>
                   <h3 className="table-id">{product._id}</h3>
@@ -156,22 +183,26 @@ const ProductTable = () => {
                     <p>Сгенерирован в ручную </p>
                   </div>
                 </td>
-                <td colspan="2">
+                <td colSpan="2">
                   <div className="full-info__description">
                     <h4>Описание</h4>
-                    <p>{product.description}</p>
+                    <p>{product.product.description}</p>
                   </div>
                 </td>
                 <td>
                   <img
                     className="full-info__preview"
-                    src={product.photo}
+                    src={product.product.photo}
                     alt=""
                   />
                 </td>
-                <td colspan="3">
+                <td colSpan="3">
                   <div className="full-info__qr-code">
-                    <img className="qr-code__qr" src={qr} alt="" />
+                    <img
+                      className="qr-code__qr"
+                      src={`data:image/png;base64,${qrCode}`}
+                      alt=""
+                    />
                     <div className="qr-code__qr-options">
                       <h3>Выберите формат файла</h3>
                       <div className="qr-options__buttons">

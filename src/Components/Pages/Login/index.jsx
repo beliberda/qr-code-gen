@@ -1,13 +1,13 @@
 import { Banner } from "Components/UI/banner";
 import "./style.css";
 import { Header } from "Components/Layout/Header";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "index";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
 function Login(params) {
-  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { store } = useContext(Context);
   // Навигация
@@ -15,6 +15,13 @@ function Login(params) {
   const NavUser = () => {
     navigate("/user/1");
   };
+
+  // useEffect(() => {
+  //   if (store.isAuth) {
+  //     NavUser();
+  //   }
+  // }, []);
+
   return (
     <>
       <Header isAdmin={false} />
@@ -24,10 +31,10 @@ function Login(params) {
           <div className="input-block">
             <input
               onChange={(e) => {
-                setUserName(e.target.value);
+                setEmail(e.target.value);
               }}
               type="text"
-              value={username}
+              value={email}
               className="input-id"
               placeholder="Логин или E-mail"
             />
@@ -45,7 +52,7 @@ function Login(params) {
           </div>
           <button
             onClick={() => {
-              store.login(username, password);
+              store.login(email, password);
               if (store.isAuth) {
                 NavUser();
               }
@@ -55,7 +62,7 @@ function Login(params) {
             Войти
           </button>
           {/* <button
-            onClick={() => store.registration(username, password)}
+            onClick={() => store.registration(email, password)}
             className="button-enter"
           >
             Регистрация

@@ -55,9 +55,6 @@ const inputMass = [
 const InputList = () => {
   const [id, setId] = useState("");
 
-  function GenerateId() {
-    setId(Math.floor(Math.random() * (999999999 - 100000000) + 100000000));
-  }
   const [qrData, setQrData] = useState({
     name: null,
     description: null,
@@ -68,7 +65,6 @@ const InputList = () => {
     photo: null,
   });
 
-  const a = qrData;
   const handleClick = (e) => {
     const value = e.target.value;
 
@@ -85,7 +81,7 @@ const InputList = () => {
     setQrData({ ...qrData, photo: files });
   };
 
-  // create Qr Code
+  // create product
 
   const saveQrCode = () => {
     try {
@@ -96,6 +92,7 @@ const InputList = () => {
     }
     console.log(qrData);
   };
+  // Получение qr кода
 
   return (
     <>
