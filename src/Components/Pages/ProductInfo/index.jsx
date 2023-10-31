@@ -8,24 +8,26 @@ import arrowRight from "assets/images/icons/arrow-right.svg";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "index";
 import axios from "axios";
-import { API_URL } from "Components/http";
+import { API_URL, headers } from "Components/http";
 import { useParams, useSearchParams } from "react-router-dom";
 
 export default function ProductInfo() {
   const { store } = useContext(Context);
   const [productInfo, setProductInfo] = useState({});
   const [photos, setPhoto] = useState([]);
-  let params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  searchParams.get("_eid");
-  // setSearchParams({ _eid: params.productId });
-  console.log("_uid", searchParams.get("_eid"));
+
+  console.log("eid", searchParams.get("eid"));
   useEffect(() => {
     try {
-      axios.get(`${API_URL}product/${searchParams.get("_eid")}`).then((res) => {
-        console.log(res.data);
-        setProductInfo(res.data);
-      });
+      axios
+        .get(`${API_URL}qr/check`, {
+          eid: searchParams.get("eid"),
+        })
+        .then((res) => {
+          console.log(res.data);
+          setProductInfo(res.data);
+        });
     } catch (error) {}
   }, [searchParams]);
 

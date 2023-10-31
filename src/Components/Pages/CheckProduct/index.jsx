@@ -6,13 +6,14 @@ import { Banner } from "Components/UI/banner";
 import { useContext, useEffect } from "react";
 import { Context } from "index";
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 export default function CheckProduct(params) {
-  const [id, setId] = useState("65046106121361691e6861de");
+  // const [id, setId] = useState("65046106121361691e6861de");
   const { store } = useContext(Context);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const Check = () => {
-    navigate(`/checking/?_eid=${id}`);
+    navigate(`/checking/?eid=${searchParams.get("eid")}`);
   };
 
   return (
@@ -25,15 +26,15 @@ export default function CheckProduct(params) {
             <div className="check-product__input">
               <h2 className="input-block__title">идентификационный номер</h2>
               <input
-                onChange={(e) => setId(e.target.value)}
+                onChange={(e) => setSearchParams({ eid: e.target.value })}
                 type="text"
-                value={id}
+                value={searchParams.get("eid") ? searchParams.get("eid") : ""}
                 placeholder="Введите идентификатор товара"
               />
             </div>
             <button
               onClick={() => {
-                if (store.getQr(id)) {
+                if (searchParams.get("eid") !== undefined) {
                   Check();
                 }
               }}
