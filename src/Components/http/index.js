@@ -15,8 +15,7 @@ const Auth =
 
 const headers = {
   "Content-Type": "application/json",
-  Authorization: Auth,
-  // 'Access-Control-Allow-Credentials': true
+  // Authorization: Auth,
 };
 
 $api.interceptors.request.use((config) => {

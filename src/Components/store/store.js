@@ -30,15 +30,11 @@ export default class Store {
 
   async login(email, password) {
     try {
-
       const response = await AuthService.login(email, password);
       localStorage.setItem("token", response.headers.authorization);
       this.setAuth(true);
       this.setUser(response.data.user);
       console.log("login", response);
-
-      // return true
-
     } catch (error) {
       console.log(error);
     }
@@ -65,15 +61,7 @@ export default class Store {
   }
   async checkAuth() {
     if (this.isAuth) {
-      return
-    }
-  }
-  async getQr(id) {
-    try {
-      const response = await axios.get(`${API_URL}qr/${id}`);
-      this.setProduct(response.data);
-    } catch (error) {
-      console.log(error.response?.data?.message);
+      return;
     }
   }
 }

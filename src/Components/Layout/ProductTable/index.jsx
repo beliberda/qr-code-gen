@@ -4,9 +4,9 @@ import arrow from "assets/images/icons/arrow-sort.svg";
 import check from "assets/images/icons/icon-check.svg";
 import accordeon from "assets/images/icons/accordeon-arrow.svg";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { API_URL, headers } from "Components/http";
+
 import { ButtonDisableQr } from "Components/UI/buttons";
+import UserService from "Components/services/UserService";
 
 function dateFormat(date) {
   return (
@@ -28,22 +28,11 @@ const ProductTable = () => {
 
   useEffect(() => {
     try {
-      axios
-        .get(`${API_URL}qr`, { headers: headers, withCredentials: false })
-        .then((response) => {
-          console.log(response);
-          setProducts(response.data);
-          console.log("qr:", products);
-
-          return response.data[0]._id;
-        })
-        .then((_id) => {
-          console.log(_id);
-          axios.post(`${API_URL}qr/${_id}`, {}).then((response) => {
-            console.log("qr image ", response);
-            setQrCode(response.data);
-          });
-        });
+      const response = UserService.getQr();
+      response.then((res) => {
+        setProducts(res.data);
+        console.log("qr:", products);
+      });
     } catch (error) {
       console.log("error");
     }
@@ -114,91 +103,98 @@ const ProductTable = () => {
           </th>
         </tr>
       </thead>
-      <tbody>
-        {products.map((product, i) => {
-          let created_at = dateFormat(new Date(product.created_at));
-          let updated_at = dateFormat(new Date(product.updated_at));
+      {products ? (
+        <tbody>
+          {products.map((product, i) => {
+            let created_at = dateFormat(new Date(product.created_at));
+            let updated_at = dateFormat(new Date(product.updated_at));
 
-          return (
-            <>
-              <tr key={i} className="table-info">
-                <td>
-                  <h3 className="table-date">{created_at}</h3>
-                </td>
-                <td>
-                  <h3 className="table-name">{product.product.name}</h3>
-                </td>
-                <td>
-                  <h3 className="table-id">{product._id}</h3>
-                </td>
-                <td>
-                  <h3 className="table-status">
-                    <button className="button-enter table__btn-status">
-                      <img src={check} alt="" />
-                      Да
-                    </button>
-                  </h3>
-                </td>
-                <td>
-                  <h3 className="table-first-check">{created_at}</h3>
-                </td>
-                <td>
-                  <h3 className="table-last-check">{updated_at}</h3>
-                </td>
-                <td>
-                  <div className="table-accordeon">
-                    <h3 className="table-count">2</h3>
-                    <button className="accordeon-btn">
-                      <img src={accordeon} alt="" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr className="table__full-info">
-                <td>
-                  <div className="full-info__source">
-                    <h4>Источник QR-кода</h4>
-                    <p>Сгенерирован в ручную </p>
-                  </div>
-                </td>
-                <td colSpan="2">
-                  <div className="full-info__description">
-                    <h4>Описание</h4>
-                    <p>{product.product.description}</p>
-                  </div>
-                </td>
-                <td>
-                  <img
-                    className="full-info__preview"
-                    src={product.product.photo}
-                    alt=""
-                  />
-                </td>
-                <td colSpan="3">
-                  <div className="full-info__qr-code">
+            return (
+              <>
+                <tr key={i} className="table-info">
+                  <td>
+                    <h3 className="table-date">{created_at}</h3>
+                  </td>
+                  <td>
+                    <h3 className="table-name">{product.product.name}</h3>
+                  </td>
+                  <td>
+                    <h3 className="table-id">{product._id}</h3>
+                  </td>
+                  <td>
+                    <h3 className="table-status">
+                      <button className="button-enter table__btn-status">
+                        <img src={check} alt="" />
+                        Да
+                      </button>
+                    </h3>
+                  </td>
+                  <td>
+                    <h3 className="table-first-check">{created_at}</h3>
+                  </td>
+                  <td>
+                    <h3 className="table-last-check">{updated_at}</h3>
+                  </td>
+                  <td>
+                    <div className="table-accordeon">
+                      <h3 className="table-count">2</h3>
+                      <button className="accordeon-btn">
+                        <img src={accordeon} alt="" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr key={product._id} className="table__full-info">
+                  <td>
+                    <div className="full-info__source">
+                      <h4>Источник QR-кода</h4>
+                      <p>Сгенерирован в ручную </p>
+                    </div>
+                  </td>
+                  <td colSpan="2">
+                    <div className="full-info__description">
+                      <h4>Описание</h4>
+                      <p>{product.product.description}</p>
+                    </div>
+                  </td>
+                  <td>
                     <img
-                      className="qr-code__qr"
-                      src={`data:image/png;base64,${qrCode}`}
+                      className="full-info__preview"
+                      src={product.product.photo}
                       alt=""
                     />
-                    <div className="qr-code__qr-options">
-                      <h3>Выберите формат файла</h3>
-                      <div className="qr-options__buttons">
-                        <button htmlFor="create-photo" className="btn-download">
-                          <img src={download} alt="" />
-                          Загрузить
-                          <img src={arrow} alt="" />
-                        </button>
-                        <ButtonDisableQr text="Отключить QR-код" />
+                  </td>
+                  <td colSpan="3">
+                    <div className="full-info__qr-code">
+                      <img
+                        className="qr-code__qr"
+                        src={`data:image/png;base64,${qrCode}`}
+                        alt=""
+                      />
+                      <div className="qr-code__qr-options">
+                        <h3>Выберите формат файла</h3>
+                        <div className="qr-options__buttons">
+                          <button
+                            htmlFor="create-photo"
+                            className="btn-download"
+                          >
+                            <img src={download} alt="" />
+                            Загрузить
+                            <img src={arrow} alt="" />
+                          </button>
+                          <ButtonDisableQr text="Отключить QR-код" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-            </>
-          );
-        })}
-      </tbody>
+                  </td>
+                </tr>
+              </>
+            );
+          })}
+        </tbody>
+      ) : (
+        <></>
+      )}
     </table>
   );
 };

@@ -6,6 +6,8 @@ import axios from "axios";
 import { API_URL } from "Components/http";
 import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
+import UserService from "Components/services/UserService";
+import readFile from "Components/utils/toImage";
 
 const inputMass = [
   {
@@ -64,7 +66,7 @@ const InputList = () => {
     materials: "" || null,
     photo: "" || null,
   });
-  const [qrCode, setQrCode] = useState({});
+  const [qrCode, setQrCode] = useState(null);
   const handleClick = (e) => {
     const value = e.target.value;
 
@@ -85,53 +87,22 @@ const InputList = () => {
 
   const saveQrCode = () => {
     try {
-      axios.post(`${API_URL}product`, qrData);
-      console.log("Product Create");
+      const response = UserService.fetchSaveProduct(qrData);
+      console.log("Create ", qrData);
     } catch (error) {
       console.log(error);
     }
-    console.log(qrData);
   };
   // Получение qr кода
-  function readFile(input) {
-    const fr = new FileReader();
-    fr.readAsDataURL(input);
-    fr.addEventListener("load", () => {
-      const res = fr.result;
-      setQrCode(res);
-    });
-  }
+
   const generateQrCode = () => {
     try {
-      axios
-        .post(
-          `${API_URL}qr/${id}`,
-          {
-            size: 500,
-            foreground_color: {
-              r: 0,
-              g: 0,
-              b: 0,
-              a: 100,
-            },
-            background_color: {
-              r: 0,
-              g: 0,
-              b: 0,
-              a: 0,
-            },
-          },
-          {
-            responseType: "blob",
-          }
-        )
-        .then((res) => {
-          return res.data;
-        })
-
+      const response = UserService.getGeneratedQr(id);
+      response
+        .then((res) => res.data)
         .then((blob) => {
           const file = new File([blob], "image", { type: blob.type });
-          readFile(file);
+          readFile(file, setQrCode);
           console.log(qrCode);
         });
     } catch (error) {
@@ -199,12 +170,12 @@ const InputList = () => {
             alt="..."
           />
         ))}
-        {qrCode !== {} ? (
+        {qrCode === null ? (
+          <></>
+        ) : (
           <>
             <img className="preview" src={qrCode} alt="..." />
           </>
-        ) : (
-          <></>
         )}
       </div>
     </>
