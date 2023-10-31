@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL, headers } from "Components/http";
 import { ButtonDisableQr } from "Components/UI/buttons";
-import getBase64Image from "Components/utils/toImage";
 
 function dateFormat(date) {
   return (

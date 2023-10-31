@@ -112,7 +112,7 @@ const InputList = () => {
               r: 0,
               g: 0,
               b: 0,
-              a: 0,
+              a: 100,
             },
             background_color: {
               r: 0,
@@ -130,9 +130,6 @@ const InputList = () => {
         })
 
         .then((blob) => {
-          // readFile(blob);
-          // debugger;
-
           const file = new File([blob], "image", { type: blob.type });
           readFile(file);
           console.log(qrCode);
@@ -202,8 +199,13 @@ const InputList = () => {
             alt="..."
           />
         ))}
-
-        <img className="preview" src={qrCode} alt="..." />
+        {qrCode !== {} ? (
+          <>
+            <img className="preview" src={qrCode} alt="..." />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );

@@ -9,19 +9,25 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "index";
 import axios from "axios";
 import { API_URL } from "Components/http";
+import { useParams, useSearchParams } from "react-router-dom";
 
 export default function ProductInfo() {
   const { store } = useContext(Context);
   const [productInfo, setProductInfo] = useState({});
   const [photos, setPhoto] = useState([]);
-
+  let params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  searchParams.get("_eid");
+  // setSearchParams({ _eid: params.productId });
+  console.log("_uid", searchParams.get("_eid"));
   useEffect(() => {
-    setProductInfo(JSON.parse(JSON.stringify(store.product)));
-    axios
-      .get(`${API_URL}product/presets`)
-      .then((response) => setPhoto(response.data))
-      .catch((error) => console.error(error));
-  }, [store.product]);
+    try {
+      axios.get(`${API_URL}product/${searchParams.get("_eid")}`).then((res) => {
+        console.log(res.data);
+        setProductInfo(res.data);
+      });
+    } catch (error) {}
+  }, [searchParams]);
 
   return (
     <>
@@ -36,25 +42,16 @@ export default function ProductInfo() {
         </div>
         <section className="product-info__main">
           <div className="product-info__info">
+            <ProductField text={productInfo?.name} title="Название товара" />
             <ProductField
-              text={productInfo?.product?.name}
-              title="Название товара"
-            />
-            <ProductField
-              text={productInfo?.product?.category}
+              text={productInfo?.category}
               title="категория товара"
             />
+            <ProductField text={productInfo?.size} title="размера товара" />
+            <ProductField text={productInfo?.color} title="цвет" />
+            <ProductField text={productInfo?.materials} title="материал" />
             <ProductField
-              text={productInfo?.product?.size}
-              title="размера товара"
-            />
-            <ProductField text={productInfo?.product?.color} title="цвет" />
-            <ProductField
-              text={productInfo?.product?.materials}
-              title="материал"
-            />
-            <ProductField
-              text={productInfo?.product?.description}
+              text={productInfo?.description}
               title="описание товара"
             />
           </div>
@@ -81,7 +78,7 @@ export default function ProductInfo() {
               <img className="main-photo__arrow" src={arrowLeft} alt="" />
               <img
                 className="main-photo__photo"
-                src={productInfo?.product?.photo}
+                src={productInfo?.photo}
                 alt=""
               />
               <img className="main-photo__arrow" src={arrowRight} alt="" />

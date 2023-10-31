@@ -12,7 +12,7 @@ export default function CheckProduct(params) {
   const { store } = useContext(Context);
   const navigate = useNavigate();
   const Check = () => {
-    navigate(`/product-info/${params.id}`);
+    navigate(`/checking/?_eid=${id}`);
   };
 
   return (
