@@ -53,18 +53,18 @@ const inputMass = [
 ];
 
 const InputList = () => {
-  const [id, setId] = useState("");
+  const [id, setId] = useState("65046106121361691e6861de");
 
   const [qrData, setQrData] = useState({
-    name: null,
-    description: null,
-    category: null,
-    color: null,
-    size: null,
-    materials: null,
-    photo: null,
+    name: "" || null,
+    description: "" || null,
+    category: "" || null,
+    color: "" || null,
+    size: "" || null,
+    materials: "" || null,
+    photo: "" || null,
   });
-
+  const [qrCode, setQrCode] = useState({});
   const handleClick = (e) => {
     const value = e.target.value;
 
@@ -93,10 +93,58 @@ const InputList = () => {
     console.log(qrData);
   };
   // Получение qr кода
+  function readFile(input) {
+    const fr = new FileReader();
+    fr.readAsDataURL(input);
+    fr.addEventListener("load", () => {
+      const res = fr.result;
+      setQrCode(res);
+    });
+  }
+  const generateQrCode = () => {
+    try {
+      axios
+        .post(
+          `${API_URL}qr/${id}`,
+          {
+            size: 500,
+            foreground_color: {
+              r: 0,
+              g: 0,
+              b: 0,
+              a: 0,
+            },
+            background_color: {
+              r: 0,
+              g: 0,
+              b: 0,
+              a: 0,
+            },
+          },
+          {
+            responseType: "blob",
+          }
+        )
+        .then((res) => {
+          return res.data;
+        })
+
+        .then((blob) => {
+          // readFile(blob);
+          // debugger;
+
+          const file = new File([blob], "image", { type: blob.type });
+          readFile(file);
+          console.log(qrCode);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
-      <section className="input-list">
+      <section className="input-list" id="parent">
         {inputMass.map((elem, i) => {
           return (
             <div key={i}>
@@ -119,7 +167,7 @@ const InputList = () => {
               type="text"
               placeholder="Введите идентификатор"
             />
-            <button onClick={() => console.log(qrData)}>
+            <button onClick={() => generateQrCode()}>
               <img src={gen} alt="" />
               Сгенерировать
             </button>
@@ -154,6 +202,8 @@ const InputList = () => {
             alt="..."
           />
         ))}
+
+        <img className="preview" src={qrCode} alt="..." />
       </div>
     </>
   );

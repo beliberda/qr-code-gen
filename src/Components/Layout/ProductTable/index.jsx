@@ -5,9 +5,23 @@ import check from "assets/images/icons/icon-check.svg";
 import accordeon from "assets/images/icons/accordeon-arrow.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { API_URL } from "Components/http";
+import { API_URL, headers } from "Components/http";
 import { ButtonDisableQr } from "Components/UI/buttons";
 import getBase64Image from "Components/utils/toImage";
+
+function dateFormat(date) {
+  return (
+    date.getDate() +
+    "." +
+    (date.getMonth() + 1) +
+    "." +
+    date.getFullYear() +
+    " " +
+    date.getHours() +
+    ":" +
+    date.getMinutes()
+  );
+}
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
@@ -15,39 +29,24 @@ const ProductTable = () => {
 
   useEffect(() => {
     try {
-      axios.get(`${API_URL}qr`, {}).then((response) => {
-        console.log(response);
-        setProducts(response.data);
-      });
-      console.log("qr:", products);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-  useEffect(() => {
-    try {
       axios
-        .post(`${API_URL}qr/65046106121361691e6861de`, {
-          size: 500,
-          foreground_color: {
-            r: 0,
-            g: 0,
-            b: 0,
-            a: 0,
-          },
-          background_color: {
-            r: 0,
-            g: 0,
-            b: 0,
-            a: 0,
-          },
-        })
+        .get(`${API_URL}qr`, { headers: headers, withCredentials: false })
         .then((response) => {
           console.log(response);
-          setQrCode(response.data);
+          setProducts(response.data);
+          console.log("qr:", products);
+
+          return response.data[0]._id;
+        })
+        .then((_id) => {
+          console.log(_id);
+          axios.post(`${API_URL}qr/${_id}`, {}).then((response) => {
+            console.log("qr image ", response);
+            setQrCode(response.data);
+          });
         });
     } catch (error) {
-      console.log(error);
+      console.log("error");
     }
   }, []);
 
@@ -117,33 +116,13 @@ const ProductTable = () => {
         </tr>
       </thead>
       <tbody>
-        {products.map((product) => {
-          let create = new Date(product.created_at);
-          let update = new Date(product.updated_at);
-          let created_at =
-            create.getDate() +
-            "." +
-            (create.getMonth() + 1) +
-            "." +
-            create.getFullYear() +
-            " " +
-            create.getHours() +
-            ":" +
-            create.getMinutes();
-          let updated_at =
-            update.getDate() +
-            "." +
-            (update.getMonth() + 1) +
-            "." +
-            update.getFullYear() +
-            " " +
-            update.getHours() +
-            ":" +
-            update.getMinutes();
+        {products.map((product, i) => {
+          let created_at = dateFormat(new Date(product.created_at));
+          let updated_at = dateFormat(new Date(product.updated_at));
 
           return (
             <>
-              <tr className="table-info">
+              <tr key={i} className="table-info">
                 <td>
                   <h3 className="table-date">{created_at}</h3>
                 </td>

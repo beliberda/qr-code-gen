@@ -3,7 +3,7 @@ info:
   title: QR Generator
   version: ver 1.0
 servers:
-  - url: http://86.102.19.21:8225
+  - url: https://localhost:8225
 tags:
   - name: User
     description: Запросы по пользователям
@@ -139,6 +139,14 @@ paths:
       description: Обновить пользователя
       security:
         - bearerAuth: []
+      parameters:
+        - name: userID
+          in: path
+          description: ID пользователя для получения
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
       requestBody:
         description: Обновленные данные пользователя
         content:
@@ -539,9 +547,24 @@ paths:
             schema:
               type: object
               properties:
-                disabled:
-                  type: boolean
-                  example: false
+                name:
+                  type: string
+                  example: "SWEATEr"
+                description:
+                  type: "string"
+                  example: "cool sweater"
+                category:
+                  type: string
+                  example: "sweaters"
+                color:
+                  type: string
+                  example: "blue"
+                size:
+                  type: string
+                  example: "OS"
+                materials:
+                  type: string
+                  example: "cotton"
                 limit:
                   type: integer
                   example: 50
@@ -790,8 +813,11 @@ components:
           type: string
           example: 50% cotton 50% acrylic
         photo:
-          type: string
-          example: https://thumb.tildacdn.com/stor3638-3335-4133-a438-303038353930/-/format/webp/68102468.png
+          type: array
+          items:
+            type: string
+          example:
+            - https://thumb.tildacdn.com/stor3638-3335-4133-a438-303038353930/-/format/webp/68102468.png
         updated_at:
           type: string
           format: date-time

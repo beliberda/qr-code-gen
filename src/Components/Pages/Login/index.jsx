@@ -11,16 +11,14 @@ function Login(params) {
   const [password, setPassword] = useState("");
   const { store } = useContext(Context);
   // Навигация
+  const path = "/user/1";
   const navigate = useNavigate();
-  const NavUser = () => {
-    navigate("/user/1");
-  };
 
-  // useEffect(() => {
-  //   if (store.isAuth) {
-  //     NavUser();
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (store.isAuth) {
+      navigate(path);
+    }
+  }, [store.isAuth, navigate]);
 
   return (
     <>
@@ -53,9 +51,6 @@ function Login(params) {
           <button
             onClick={() => {
               store.login(email, password);
-              if (store.isAuth) {
-                NavUser();
-              }
             }}
             className="button-enter"
           >

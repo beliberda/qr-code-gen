@@ -1,5 +1,5 @@
 {
-  "homepage": "https://solweb.site/",
+  "homepage": "http://localhost:3000/",
   "name": "qr-code-widjet",
   "version": "0.1.0",
   "private": true,
