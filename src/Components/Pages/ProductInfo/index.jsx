@@ -10,6 +10,7 @@ import { Context } from "index";
 import axios from "axios";
 import { API_URL, headers } from "Components/http";
 import { useParams, useSearchParams } from "react-router-dom";
+import UserService from "Components/services/UserService";
 
 export default function ProductInfo() {
   const { store } = useContext(Context);
@@ -17,19 +18,25 @@ export default function ProductInfo() {
   const [photos, setPhoto] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log("eid", searchParams.get("eid"));
+  console.log("id", searchParams.get("eid"));
   useEffect(() => {
+    console.log("dwd");
     try {
-      axios
-        .get(`${API_URL}qr/check`, {
-          eid: searchParams.get("eid"),
-        })
-        .then((res) => {
-          console.log(res.data);
-          setProductInfo(res.data);
-        });
+      const response = UserService.getQrCheck(searchParams);
+      response.then((res) => {
+        console.log(res.data);
+        setProductInfo(res.data);
+      });
+      // axios
+      //   .get(`${API_URL}qr/check`, {
+      //     eid: searchParams.get("eid"),
+      //   })
+      //   .then((res) => {
+      //     console.log(res.data);
+      //     setProductInfo(res.data);
+      //   });
     } catch (error) {}
-  }, [searchParams]);
+  }, []);
 
   return (
     <>

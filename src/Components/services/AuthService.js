@@ -9,7 +9,7 @@ export default class AuthService {
       { email, password },
       {
         headers: headers,
-        withCredentials: false,
+
       }
     );
   }

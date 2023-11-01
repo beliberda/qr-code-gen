@@ -15,6 +15,7 @@ export default class Store {
     category: null,
     photo: null,
   };
+  authorization = null
   constructor() {
     makeAutoObservable(this);
   }
@@ -27,11 +28,16 @@ export default class Store {
   setProduct(product) {
     this.product = product;
   }
+  setAuthorization(authorization) {
+    this.authorization = authorization
+  }
 
   async login(email, password) {
     try {
       const response = await AuthService.login(email, password);
-      localStorage.setItem("token", response.headers.authorization);
+      // debugger
+      localStorage.setItem("token", response.headers.getAuthorization);
+      this.setAuthorization(response.headers.authorization)
       this.setAuth(true);
       this.setUser(response.data.user);
       console.log("login", response);

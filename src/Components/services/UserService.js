@@ -1,28 +1,22 @@
 import { $api, headers } from "Components/http";
 
+const params = { disabled: false }
+
 export default class UserService {
   static fetchUsers() {
     return $api.get("/users");
   }
   static async getQr() {
-    return $api.get(`/qr/`, {
-      headers: headers,
+    return $api.get(`qr/`, {
       data: {
-        disabled: false,
-        limit: 50,
-        page: 0,
-        sort_by: "created_at",
-      },
+        disabled: true
+      }
     });
   }
   static async getQrById(eid) {
     return $api.get(`/qr/${eid}`, {
       headers: headers,
       data: {
-        disabled: false,
-        limit: 50,
-        page: 0,
-        sort_by: "created_at",
       },
     });
   }
@@ -49,6 +43,13 @@ export default class UserService {
         headers: headers,
       }
     );
+  }
+  static async getQrCheck(searchParams) {
+    return $api.post(
+      `qr/check/`,
+      {
+        eid: searchParams.get("eid"),
+      })
   }
   static async fetchSaveProduct(qrData) {
     return $api.post(`product`, qrData);

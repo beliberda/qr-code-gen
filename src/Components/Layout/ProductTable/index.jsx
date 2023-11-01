@@ -30,8 +30,8 @@ const ProductTable = () => {
     try {
       const response = UserService.getQr();
       response.then((res) => {
+        console.log("qr:", res);
         setProducts(res.data);
-        console.log("qr:", products);
       });
     } catch (error) {
       console.log("error");

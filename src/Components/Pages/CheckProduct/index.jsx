@@ -5,9 +5,9 @@ import scan from "assets/images/icons/scan-qr.svg";
 import { Banner } from "Components/UI/banner";
 import { useContext, useEffect } from "react";
 import { Context } from "index";
-import { useState } from "react";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
-export default function CheckProduct(params) {
+
+import { useNavigate, useSearchParams } from "react-router-dom";
+export default function CheckProduct() {
   // const [id, setId] = useState("65046106121361691e6861de");
   const { store } = useContext(Context);
   const navigate = useNavigate();
