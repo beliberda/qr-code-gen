@@ -20,7 +20,6 @@ export default function ProductInfo() {
 
   console.log("id", searchParams.get("eid"));
   useEffect(() => {
-    console.log("dwd");
     try {
       const response = UserService.getQrCheck(searchParams);
       response.then((res) => {
@@ -38,6 +37,11 @@ export default function ProductInfo() {
     } catch (error) {}
   }, []);
 
+  // useEffect(() => {
+  //   axios.get(`https://jsonplaceholder.typicode.com/posts`).then((res) => {
+  //     console.log(res.data);
+  //   });
+  // }, []);
   return (
     <>
       <Header />
