@@ -2,8 +2,6 @@ import "./style.css";
 import { Select } from "Components/UI/Select";
 import gen from "assets/images/icons/generate.svg";
 import { useState } from "react";
-import axios from "axios";
-import { API_URL } from "Components/http";
 import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
 import UserService from "Components/services/UserService";
@@ -14,7 +12,7 @@ const inputMass = [
     label: "название товара",
     placeholder: "Выберите товар",
     name: "name",
-    options: ["Jeans", "Sweater"],
+    options: ["KNITTED SWEATSHIRT ROCK", "GR Full oversize mega pants"],
   },
   {
     label: "категория товара",
@@ -37,7 +35,7 @@ const inputMass = [
   {
     label: "материал",
     placeholder: "Выберите материалы",
-    name: "material",
+    name: "materials",
     options: ["50% cotton 50% acrylic"],
   },
   {
@@ -55,7 +53,7 @@ const inputMass = [
 ];
 
 const InputList = () => {
-  const [id, setId] = useState("65046106121361691e6861de");
+  const [id, setId] = useState("");
 
   const [qrData, setQrData] = useState({
     name: "" || null,
@@ -64,7 +62,7 @@ const InputList = () => {
     color: "" || null,
     size: "" || null,
     materials: "" || null,
-    photo: "" || null,
+    photo: [""],
   });
   const [qrCode, setQrCode] = useState(null);
   const handleClick = (e) => {
@@ -83,31 +81,37 @@ const InputList = () => {
     setQrData({ ...qrData, photo: files });
   };
 
+  // Получение qr кода
+
+  const generateQrCode = (id) => {
+    const response = UserService.getGeneratedQr(id);
+    response
+      .then((res) => res.data)
+      .then((blob) => {
+        const file = new File([blob], "image", { type: blob.type });
+        readFile(file, setQrCode);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   // create product
 
   const saveQrCode = () => {
-    try {
-      const response = UserService.fetchSaveProduct(qrData);
-      console.log("Create ", qrData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // Получение qr кода
-
-  const generateQrCode = () => {
-    try {
-      const response = UserService.getGeneratedQr(id);
-      response
-        .then((res) => res.data)
-        .then((blob) => {
-          const file = new File([blob], "image", { type: blob.type });
-          readFile(file, setQrCode);
-          console.log(qrCode);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    const response = UserService.fetchSaveProduct(qrData);
+    response
+      .then((res) => {
+        console.log("create product", res);
+        console.log("what a product", qrData);
+        return res.config.data;
+      })
+      .then((id) => {
+        generateQrCode(id);
+        setId(id);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -135,7 +139,7 @@ const InputList = () => {
               type="text"
               placeholder="Введите идентификатор"
             />
-            <button onClick={() => generateQrCode()}>
+            <button onClick={() => saveQrCode()}>
               <img src={gen} alt="" />
               Сгенерировать
             </button>

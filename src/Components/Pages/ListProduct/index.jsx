@@ -11,7 +11,7 @@ export default function ListProducts(params) {
     <>
       <Header isAdmin={true} />
       <main className="main container">
-        <MainTop />
+        <MainTop text="Создать qr-код" link="create-qr" />
         <ProductTable />
       </main>
     </>

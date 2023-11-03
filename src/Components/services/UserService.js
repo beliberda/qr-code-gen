@@ -1,25 +1,26 @@
 import { $api, headers } from "Components/http";
 
 
-const json = {
-  disabled: false,
-  limit: 50,
-  page: 0,
-  sort_by: 'created_at',
-}
+
 export default class UserService {
   static fetchUsers() {
     return $api.get("/users");
   }
   static async getQr() {
+    const params = {
+      disabled: false,
+      limit: 50,
+      page: 0,
+      sort_by: 'created_at',
+    }
     return $api.get(`qr/`, {
-      data: json
+      params: params
     });
   }
   static async getQrById(eid) {
     return $api.get(`/qr/${eid}`, {
-      // headers: headers,
-      data: { eid: eid }
+      headers: headers,
+      params: { eid: eid }
     });
   }
   static async getGeneratedQr(id) {
@@ -48,12 +49,11 @@ export default class UserService {
   }
   static async getQrCheck(searchParams) {
     return $api.get(
-      `qr/check/`,
+      `qr/check`,
       {
-        data: {
-          eid: searchParams.get("eid"),
-
-        }
+        params: {
+          "eid": "1224",
+        },
       })
   }
   static async fetchSaveProduct(qrData) {

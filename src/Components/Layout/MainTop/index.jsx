@@ -1,11 +1,11 @@
 import { ButtonCreateQr, ButtonDefault } from "Components/UI/buttons";
 import "./style.css";
 
-const MainTop = () => {
+const MainTop = ({ link, text }) => {
   return (
     <>
       <section className="main-top">
-        <ButtonCreateQr id={1} text="Создать QR-код" />
+        <ButtonCreateQr link={link} id={1} text={text} />
         <ButtonDefault text="Шаблоны описаний товаров" />
       </section>
     </>

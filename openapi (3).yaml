@@ -51,31 +51,32 @@ paths:
       description: Получить список пользователей
       security:
         - bearerAuth: []
-      requestBody:
-        description: Фильтр
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  example: John
-                email:
-                  type: string
-                  example: johndoe@email.com
-                role:
-                  type: string
-                  enum:
-                    - admin
-                    - User
-                  example: admin
-                limit:
-                  type: integer
-                  example: 50
-                page:
-                  type: integer
-                  example: 0
+      parameters:
+        - name: username
+          in: query
+          schema:
+            type: string
+            example: John
+        - name: email
+          in: query
+          schema:
+            type: string
+            example: johndoe
+        - name: role
+          in: query
+          schema:
+            type: string
+            example: admin
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            example: 10
+        - name: page
+          in: query
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: Success
@@ -281,29 +282,34 @@ paths:
         - QR
       summary: Получить список QR кодов
       description: Получить список QR кодов
-      requestBody:
-        description: Фильтр
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                disabled:
-                  type: boolean
-                  example: false
-                limit:
-                  type: integer
-                  example: 50
-                page:
-                  type: integer
-                  example: 0
-                sort_by:
-                  type: string
-                  enum:
-                    - created_at
-                    - use_count
-                    - first_used_at
-                    - last_used_at
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: disabled
+          in: query
+          schema:
+            type: boolean
+            example: false
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            example: 10
+        - name: page
+          in: query
+          schema:
+            type: integer
+            example: 1
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+            example: created_at
+            enum:
+              - created_at
+              - use_count
+              - first_used_at
+              - last_used_at
       responses:
         200:
           description: Success
@@ -540,44 +546,52 @@ paths:
       description: Получить список продуктов
       security:
         - bearerAuth: []
-      requestBody:
-        description: Фильтр
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: "SWEATEr"
-                description:
-                  type: "string"
-                  example: "cool sweater"
-                category:
-                  type: string
-                  example: "sweaters"
-                color:
-                  type: string
-                  example: "blue"
-                size:
-                  type: string
-                  example: "OS"
-                materials:
-                  type: string
-                  example: "cotton"
-                limit:
-                  type: integer
-                  example: 50
-                page:
-                  type: integer
-                  example: 0
-                sort_by:
-                  type: string
-                  enum:
-                    - created_at
-                    - use_count
-                    - first_used_at
-                    - last_used_at
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+            example: "sweater"
+        - name: description
+          in: query
+          schema:
+            type: string
+            example: "very"
+        - name: category
+          in: query
+          schema:
+            type: string
+            example: "sweaters"
+        - name: color
+          in: query
+          schema:
+            type: string
+            example: "blue"
+        - name: size
+          in: query
+          schema:
+            type: string
+            example: "OS"
+        - name: materials
+          in: query
+          schema:
+            type: string
+            example: "cotton"
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            example: 10
+        - name: page
+          in: query
+          schema:
+            type: integer
+            example: 1
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+            example: created_at
       responses:
         200:
           description: Success

@@ -7,10 +7,10 @@ import arrowLeft from "assets/images/icons/arrow-left.svg";
 import arrowRight from "assets/images/icons/arrow-right.svg";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "index";
-import axios from "axios";
-import { API_URL, headers } from "Components/http";
 import { useParams, useSearchParams } from "react-router-dom";
 import UserService from "Components/services/UserService";
+import axios from "axios";
+import { API_URL } from "Components/http";
 
 export default function ProductInfo() {
   const { store } = useContext(Context);
@@ -18,30 +18,29 @@ export default function ProductInfo() {
   const [photos, setPhoto] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log("id", searchParams.get("eid"));
+  console.log("EID", searchParams.get("eid"));
   useEffect(() => {
-    try {
-      const response = UserService.getQrCheck(searchParams);
-      response.then((res) => {
-        console.log(res.data);
+    const response = UserService.getQrCheck(searchParams);
+    response
+      .then((res) => {
+        console.log("qqqqqq", res.data);
         setProductInfo(res.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          // Request made but the server responded with an error
+          console.log("response message:", error.response.data);
+          console.log("response status:", error.response.status);
+          console.log("response headers:", error.response.headers);
+        } else if (error.request) {
+          // Request made but no response is received from the server.
+          console.log(error.request);
+        } else {
+          // Error occured while setting up the request
+          console.log("Error", error.message);
+        }
       });
-      // axios
-      //   .get(`${API_URL}qr/check`, {
-      //     eid: searchParams.get("eid"),
-      //   })
-      //   .then((res) => {
-      //     console.log(res.data);
-      //     setProductInfo(res.data);
-      //   });
-    } catch (error) {}
   }, []);
-
-  // useEffect(() => {
-  //   axios.get(`https://jsonplaceholder.typicode.com/posts`).then((res) => {
-  //     console.log(res.data);
-  //   });
-  // }, []);
   return (
     <>
       <Header />

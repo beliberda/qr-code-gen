@@ -114,6 +114,9 @@ tr td:last-of-type {
   display: flex;
   gap: 20px;
 }
+.qr-code__qr {
+  width: 80px;
+}
 .qr-code__qr-options {
   display: flex;
   flex-direction: column;

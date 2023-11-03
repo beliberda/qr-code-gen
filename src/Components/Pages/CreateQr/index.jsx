@@ -8,7 +8,7 @@ export default function CreateQr(params) {
     <>
       <Header isAuth={true} />
       <main className="main container">
-        <MainTop />
+        <MainTop text="Список продуктов" link="" />
         <InputList />
       </main>
     </>

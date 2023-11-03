@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import { ButtonDisableQr } from "Components/UI/buttons";
 import UserService from "Components/services/UserService";
+import readFile from "Components/utils/toImage";
 
 function dateFormat(date) {
   return (
@@ -29,10 +30,21 @@ const ProductTable = () => {
   useEffect(() => {
     try {
       const response = UserService.getQr();
-      response.then((res) => {
-        console.log("qr:", res);
-        setProducts(res.data);
-      });
+      response
+        .then((res) => {
+          console.log("qr:", res);
+          setProducts(res.data);
+        })
+        .then((eid) => {
+          const response = UserService.getGeneratedQr(eid);
+          response
+            .then((res) => res.data)
+            .then((blob) => {
+              const file = new File([blob], "image", { type: blob.type });
+              readFile(file, setQrCode);
+              console.log(qrCode);
+            });
+        });
     } catch (error) {
       console.log("error");
     }
@@ -166,11 +178,7 @@ const ProductTable = () => {
                   </td>
                   <td colSpan="3">
                     <div className="full-info__qr-code">
-                      <img
-                        className="qr-code__qr"
-                        src={`data:image/png;base64,${qrCode}`}
-                        alt=""
-                      />
+                      <img className="qr-code__qr" src={qrCode} alt="" />
                       <div className="qr-code__qr-options">
                         <h3>Выберите формат файла</h3>
                         <div className="qr-options__buttons">

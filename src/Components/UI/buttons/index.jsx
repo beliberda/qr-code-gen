@@ -11,7 +11,7 @@ const ButtonEnter = () => {
 const ButtonCreateQr = (props) => {
   return (
     <button className="button-create-qr">
-      <Link to={`/user/${props.id}/create-qr`}>
+      <Link to={`/user/${props.id}/${props.link}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
