@@ -28,27 +28,42 @@ const ProductTable = () => {
   const [qrCode, setQrCode] = useState([]);
 
   useEffect(() => {
-    try {
-      const response = UserService.getQr();
-      response
-        .then((res) => {
-          console.log("qr:", res);
-          setProducts(res.data);
-        })
-        .then((eid) => {
-          const response = UserService.getGeneratedQr(eid);
-          response
-            .then((res) => res.data)
-            .then((blob) => {
-              const file = new File([blob], "image", { type: blob.type });
-              readFile(file, setQrCode);
-              console.log(qrCode);
-            });
-        });
-    } catch (error) {
-      console.log("error");
-    }
+    const response = UserService.getQr();
+    response
+      .then((res) => {
+        console.log("qr:", res);
+        setProducts(res.data);
+        return res.data[0]._id;
+      })
+      .then((id) => {
+        const response = UserService.getGeneratedQr(id);
+        response
+          .then((res) => res.data)
+          .then((blob) => {
+            const file = new File([blob], "image", { type: blob.type });
+            readFile(file, setQrCode);
+            console.log(qrCode);
+          });
+      })
+      .catch((error) => {
+        if (error.response) {
+          // Request made but the server responded with an error
+          console.log("response message:", error.response.data);
+          console.log("response status:", error.response.status);
+          console.log("response headers:", error.response.headers);
+        } else if (error.request) {
+          // Request made but no response is received from the server.
+          console.log(error.request);
+        } else {
+          // Error occured while setting up the request
+          console.log("Error", error.message);
+        }
+      });
   }, []);
+
+  const diableQr = (id) => {
+    const response = UserService.disabledQr(id);
+  };
 
   return (
     <table className="table">
@@ -180,17 +195,24 @@ const ProductTable = () => {
                     <div className="full-info__qr-code">
                       <img className="qr-code__qr" src={qrCode} alt="" />
                       <div className="qr-code__qr-options">
-                        <h3>Выберите формат файла</h3>
+                        <h3> Выберите формат файла</h3>
                         <div className="qr-options__buttons">
                           <button
                             htmlFor="create-photo"
                             className="btn-download"
                           >
                             <img src={download} alt="" />
-                            Загрузить
+                            <a download={true} href={qrCode}>
+                              Загрузить
+                            </a>
                             <img src={arrow} alt="" />
                           </button>
-                          <ButtonDisableQr text="Отключить QR-код" />
+                          <ButtonDisableQr
+                            handlClick={() => {
+                              diableQr(product._id);
+                            }}
+                            text="Отключить QR-код"
+                          />
                         </div>
                       </div>
                     </div>

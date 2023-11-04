@@ -3,10 +3,11 @@
   flex-direction: column;
   gap: 22px;
 }
+
 .input-block__title {
   color: var(--input-label);
 }
-select {
+.input-block__select {
   color: var(--dark-blue);
   padding: 0 0 10px 0;
   border: none;

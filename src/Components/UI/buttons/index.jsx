@@ -31,7 +31,12 @@ const ButtonCreateQr = (props) => {
 };
 const ButtonDisableQr = ({ text, handlClick }) => {
   return (
-    <button className="button-disable-qr">
+    <button
+      onClick={() => {
+        handlClick();
+      }}
+      className="button-disable-qr"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

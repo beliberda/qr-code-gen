@@ -9,8 +9,6 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "index";
 import { useParams, useSearchParams } from "react-router-dom";
 import UserService from "Components/services/UserService";
-import axios from "axios";
-import { API_URL } from "Components/http";
 
 export default function ProductInfo() {
   const { store } = useContext(Context);
@@ -23,8 +21,8 @@ export default function ProductInfo() {
     const response = UserService.getQrCheck(searchParams);
     response
       .then((res) => {
-        console.log("qqqqqq", res.data);
-        setProductInfo(res.data);
+        setProductInfo(res.data.product);
+        console.log(res.data);
       })
       .catch((error) => {
         if (error.response) {
@@ -40,7 +38,7 @@ export default function ProductInfo() {
           console.log("Error", error.message);
         }
       });
-  }, []);
+  }, [searchParams]);
   return (
     <>
       <Header />

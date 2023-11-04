@@ -27,17 +27,23 @@ const inputMass = [
     options: ["XS", "S", "M", "L", "XL", "XXL"],
   },
   {
-    label: "цвет",
-    placeholder: "Выберите цветовую палитру",
-    name: "color",
-    options: ["black", "white"],
+    label: "Ссылка на товар",
+    placeholder: "Вставьте ссылку",
+    name: "link",
+    options: [""],
   },
-  {
-    label: "материал",
-    placeholder: "Выберите материалы",
-    name: "materials",
-    options: ["50% cotton 50% acrylic"],
-  },
+  // {
+  //   label: "цвет",
+  //   placeholder: "Выберите цветовую палитру",
+  //   name: "color",
+  //   options: ["black", "white"],
+  // },
+  // {
+  //   label: "материал",
+  //   placeholder: "Выберите материалы",
+  //   name: "materials",
+  //   options: ["50% cotton 50% acrylic"],
+  // },
   {
     label: "описание товара",
     placeholder: "Выберите описание",
@@ -103,7 +109,7 @@ const InputList = () => {
       .then((res) => {
         console.log("create product", res);
         console.log("what a product", qrData);
-        return res.config.data;
+        return res.data;
       })
       .then((id) => {
         generateQrCode(id);
@@ -119,15 +125,14 @@ const InputList = () => {
       <section className="input-list" id="parent">
         {inputMass.map((elem, i) => {
           return (
-            <div key={i}>
-              <Select
-                options={elem.options}
-                name={elem.name}
-                label={elem.label}
-                placeholder={elem.placeholder}
-                handleClick={handleClick}
-              />
-            </div>
+            <Select
+              id={i}
+              options={elem.options}
+              name={elem.name}
+              label={elem.label}
+              placeholder={elem.placeholder}
+              handleClick={handleClick}
+            />
           );
         })}
         <div className="input-block input-generate">

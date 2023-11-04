@@ -17,10 +17,10 @@ export default class UserService {
       params: params
     });
   }
-  static async getQrById(eid) {
-    return $api.get(`/qr/${eid}`, {
-      headers: headers,
-      params: { eid: eid }
+  static async getQrById(id) {
+    return $api.get(`/qr/${id}`, {
+      // headers: headers,
+      params: { eid: id }
     });
   }
   static async getGeneratedQr(id) {
@@ -52,11 +52,14 @@ export default class UserService {
       `qr/check`,
       {
         params: {
-          "eid": "1224",
+          "eid": searchParams,
         },
       })
   }
   static async fetchSaveProduct(qrData) {
     return $api.post(`product`, qrData);
+  }
+  static async disabledQr(id) {
+    return $api.put(`product/${id}`, {});
   }
 }
