@@ -55,7 +55,23 @@ const ButtonDisableQr = ({ text, handlClick }) => {
     </button>
   );
 };
-const ButtonDefault = (props) => {
-  return <button className="button-enter">{props.text}</button>;
+const ButtonDefault = ({ text, handlClick, font, padding, textTransform }) => {
+  return (
+    <button
+      style={{
+        fontSize: `${font}px`,
+        padding: padding,
+        textTransform: textTransform,
+      }}
+      onClick={() => {
+        if (handlClick) {
+          handlClick();
+        }
+      }}
+      className="button-enter"
+    >
+      {text}
+    </button>
+  );
 };
 export { ButtonEnter, ButtonCreateQr, ButtonDisableQr, ButtonDefault };

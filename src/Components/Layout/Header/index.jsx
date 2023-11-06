@@ -2,7 +2,7 @@ import logo from "assets/images/Logo.svg";
 import user from "assets/images/icons/avatar.svg";
 import logout from "assets/images/icons/logout.svg";
 import "./style.css";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Context } from "index";
 import { Link } from "react-router-dom";
 const Header = (props) => {
@@ -10,9 +10,10 @@ const Header = (props) => {
 
   return (
     <header className="header container">
-      <Link to="/login">
+      {/* <Link to="/login">
         <img src={logo} alt="maneken" />
-      </Link>
+      </Link> */}
+      <img src={logo} alt="maneken" />
       {props.isAdmin ? (
         <div className="header__info">
           <div className="user-block">

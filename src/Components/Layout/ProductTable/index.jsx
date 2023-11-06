@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 
 import { ButtonDisableQr } from "Components/UI/buttons";
 import UserService from "Components/services/UserService";
-import readFile from "Components/utils/toImage";
+import { Image } from "Components/UI/Image";
+import { Catch } from "Components/utils/catch";
 
 function dateFormat(date) {
   return (
@@ -25,7 +26,6 @@ function dateFormat(date) {
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
-  const [qrCode, setQrCode] = useState([]);
 
   useEffect(() => {
     const response = UserService.getQr();
@@ -33,31 +33,9 @@ const ProductTable = () => {
       .then((res) => {
         console.log("qr:", res);
         setProducts(res.data);
-        return res.data[0]._id;
-      })
-      .then((id) => {
-        const response = UserService.getGeneratedQr(id);
-        response
-          .then((res) => res.data)
-          .then((blob) => {
-            const file = new File([blob], "image", { type: blob.type });
-            readFile(file, setQrCode);
-            console.log(qrCode);
-          });
       })
       .catch((error) => {
-        if (error.response) {
-          // Request made but the server responded with an error
-          console.log("response message:", error.response.data);
-          console.log("response status:", error.response.status);
-          console.log("response headers:", error.response.headers);
-        } else if (error.request) {
-          // Request made but no response is received from the server.
-          console.log(error.request);
-        } else {
-          // Error occured while setting up the request
-          console.log("Error", error.message);
-        }
+        Catch(error);
       });
   }, []);
 
@@ -193,7 +171,7 @@ const ProductTable = () => {
                   </td>
                   <td colSpan="3">
                     <div className="full-info__qr-code">
-                      <img className="qr-code__qr" src={qrCode} alt="" />
+                      <Image id={product._id} />
                       <div className="qr-code__qr-options">
                         <h3> Выберите формат файла</h3>
                         <div className="qr-options__buttons">
@@ -202,7 +180,7 @@ const ProductTable = () => {
                             className="btn-download"
                           >
                             <img src={download} alt="" />
-                            <a download={true} href={qrCode}>
+                            <a download={true} href="">
                               Загрузить
                             </a>
                             <img src={arrow} alt="" />

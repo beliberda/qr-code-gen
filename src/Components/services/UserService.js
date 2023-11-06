@@ -56,6 +56,21 @@ export default class UserService {
         },
       })
   }
+  static async getProducts() {
+    return $api.get(`product`,
+      {
+        params: {
+          name: '',
+          description: '',
+          category: '',
+          size: '',
+          limit: '',
+          page: '',
+          sort_by: '',
+        }
+      }
+    )
+  }
   static async fetchSaveProduct(qrData) {
     return $api.post(`product`, qrData);
   }

@@ -1,6 +1,14 @@
 import "./style.css";
 
-const Select = ({ id, name, options, label, placeholder, handleClick }) => (
+const Select = ({
+  id,
+  name,
+  options,
+  label,
+  placeholder,
+  handleClick,
+  value,
+}) => (
   <div key={id} className="input-block">
     <h2 className="input-block__title">{label}</h2>
 
@@ -11,6 +19,7 @@ const Select = ({ id, name, options, label, placeholder, handleClick }) => (
       list="name"
       onChange={handleClick}
       name={name}
+      value={value}
     />
     <datalist id={name}>
       {options.map((option) => {

@@ -1,23 +1,32 @@
-import axios from "axios";
-import { API_URL } from "Components/http";
+
 import AuthService from "Components/services/AuthService";
 
 import { makeAutoObservable } from "mobx";
 
 export default class Store {
+  isModal = false;
   user = {};
   isAuth = false;
   product = {
-    name: null,
-    size: null,
-    color: null,
-    material: null,
-    category: null,
-    photo: null,
+    name: null || "",
+    description: null || "",
+    size: null || "",
+    category: null || "",
+    url: null || "",
+    photo: null || [],
+    updated_at: null || "",
+    _id: null || "",
+    color: null || "",
+    created_at: null || "",
+    materials: null || "",
   };
   authorization = null
   constructor() {
     makeAutoObservable(this);
+  }
+  setModal() {
+    this.isModal = this.isModal ? false : true
+    console.log(this.isModal);
   }
   setAuth(bool) {
     this.isAuth = bool;
@@ -27,6 +36,7 @@ export default class Store {
   }
   setProduct(product) {
     this.product = product;
+    console.log("product", JSON.parse(JSON.stringify(this.product)));
   }
   setAuthorization(authorization) {
     this.authorization = authorization

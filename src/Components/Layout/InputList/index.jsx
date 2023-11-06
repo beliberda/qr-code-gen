@@ -1,11 +1,12 @@
 import "./style.css";
 import { Select } from "Components/UI/Select";
 import gen from "assets/images/icons/generate.svg";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
 import UserService from "Components/services/UserService";
 import readFile from "Components/utils/toImage";
+// import { Context } from "index";
 
 const inputMass = [
   {
@@ -59,13 +60,18 @@ const inputMass = [
 ];
 
 const InputList = () => {
+  // const { store } = useContext(Context);
+  // useEffect(() => {
+  //   setQrData(JSON.parse(JSON.stringify(store.product)));
+  // }, [store.product]);
+
   const [id, setId] = useState("");
 
   const [qrData, setQrData] = useState({
     name: "" || null,
     description: "" || null,
     category: "" || null,
-    color: "" || null,
+    url: "" || null,
     size: "" || null,
     materials: "" || null,
     photo: [""],
@@ -79,7 +85,6 @@ const InputList = () => {
       [e.target.name]: value,
     });
   };
-
   const [fileSelected, setFileSelected] = useState([]);
   const uploadMultiFiles = (e) => {
     const files = Array.from(e.target.files);

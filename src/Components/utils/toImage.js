@@ -1,4 +1,4 @@
-export default function readFile(input, setQrCode) {
+export default function readFile(input, setQrCode, qrData) {
   const fr = new FileReader();
   fr.readAsDataURL(input);
   fr.addEventListener("load", () => {
