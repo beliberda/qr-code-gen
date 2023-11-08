@@ -3,6 +3,7 @@ import "./style.css";
 import { useContext, useState } from "react";
 import { Context } from "index";
 import { ModalTemplates } from "../Templates";
+import { ModalTemplatesDescription } from "../TemplatesDescription";
 
 const MainTop = ({ link, text }) => {
   const { store } = useContext(Context);
@@ -19,7 +20,7 @@ const MainTop = ({ link, text }) => {
           text="Шаблоны описаний товаров"
         />
       </section>
-      {/* {isModal ? <ModalTemplates /> : <></>} */}
+      {isModal ? <ModalTemplatesDescription /> : <></>}
     </>
   );
 };

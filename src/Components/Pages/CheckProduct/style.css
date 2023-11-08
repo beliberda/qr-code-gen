@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 270px;
 }
 .check-product__input-block {
   align-items: end;
