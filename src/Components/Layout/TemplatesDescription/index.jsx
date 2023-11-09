@@ -22,10 +22,10 @@ const ModalTemplatesDescription = () => {
   const { store } = useContext(Context);
 
   useEffect(() => {
-    const response = UserService.getProducts();
+    const response = UserService.getTemplates();
     response
       .then((res) => {
-        console.log("template", res);
+        console.log("templates", res);
         setTemplates(res.data);
       })
       .catch((error) => {
@@ -44,10 +44,10 @@ const ModalTemplatesDescription = () => {
           <>
             <div className="template-list">
               <h2 className="template-title">Описание</h2>
-              {descriptions.map((item) => {
+              {templates.map((item) => {
                 return (
                   <article className="template-item">
-                    <p className="template-description">{item.template}</p>
+                    <p className="template-description">{item.text}</p>
                     <ButtonDefault
                       text="Редактировать"
                       font={14}

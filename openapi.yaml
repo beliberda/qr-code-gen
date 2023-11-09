@@ -11,6 +11,8 @@ tags:
     description: Запросы по QR кодам
   - name: Product
     description: Запросы по шаблонам продуктов
+  - name: Template
+    description: Запросы по шаблонам описаний для продукта
 
 paths:
   /user:
@@ -714,6 +716,182 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /template:
+    post:
+      tags:
+        - Template
+      summary: Создание шаблона описания
+      description: Создание шаблона описания
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Созданный шаблон
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Template"
+      responses:
+        201:
+          description: Success
+          content:
+            text/schema:
+              schema:
+                type: string
+                example: 65046106121361691e6861de
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags:
+        - Template
+      summary: Получить список шаблонов описаний
+      description: Получить список шаблонов описаний
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            example: 10
+        - name: page
+          in: query
+          schema:
+            type: integer
+            example: 1
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Template"
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /template/{templateID}:
+    get:
+      tags:
+        - Template
+      summary: Получение шаблона описания
+      description: Получение шаблона описания
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: templateID
+          in: path
+          description: ID шаблона для получения
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Template"
+        401:
+          description: Требуется авторизация
+        404:
+          description: Шаблон не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Template
+      summary: Изменение шаблона описания
+      description: Изменение шаблона описания
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: templateID
+          in: path
+          description: ID шаблона для получения
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      requestBody:
+        description: Изменение шаблона описания
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Template"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Плохой запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Требуется авторизация
+        404:
+          description: Шаблон не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Template
+      summary: Удаление шаблона описания
+      description: Удаление шаблона описания
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: templateID
+          in: path
+          description: ID шаблона описания для удаления
+          required: true
+          schema:
+            type: string
+            example: 65046106121361691e6861de
+      responses:
+        200:
+          description: Success
+        401:
+          description: Требуется авторизация
+        404:
+          description: Шаблон описания не найден
+        500:
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   securitySchemes:
     bearerAuth:
@@ -811,9 +989,9 @@ components:
         name:
           type: string
           example: KNITTED SWEATSHIRT ROCK
-        description:
+        template_id:
           type: string
-          example: Very cool sweater!
+          example: 65046106121361691e6861de
         category:
           type: string
           example: sweaters
@@ -829,6 +1007,26 @@ components:
             type: string
           example:
             - https://thumb.tildacdn.com/stor3638-3335-4133-a438-303038353930/-/format/webp/68102468.png
+        updated_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00.000+00:00"
+          readOnly: true
+    Template:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 65046106121361691e6861de
+          readOnly: true
+        text:
+          type: string
+          example: "Some description for {name}"
         updated_at:
           type: string
           format: date-time

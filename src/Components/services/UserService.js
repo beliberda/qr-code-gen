@@ -74,4 +74,16 @@ export default class UserService {
   static async saveTemplate(id) {
     return $api.put(`template/${id}`);
   }
+  static async createTemplate(text) {
+    return $api.post(`template`, { text: text });
+  }
+  static async getTemplates() {
+    return $api.get(`template`);
+  }
+  static async getTemplate(id) {
+    return $api.get(`template/${id}`);
+  }
+  static async deleteTemplate(id) {
+    return $api.delete(`template/${id}`);
+  }
 }
