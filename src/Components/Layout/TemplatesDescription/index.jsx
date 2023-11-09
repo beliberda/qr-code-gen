@@ -54,6 +54,7 @@ const ModalTemplatesDescription = () => {
                       textTransform="capitalize"
                       padding="6px 8px"
                       handlClick={() => {
+                        setEditTemplate(item);
                         setIsEdit(false);
                       }}
                     />
