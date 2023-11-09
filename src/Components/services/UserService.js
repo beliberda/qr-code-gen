@@ -1,7 +1,5 @@
 import { $api, headers } from "Components/http";
 
-
-
 export default class UserService {
   static fetchUsers() {
     return $api.get("/users");
@@ -11,16 +9,16 @@ export default class UserService {
       disabled: false,
       limit: 50,
       page: 0,
-      sort_by: 'created_at',
-    }
+      sort_by: "created_at",
+    };
     return $api.get(`qr/`, {
-      params: params
+      params: params,
     });
   }
   static async getQrById(id) {
     return $api.get(`/qr/${id}`, {
       // headers: headers,
-      params: { eid: id }
+      params: { eid: id },
     });
   }
   static async getGeneratedQr(id) {
@@ -48,33 +46,32 @@ export default class UserService {
     );
   }
   static async getQrCheck(searchParams) {
-    return $api.get(
-      `qr/check`,
-      {
-        params: {
-          "eid": searchParams,
-        },
-      })
+    return $api.get(`qr/check`, {
+      params: {
+        eid: searchParams,
+      },
+    });
   }
   static async getProducts() {
-    return $api.get(`product`,
-      {
-        params: {
-          name: '',
-          description: '',
-          category: '',
-          size: '',
-          limit: '',
-          page: '',
-          sort_by: '',
-        }
-      }
-    )
+    return $api.get(`product`, {
+      params: {
+        name: "",
+        description: "",
+        category: "",
+        size: "",
+        limit: "",
+        page: "",
+        sort_by: "",
+      },
+    });
   }
   static async fetchSaveProduct(qrData) {
     return $api.post(`product`, qrData);
   }
   static async disabledQr(id) {
     return $api.put(`product/${id}`, {});
+  }
+  static async saveTemplate(id) {
+    return $api.put(`template/${id}`);
   }
 }

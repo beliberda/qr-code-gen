@@ -15,29 +15,65 @@ const descriptions = [
   },
 ];
 const ModalTemplatesDescription = () => {
-  const [products, setProducts] = useState([]);
+  const [templates, setTemplates] = useState([]);
+  const [editTemplate, setEditTemplate] = useState({});
+  const [isEdit, setIsEdit] = useState(true);
+
   const { store } = useContext(Context);
+
   useEffect(() => {
     const response = UserService.getProducts();
     response
       .then((res) => {
         console.log("template", res);
-        setProducts(res.data);
+        setTemplates(res.data);
       })
       .catch((error) => {
         Catch(error);
       });
   }, []);
 
+  const saveDescription = (id) => {
+    const response = UserService.saveTemplate(id);
+  };
+
   return (
     <>
       <section className="template-modal">
-        <div className="template-list">
-          <h2 className="template-title">Описание</h2>
-          {descriptions.map((item) => {
-            return (
+        {isEdit ? (
+          <>
+            <div className="template-list">
+              <h2 className="template-title">Описание</h2>
+              {descriptions.map((item) => {
+                return (
+                  <article className="template-item">
+                    <p className="template-description">{item.template}</p>
+                    <ButtonDefault
+                      text="Редактировать"
+                      font={14}
+                      textTransform="capitalize"
+                      padding="6px 8px"
+                      handlClick={() => {
+                        setIsEdit(false);
+                      }}
+                    />
+                  </article>
+                );
+              })}
+            </div>
+            <ButtonDefault
+              text="Создать Шаблон"
+              font={16}
+              textTransform="uppercase"
+            />
+          </>
+        ) : (
+          <>
+            <div className="template-list">
+              <h2 className="template-title">Описание</h2>
+              <h3>{"{Тип товара} {Название товара}"}</h3>
               <article className="template-item">
-                <p className="template-description">{item.template}</p>
+                <textarea className="template-description" />
                 <ButtonDefault
                   text="Редактировать"
                   font={14}
@@ -45,10 +81,17 @@ const ModalTemplatesDescription = () => {
                   padding="6px 8px"
                 />
               </article>
-            );
-          })}
-        </div>
-        <ButtonDefault text="Сохранить" font={16} textTransform="uppercase" />
+            </div>
+            <ButtonDefault
+              text="К шаблонам"
+              font={16}
+              textTransform="uppercase"
+              handlClick={() => {
+                setIsEdit(true);
+              }}
+            />
+          </>
+        )}
       </section>
     </>
   );
