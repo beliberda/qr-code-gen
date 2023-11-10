@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/qr-code-gen/static/css/main.47a6f0c6.css",
-    "main.js": "/qr-code-gen/static/js/main.fae91456.js",
+    "main.js": "/qr-code-gen/static/js/main.10c63881.js",
     "static/js/787.75f96db8.chunk.js": "/qr-code-gen/static/js/787.75f96db8.chunk.js",
     "static/media/banner.png": "/qr-code-gen/static/media/banner.ec8315d386fa165924c9.png",
     "static/media/TTNorms-Regular.ttf": "/qr-code-gen/static/media/TTNorms-Regular.7281703a3e7aec14a6d2.ttf",
@@ -26,11 +26,11 @@
     "static/media/arrow-right.svg": "/qr-code-gen/static/media/arrow-right.42d13d4da2c52ec2e233341dcf849a42.svg",
     "static/media/arrow-left.svg": "/qr-code-gen/static/media/arrow-left.64f909f8ec7339846efd912873eb9392.svg",
     "main.47a6f0c6.css.map": "/qr-code-gen/static/css/main.47a6f0c6.css.map",
-    "main.fae91456.js.map": "/qr-code-gen/static/js/main.fae91456.js.map",
+    "main.10c63881.js.map": "/qr-code-gen/static/js/main.10c63881.js.map",
     "787.75f96db8.chunk.js.map": "/qr-code-gen/static/js/787.75f96db8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.47a6f0c6.css",
-    "static/js/main.fae91456.js"
+    "static/js/main.10c63881.js"
   ]
 }
