@@ -25,7 +25,6 @@ const ModalTemplatesDescription = () => {
     response
       .then((res) => {
         store.setTemplates(res.data);
-        console.log("Store", JSON.parse(JSON.stringify(store.templates)));
         setTemplates(res.data);
       })
       .catch((error) => {

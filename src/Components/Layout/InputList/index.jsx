@@ -1,7 +1,7 @@
 import "./style.css";
 import { Select } from "Components/UI/Select";
 import gen from "assets/images/icons/generate.svg";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
 import UserService from "Components/services/UserService";
@@ -14,13 +14,9 @@ const InputList = () => {
   const [templateList, setTemplateList] = useState(
     JSON.parse(JSON.stringify(store.templates))
   );
-  const { current: myArray } = useRef(
-    JSON.parse(JSON.stringify(store.templates))
-  );
   useEffect(() => {
-    setTemplateList(myArray);
-    console.log(templateList);
-  }, [myArray]);
+    setTemplateList(JSON.parse(JSON.stringify(store.templates)));
+  }, [store.templates, store]);
   const inputMass = [
     {
       label: "название товара",
