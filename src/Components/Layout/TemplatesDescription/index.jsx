@@ -4,6 +4,7 @@ import UserService from "Components/services/UserService";
 import { Catch } from "Components/utils/catch";
 import { ButtonDefault } from "Components/UI/buttons";
 import { Context } from "index";
+import { observer } from "mobx-react-lite";
 const inputMass = [
   "название товара",
   "категория товара",
@@ -149,4 +150,4 @@ const ModalTemplatesDescription = () => {
   );
 };
 
-export { ModalTemplatesDescription };
+export default observer(ModalTemplatesDescription);
