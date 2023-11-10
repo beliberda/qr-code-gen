@@ -26,7 +26,7 @@ function dateFormat(date) {
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
-
+  const [description, setDescription] = useState("");
   useEffect(() => {
     const response = UserService.getQr();
     response
@@ -41,6 +41,16 @@ const ProductTable = () => {
 
   const diableQr = (id) => {
     const response = UserService.disabledQr(id);
+  };
+  const getDescription = (id) => {
+    const response = UserService.getTemplate(id);
+    response
+      .then((res) => {
+        setDescription(res.data.text);
+      })
+      .catch((error) => {
+        Catch(error);
+      });
   };
 
   return (
@@ -159,7 +169,10 @@ const ProductTable = () => {
                   <td colSpan="2">
                     <div className="full-info__description">
                       <h4>Описание</h4>
-                      <p>{product.product.description}</p>
+                      <p>
+                        {getDescription(product.product.template_id)}
+                        {description}
+                      </p>
                     </div>
                   </td>
                   <td>

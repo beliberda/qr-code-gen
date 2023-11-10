@@ -1,42 +1,56 @@
 import "./style.css";
-import arrow from "assets/images/icons/arrow-sort.svg";
 import { useContext, useEffect, useState } from "react";
 import UserService from "Components/services/UserService";
 import { Catch } from "Components/utils/catch";
-import { dateFormat } from "Components/utils/dateFormat";
 import { ButtonDefault } from "Components/UI/buttons";
 import { Context } from "index";
-
-const descriptions = [
-  {
-    id: 1,
-    template:
-      "{Тип товара} {Название товара} разработаны с любовью командой Maneken Brand. Спасибо, что выбрали нас! Вы можете быть уверены, что {Название товара} создано профессионалами из лучших материалов: {Материалы товара}",
-  },
+const inputMass = [
+  "название товара",
+  "категория товара",
+  "размера товара",
+  "ссылка на товар",
 ];
 const ModalTemplatesDescription = () => {
+  const { store } = useContext(Context);
+
   const [templates, setTemplates] = useState([]);
   const [editTemplate, setEditTemplate] = useState({});
-  const [isEdit, setIsEdit] = useState(true);
 
-  const { store } = useContext(Context);
+  const [isEdit, setIsEdit] = useState(null);
+  const [isCreate, setIsCreate] = useState(null);
 
   useEffect(() => {
     const response = UserService.getTemplates();
     response
       .then((res) => {
-        console.log("templates", res);
+        store.setTemplates(res.data);
+        console.log("Store", JSON.parse(JSON.stringify(store.templates)));
         setTemplates(res.data);
       })
       .catch((error) => {
         Catch(error);
       });
-  }, []);
+  }, [isCreate, isEdit, store]);
 
-  const saveDescription = (id) => {
-    const response = UserService.saveTemplate(id);
+  const editDescription = (id, text) => {
+    const response = UserService.editTemplate(id, text);
+    response.then(() => {
+      setIsEdit(true);
+    });
   };
 
+  const createDescription = (text) => {
+    const response = UserService.createTemplate(text);
+    response.then(() => {
+      setIsEdit(false);
+      setIsCreate(false);
+    });
+  };
+  const deleteTemplate = (id, i) => {
+    let newTemplate = templates.filter((item, j) => j !== i);
+    setTemplates(newTemplate);
+    const response = UserService.deleteTemplate(id);
+  };
   return (
     <>
       <section className="template-modal">
@@ -44,42 +58,34 @@ const ModalTemplatesDescription = () => {
           <>
             <div className="template-list">
               <h2 className="template-title">Описание</h2>
-              {templates.map((item) => {
-                return (
-                  <article className="template-item">
-                    <p className="template-description">{item.text}</p>
-                    <ButtonDefault
-                      text="Редактировать"
-                      font={14}
-                      textTransform="capitalize"
-                      padding="6px 8px"
-                      handlClick={() => {
-                        setEditTemplate(item);
-                        setIsEdit(false);
-                      }}
-                    />
-                  </article>
-                );
-              })}
-            </div>
-            <ButtonDefault
-              text="Создать Шаблон"
-              font={16}
-              textTransform="uppercase"
-            />
-          </>
-        ) : (
-          <>
-            <div className="template-list">
-              <h2 className="template-title">Описание</h2>
-              <h3>{"{Тип товара} {Название товара}"}</h3>
+              <h4>
+                {inputMass.map((e) => {
+                  return "{" + e + "}";
+                })}
+              </h4>
               <article className="template-item">
-                <textarea className="template-description" />
+                <textarea
+                  className="template-description"
+                  value={editTemplate.text}
+                  onChange={(e) => {
+                    setEditTemplate({ ...editTemplate, text: e.target.value });
+                  }}
+                />
                 <ButtonDefault
-                  text="Редактировать"
+                  text={isCreate ? "Сохранить" : "Редактировать"}
                   font={14}
                   textTransform="capitalize"
                   padding="6px 8px"
+                  handlClick={
+                    isCreate
+                      ? () => {
+                          createDescription(editTemplate.text);
+                        }
+                      : () => {
+                          editDescription(editTemplate._id, editTemplate.text);
+                          setIsEdit(false);
+                        }
+                  }
                 />
               </article>
             </div>
@@ -88,7 +94,52 @@ const ModalTemplatesDescription = () => {
               font={16}
               textTransform="uppercase"
               handlClick={() => {
+                setIsEdit(false);
+                setIsCreate(false);
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <div className="template-list">
+              <h2 className="template-title">Описание</h2>
+              {templates.map((item, i) => {
+                return (
+                  <article key={i} className="template-item">
+                    <p className="template-description">{item.text}</p>
+                    <div className="template-buttons">
+                      <ButtonDefault
+                        text="Редактировать"
+                        font={14}
+                        textTransform="capitalize"
+                        padding="6px 8px"
+                        handlClick={() => {
+                          setEditTemplate(item);
+                          setIsEdit(true);
+                          setIsCreate(false);
+                        }}
+                      />
+                      <ButtonDefault
+                        text="Удалить"
+                        font={12}
+                        textTransform="lower"
+                        padding="4px 6px"
+                        handlClick={() => {
+                          deleteTemplate(item._id, i);
+                        }}
+                      />
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+            <ButtonDefault
+              text="Создать Шаблон"
+              font={16}
+              textTransform="uppercase"
+              handlClick={() => {
                 setIsEdit(true);
+                setIsCreate(true);
               }}
             />
           </>

@@ -3,7 +3,7 @@ import axios from "axios";
 // export const API_URL = " http://127.0.0.1:8225/";
 // export const API_URL = "https://solweb.site/";
 // export const API_URL = "http://86.102.143.87:8225/";
-export const API_URL = "http://188.226.76.178:8225";
+export const API_URL = "http://188.226.76.178:8225/";
 
 const $api = axios.create({
   withCredentials: false,
@@ -24,7 +24,7 @@ $api.interceptors.request.use((config) => {
   config.headers["Authorization"] = Auth;
   config.headers["Content-Type"] = "application/json";
 
-  config.timeout = 1000;
+  // config.timeout = 1000;
   return config;
 });
 

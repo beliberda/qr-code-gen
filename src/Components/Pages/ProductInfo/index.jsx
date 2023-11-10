@@ -9,12 +9,27 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "index";
 import { useParams, useSearchParams } from "react-router-dom";
 import UserService from "Components/services/UserService";
+import { Catch } from "Components/utils/catch";
 
 export default function ProductInfo() {
   const { store } = useContext(Context);
   const [productInfo, setProductInfo] = useState({});
   const [photos, setPhoto] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // get description from template
+  const [description, setDescription] = useState("");
+  const getDescription = (id) => {
+    const response = UserService.getTemplate(id);
+    response
+      .then((res) => {
+        setDescription(res.data.text);
+        return res.data.text;
+      })
+      .catch((error) => {
+        Catch(error);
+      });
+  };
 
   console.log("EID", searchParams.get("eid"));
   useEffect(() => {
@@ -59,9 +74,9 @@ export default function ProductInfo() {
             />
             <ProductField text={productInfo?.size} title="размера товара" />
             <ProductField text={productInfo?.color} title="цвет" />
-            <ProductField text={productInfo?.materials} title="материал" />
+            <ProductField text={productInfo?.url} title="материал" />
             <ProductField
-              text={productInfo?.description}
+              text={getDescription(productInfo?.template_id)}
               title="описание товара"
             />
           </div>

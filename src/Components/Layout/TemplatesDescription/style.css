@@ -17,3 +17,13 @@
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(24, 24, 24, 0.2);
 }
+.template-modal textarea {
+  width: 400px;
+  padding: 10px;
+  font-size: 16px;
+}
+.template-buttons {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}

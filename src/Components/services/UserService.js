@@ -71,14 +71,20 @@ export default class UserService {
   static async disabledQr(id) {
     return $api.put(`product/${id}`, {});
   }
-  static async saveTemplate(id) {
-    return $api.put(`template/${id}`);
+  // templates
+  static async editTemplate(id, text) {
+    return $api.put(`template/${id}`, { text: text });
   }
   static async createTemplate(text) {
     return $api.post(`template`, { text: text });
   }
   static async getTemplates() {
-    return $api.get(`template`);
+    return $api.get(`template`, {
+      params: {
+        limit: 10,
+        page: 1
+      }
+    });
   }
   static async getTemplate(id) {
     return $api.get(`template/${id}`);

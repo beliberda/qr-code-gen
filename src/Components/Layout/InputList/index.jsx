@@ -1,69 +1,65 @@
 import "./style.css";
 import { Select } from "Components/UI/Select";
 import gen from "assets/images/icons/generate.svg";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
 import UserService from "Components/services/UserService";
 import readFile from "Components/utils/toImage";
+import { Context } from "index";
 // import { Context } from "index";
 
-const inputMass = [
-  {
-    label: "название товара",
-    placeholder: "Выберите товар",
-    name: "name",
-    options: ["KNITTED SWEATSHIRT ROCK", "GR Full oversize mega pants"],
-  },
-  {
-    label: "категория товара",
-    placeholder: "Выберите категорию",
-    name: "category",
-    options: ["Jeans", "Sweater"],
-  },
-  {
-    label: "размера товара",
-    placeholder: "Выберите размер",
-    name: "size",
-    options: ["XS", "S", "M", "L", "XL", "XXL"],
-  },
-  {
-    label: "Ссылка на товар",
-    placeholder: "Вставьте ссылку",
-    name: "link",
-    options: [""],
-  },
-  // {
-  //   label: "цвет",
-  //   placeholder: "Выберите цветовую палитру",
-  //   name: "color",
-  //   options: ["black", "white"],
-  // },
-  // {
-  //   label: "материал",
-  //   placeholder: "Выберите материалы",
-  //   name: "materials",
-  //   options: ["50% cotton 50% acrylic"],
-  // },
-  {
-    label: "описание товара",
-    placeholder: "Выберите описание",
-    name: "description",
-    options: ["Very cool sweater!"],
-  },
-  {
-    label: "добавление тэгов",
-    placeholder: "Выберите основные тэги",
-    name: "tags",
-    options: ["#sweater", "#cool"],
-  },
-];
-
 const InputList = () => {
-  // const { store } = useContext(Context);
-  // useEffect(() => {
-  //   setQrData(JSON.parse(JSON.stringify(store.product)));
-  // }, [store.product]);
+  const { store } = useContext(Context);
+  const [templateList, setTemplateList] = useState(
+    JSON.parse(JSON.stringify(store.templates))
+  );
+  const { current: myArray } = useRef(
+    JSON.parse(JSON.stringify(store.templates))
+  );
+  useEffect(() => {
+    setTemplateList(myArray);
+    console.log(templateList);
+  }, [myArray]);
+  const inputMass = [
+    {
+      label: "название товара",
+      placeholder: "Выберите товар",
+      name: "name",
+      options: ["KNITTED SWEATSHIRT ROCK", "GR Full oversize mega pants"],
+    },
+    {
+      label: "категория товара",
+      placeholder: "Выберите категорию",
+      name: "category",
+      options: ["Jeans", "Sweater"],
+    },
+    {
+      label: "размера товара",
+      placeholder: "Выберите размер",
+      name: "size",
+      options: ["XS", "S", "M", "L", "XL", "XXL"],
+    },
+    {
+      label: "Ссылка на товар",
+      placeholder: "Вставьте ссылку",
+      name: "url",
+      options: [""],
+    },
+
+    {
+      label: "описание товара",
+      placeholder: "Выберите описание",
+      name: "template_id",
+      options: templateList.map((obj) => obj.text),
+    },
+    {
+      label: "добавление тэгов",
+      placeholder: "Выберите основные тэги",
+      name: "tags",
+      options: ["#sweater", "#cool"],
+    },
+  ];
 
   const [id, setId] = useState("");
 
@@ -93,7 +89,6 @@ const InputList = () => {
   };
 
   // Получение qr кода
-
   const generateQrCode = (id) => {
     const response = UserService.getGeneratedQr(id);
     response

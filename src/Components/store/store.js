@@ -5,6 +5,8 @@ import { makeAutoObservable } from "mobx";
 
 export default class Store {
   isModal = false;
+  templates = []
+
   user = {};
   isAuth = false;
   product = {
@@ -27,6 +29,9 @@ export default class Store {
   setModal() {
     this.isModal = this.isModal ? false : true
     console.log(this.isModal);
+  }
+  setTemplates(templates) {
+    this.templates = templates
   }
   setAuth(bool) {
     this.isAuth = bool;
