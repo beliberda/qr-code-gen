@@ -3,19 +3,26 @@ import "./style.css";
 import { ButtonDefault } from "Components/UI/buttons";
 import scan from "assets/images/icons/scan-qr.svg";
 import { Banner } from "Components/UI/banner";
-import { useContext, useEffect } from "react";
-import { Context } from "index";
 
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 export default function CheckProduct() {
-  // const [id, setId] = useState("65046106121361691e6861de");
-  const { store } = useContext(Context);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const paramsProduct = new URLSearchParams(location.search);
   const Check = () => {
     navigate(`/checking/?eid=${searchParams.get("eid")}`);
   };
-
+  useEffect(() => {
+    let href = window.parent.location;
+    console.log(href);
+    console.log(paramsProduct.get("eid"));
+    if (searchParams.get("eid") !== null || paramsProduct.get("eid") !== null) {
+      console.log("Checking...");
+      Check();
+    }
+  }, []);
   return (
     <>
       <Header />
@@ -34,7 +41,7 @@ export default function CheckProduct() {
             </div>
             <button
               onClick={() => {
-                if (searchParams.get("eid") !== undefined) {
+                if (searchParams.get("eid") !== null) {
                   Check();
                 }
               }}
