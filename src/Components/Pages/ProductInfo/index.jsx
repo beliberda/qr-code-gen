@@ -74,7 +74,6 @@ export default function ProductInfo() {
             />
             <ProductField text={productInfo?.size} title="размера товара" />
             <ProductField text={productInfo?.color} title="цвет" />
-            <ProductField text={productInfo?.url} title="материал" />
             <ProductField
               text={getDescription(productInfo?.template_id)}
               title="описание товара"

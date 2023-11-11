@@ -7,20 +7,28 @@ import { Banner } from "Components/UI/banner";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 export default function CheckProduct() {
+  let href = window.top.location;
+  let paramHref = href.search.slice(href.search.indexOf("?"));
+  console.log(href, paramHref);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const paramsProduct = new URLSearchParams(location.search);
-  const Check = () => {
-    navigate(`/checking/?eid=${searchParams.get("eid")}`);
+
+  const Check = (search) => {
+    navigate(`/checking/?eid=${search}`);
   };
   useEffect(() => {
-    let href = window.parent.location;
-    console.log(href);
-    console.log(paramsProduct.get("eid"));
+    //get parent url
+
     if (searchParams.get("eid") !== null || paramsProduct.get("eid") !== null) {
-      console.log("Checking...");
-      Check();
+      console.log(paramsProduct.get("eid"));
+      Check(searchParams.get("eid"));
+      return;
+    }
+    if (paramHref !== "") {
+      Check(paramHref);
+      return;
     }
   }, []);
   return (
