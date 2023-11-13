@@ -7,7 +7,7 @@ import arrowLeft from "assets/images/icons/arrow-left.svg";
 import arrowRight from "assets/images/icons/arrow-right.svg";
 import { useEffect, useState } from "react";
 
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import UserService from "Components/services/UserService";
 import { Catch } from "Components/utils/catch";
 
@@ -37,7 +37,7 @@ export default function ProductInfo() {
         Catch(error);
       });
   };
-
+  const navigate = useNavigate();
   useEffect(() => {
     const response = UserService.getQrCheck(searchParams.get("eid"));
     response
@@ -47,22 +47,14 @@ export default function ProductInfo() {
         console.log(productInfo.photo.length);
         return res.data.product;
       })
+      .catch(() => {
+        navigate(`/`);
+      })
       .then((res) => {
         getDescription(res.template_id);
       })
       .catch((error) => {
-        if (error.response) {
-          // Request made but the server responded with an error
-          console.log("response message:", error.response.data);
-          console.log("response status:", error.response.status);
-          console.log("response headers:", error.response.headers);
-        } else if (error.request) {
-          // Request made but no response is received from the server.
-          console.log(error.request);
-        } else {
-          // Error occured while setting up the request
-          console.log("Error", error.message);
-        }
+        Catch(error);
       });
   }, [searchParams]);
   return (

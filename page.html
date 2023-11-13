@@ -1,16 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("load", () => {
+        const frame = document.createElement("iframe");
+        frame.style.display = "block";
+        frame.style.width = "100%";
+        frame.style.height = "70vh";
+        let params = window.location.search;
+        frame.src = `https://qrchecker.manekenbrand.com/#/checking/${params}`;
+        document
+          .querySelector("footer")
+          .insertAdjacentElement("beforebegin", frame);
+      });
+    </script>
+    <footer
+      style="width: 100%; height: 70px; background-color: blueviolet"
+    ></footer>
+  </body>
+</html>
+
 <!-- <iframe
   style="display: block; margin: 0 auto; width: 100%; height: 70vh"
   title="Qr Generate"
   src="https://qrchecker.manekenbrand.com/#/"
   id="qrcode"
 ></iframe> -->
-<script src="https://qrchecker.manekenbrand.com/#/"></script>
-<script>
-  const frame = document.createElement("iframe");
-  frame.style.display = "block";
-  frame.style.width = "100%";
-  frame.style.height = "70vh";
-  let url = window.location.search;
-  frame.src = `https://qrchecker.manekenbrand.com/#/`;
-  frame.contentWindow.postMessage(url, "https://qrchecker.manekenbrand.com/#/");
-</script>

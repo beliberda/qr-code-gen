@@ -14,15 +14,15 @@ export default function CheckProduct() {
     navigate(`/checking/?${search}`);
   };
   useEffect(() => {
-    window.addEventListener("message", (event) => {
-      if (event.origin === "https://manekenbrand.com/checking/") {
-        console.log(event.data);
-        console.log(event.data.slice(event.data.indexOf("=") + 1));
-      } else {
-        console.log("else");
-        return;
-      }
-    });
+    // window.addEventListener("message", (event) => {
+    //   if (event.origin === "https://manekenbrand.com/checking/") {
+    //     console.log(event.data);
+    //     console.log(event.data.slice(event.data.indexOf("=") + 1));
+    //   } else {
+    //     console.log("else");
+    //     return;
+    //   }
+    // });
     if (searchParams.get("eid") !== null) {
       Check(searchParams.get("eid"));
     }
