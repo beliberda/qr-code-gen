@@ -1,12 +1,11 @@
-
 import AuthService from "Components/services/AuthService";
 
 import { makeAutoObservable } from "mobx";
 
 export default class Store {
   isModal = false;
-  templates = []
-
+  templates = [];
+  qrSrc = "";
   user = {};
   isAuth = false;
   product = {
@@ -22,16 +21,16 @@ export default class Store {
     created_at: null || "",
     materials: null || "",
   };
-  authorization = null
+  authorization = null;
   constructor() {
     makeAutoObservable(this);
   }
   setModal() {
-    this.isModal = this.isModal ? false : true
+    this.isModal = this.isModal ? false : true;
     console.log(this.isModal);
   }
   setTemplates(templates) {
-    this.templates = templates
+    this.templates = templates;
   }
   setAuth(bool) {
     this.isAuth = bool;
@@ -41,17 +40,18 @@ export default class Store {
   }
   setProduct(product) {
     this.product = product;
-    console.log("product", JSON.parse(JSON.stringify(this.product)));
   }
   setAuthorization(authorization) {
-    this.authorization = authorization
+    this.authorization = authorization;
   }
-
+  setQrSrc(src) {
+    this.qrSrc = src;
+  }
   async login(email, password) {
     try {
       const response = await AuthService.login(email, password);
       localStorage.setItem("token", response.headers.authorization);
-      this.setAuthorization(response.headers.authorization)
+      this.setAuthorization(response.headers.authorization);
       this.setAuth(true);
       this.setUser(response.data.user);
       // console.log("login", response);

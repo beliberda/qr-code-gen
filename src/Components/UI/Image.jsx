@@ -1,4 +1,6 @@
 import { Catch } from "Components/utils/catch";
+import { Context } from "index";
+import { useContext } from "react";
 
 const { default: UserService } = require("Components/services/UserService");
 const { default: readFile } = require("Components/utils/toImage");
@@ -6,7 +8,7 @@ const { useState, useEffect } = require("react");
 
 const Image = ({ id }) => {
   const [qrCode, setQrCode] = useState();
-
+  const { store } = useContext(Context);
   useEffect(() => {
     const response = UserService.getGeneratedQr(id);
     response
@@ -14,7 +16,7 @@ const Image = ({ id }) => {
       .then((blob) => {
         const file = new File([blob], "image", { type: blob.type });
         readFile(file, setQrCode, qrCode);
-        console.log(qrCode);
+        store.setQrSrc(qrCode);
       })
       .catch((error) => {
         Catch(error);

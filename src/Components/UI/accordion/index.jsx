@@ -9,11 +9,13 @@ import accordeon from "assets/images/icons/accordeon-arrow.svg";
 import { ButtonDisableQr } from "../buttons";
 import UserService from "Components/services/UserService";
 import { Catch } from "Components/utils/catch";
+import { useContext } from "react";
+import { Context } from "index";
 
 const Accordion = ({ product, i }) => {
   let created_at = dateFormat(new Date(product.created_at));
   let updated_at = dateFormat(new Date(product.updated_at));
-
+  const { store } = useContext(Context);
   const [isActive, setIsActive] = useState(false);
   const [description, setDescription] = useState("");
 
@@ -109,7 +111,7 @@ const Accordion = ({ product, i }) => {
                 <div className="qr-options__buttons">
                   <button htmlFor="create-photo" className="btn-download">
                     <img src={download} alt="" />
-                    <a download={true} href="">
+                    <a download href={store.qrSrc}>
                       Загрузить
                     </a>
                     <img src={arrow} alt="" />

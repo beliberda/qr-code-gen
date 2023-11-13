@@ -15,9 +15,12 @@ const InputList = () => {
   const [templateList, setTemplateList] = useState(
     JSON.parse(JSON.stringify(store.templates))
   );
+
   useEffect(() => {
-    setTemplateList(JSON.parse(JSON.stringify(store.templates)));
-  }, [store.templates, store]);
+    setInterval(() => {
+      setTemplateList(JSON.parse(JSON.stringify(store.templates)));
+    }, 5000);
+  }, []);
   const inputMass = [
     {
       label: "название товара",
@@ -62,21 +65,32 @@ const InputList = () => {
 
   const [qrData, setQrData] = useState({
     name: "" || null,
-    description: "" || null,
+    template_id: "" || null,
     category: "" || null,
     url: "" || null,
     size: "" || null,
-    materials: "" || null,
     photo: [""],
   });
+
   const [qrCode, setQrCode] = useState(null);
   const handleClick = (e) => {
     const value = e.target.value;
-
+    console.log(e.target.name);
+    if (e.target.name === "template_id") {
+      const template = templateList.filter((x) => x.text === e.target.value);
+      console.log(template);
+      setQrData({
+        ...qrData,
+        [e.target.name]: template[0]._id,
+      });
+      console.log(qrData);
+      return;
+    }
     setQrData({
       ...qrData,
       [e.target.name]: value,
     });
+    console.log(qrData);
   };
   const [fileSelected, setFileSelected] = useState([]);
   const uploadMultiFiles = (e) => {
