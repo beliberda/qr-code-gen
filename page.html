@@ -1,0 +1,16 @@
+<!-- <iframe
+  style="display: block; margin: 0 auto; width: 100%; height: 70vh"
+  title="Qr Generate"
+  src="https://qrchecker.manekenbrand.com/#/"
+  id="qrcode"
+></iframe> -->
+<script src="https://qrchecker.manekenbrand.com/#/"></script>
+<script>
+  const frame = document.createElement("iframe");
+  frame.style.display = "block";
+  frame.style.width = "100%";
+  frame.style.height = "70vh";
+  let url = window.location.search;
+  frame.src = `https://qrchecker.manekenbrand.com/#/`;
+  frame.contentWindow.postMessage(url, "https://qrchecker.manekenbrand.com/#/");
+</script>
