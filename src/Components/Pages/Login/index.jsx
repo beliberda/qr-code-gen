@@ -6,13 +6,19 @@ import { Context } from "index";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
-function Login(params) {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { store } = useContext(Context);
   // Навигация
   const path = "/user/1";
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (store.isAuth) {
+      navigate(path);
+    }
+  }, []);
 
   useEffect(() => {
     if (store.isAuth) {

@@ -5,15 +5,23 @@ import { ProductField } from "Components/UI/productField";
 // import photo from "assets/images/photo1.png";
 import arrowLeft from "assets/images/icons/arrow-left.svg";
 import arrowRight from "assets/images/icons/arrow-right.svg";
-import { useContext, useEffect, useState } from "react";
-import { Context } from "index";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { useSearchParams } from "react-router-dom";
 import UserService from "Components/services/UserService";
 import { Catch } from "Components/utils/catch";
 
 export default function ProductInfo() {
-  const { store } = useContext(Context);
-  const [productInfo, setProductInfo] = useState({});
+  const [productInfo, setProductInfo] = useState({
+    category: "",
+    created_at: "",
+    name: "",
+    photo: [""],
+    size: "",
+    template_id: "",
+    updated_at: "",
+    _id: "",
+  });
   const [photos, setPhoto] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -24,20 +32,23 @@ export default function ProductInfo() {
     response
       .then((res) => {
         setDescription(res.data.text);
-        return res.data.text;
       })
       .catch((error) => {
         Catch(error);
       });
   };
 
-  console.log("EID", searchParams.get("eid"));
   useEffect(() => {
-    const response = UserService.getQrCheck(searchParams);
+    const response = UserService.getQrCheck(searchParams.get("eid"));
     response
       .then((res) => {
         setProductInfo(res.data.product);
         console.log(res.data);
+        console.log(productInfo.photo.length);
+        return res.data.product;
+      })
+      .then((res) => {
+        getDescription(res.template_id);
       })
       .catch((error) => {
         if (error.response) {
@@ -73,39 +84,47 @@ export default function ProductInfo() {
               title="категория товара"
             />
             <ProductField text={productInfo?.size} title="размера товара" />
-            <ProductField text={productInfo?.color} title="цвет" />
-            <ProductField
-              text={getDescription(productInfo?.template_id)}
-              title="описание товара"
-            />
+            <ProductField text={description} title="описание товара" />
           </div>
           <div className="product-info__gallery">
             <div className="gallery-list">
-              {photos.length === 0 ? (
-                photos.map((item, i) => {
-                  return (
-                    <>
-                      <img
-                        key={i}
-                        className="gallery-list__item"
-                        src={item}
-                        alt=""
-                      />
-                    </>
-                  );
+              {productInfo.photo.length > 1 ? (
+                productInfo.photo.map((item, i) => {
+                  if (i <= 4) {
+                    return (
+                      <>
+                        <img
+                          key={i}
+                          className="gallery-list__item"
+                          src={item}
+                          alt=""
+                        />
+                      </>
+                    );
+                    return <></>;
+                  }
                 })
               ) : (
                 <></>
               )}
             </div>
             <div className="gallery__main-photo">
-              <img className="main-photo__arrow" src={arrowLeft} alt="" />
+              {productInfo.photo.length > 1 ? (
+                <img className="main-photo__arrow" src={arrowLeft} alt="" />
+              ) : (
+                <></>
+              )}
+
               <img
                 className="main-photo__photo"
-                src={productInfo?.photo}
+                src={productInfo.photo}
                 alt=""
               />
-              <img className="main-photo__arrow" src={arrowRight} alt="" />
+              {productInfo.photo.length > 1 ? (
+                <img className="main-photo__arrow" src={arrowRight} alt="" />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </section>
