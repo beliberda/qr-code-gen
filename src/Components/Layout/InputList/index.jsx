@@ -7,8 +7,10 @@ import arrow from "assets/images/icons/arrow-sort.svg";
 import UserService from "Components/services/UserService";
 import readFile from "Components/utils/toImage";
 import { Context } from "index";
+import { useNavigate } from "react-router-dom";
 
 const InputList = () => {
+  const navigate = useNavigate();
   const { store } = useContext(Context);
   const [templateList, setTemplateList] = useState(
     JSON.parse(JSON.stringify(store.templates))
@@ -103,13 +105,21 @@ const InputList = () => {
     response
       .then((res) => {
         console.log("create product", res);
-        console.log("what a product", qrData);
         return res.data;
       })
       .then((id) => {
-        generateQrCode(id);
-        setId(id);
+        const response = UserService.createQr(id);
+        response
+          .then((res) => {
+            console.log(res);
+            return res.data;
+          })
+          .then((id) => {
+            generateQrCode(id);
+            setId(id);
+          });
       })
+
       .catch((error) => {
         console.log(error);
       });
@@ -161,7 +171,7 @@ const InputList = () => {
             <img src={arrow} alt="" />
           </label>
         </div>
-        <button onClick={() => saveQrCode()} className="create-save">
+        <button onClick={() => navigate("/user/1")} className="create-save">
           Сохранить
         </button>
       </div>

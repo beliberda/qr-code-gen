@@ -7,13 +7,16 @@ export default class UserService {
   static async getQr() {
     const params = {
       disabled: false,
-      limit: 50,
+      limit: 10,
       page: 0,
       sort_by: "created_at",
     };
     return $api.get(`qr/`, {
       params: params,
     });
+  }
+  static async createQr(id) {
+    return $api.post(`qr/`, { product_id: id });
   }
   static async getQrById(id) {
     return $api.get(`/qr/${id}`, {

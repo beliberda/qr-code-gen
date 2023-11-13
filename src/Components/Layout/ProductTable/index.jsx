@@ -9,24 +9,11 @@ import { ButtonDisableQr } from "Components/UI/buttons";
 import UserService from "Components/services/UserService";
 import { Image } from "Components/UI/Image";
 import { Catch } from "Components/utils/catch";
-
-function dateFormat(date) {
-  return (
-    date.getDate() +
-    "." +
-    (date.getMonth() + 1) +
-    "." +
-    date.getFullYear() +
-    " " +
-    date.getHours() +
-    ":" +
-    date.getMinutes()
-  );
-}
+import { dateFormat } from "Components/utils/dateFormat";
+import { Accordion } from "Components/UI/accordion";
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
-  const [description, setDescription] = useState("");
   useEffect(() => {
     const response = UserService.getQr();
     response
@@ -38,21 +25,6 @@ const ProductTable = () => {
         Catch(error);
       });
   }, []);
-
-  const diableQr = (id) => {
-    const response = UserService.disabledQr(id);
-  };
-  const getDescription = (id) => {
-    const response = UserService.getTemplate(id);
-    response
-      .then((res) => {
-        setDescription(res.data.text);
-      })
-      .catch((error) => {
-        Catch(error);
-      });
-  };
-
   return (
     <table className="table">
       <thead>
@@ -121,94 +93,9 @@ const ProductTable = () => {
       {products ? (
         <tbody>
           {products.map((product, i) => {
-            let created_at = dateFormat(new Date(product.created_at));
-            let updated_at = dateFormat(new Date(product.updated_at));
-
             return (
               <>
-                <tr key={i} className="table-info">
-                  <td>
-                    <h3 className="table-date">{created_at}</h3>
-                  </td>
-                  <td>
-                    <h3 className="table-name">{product.product.name}</h3>
-                  </td>
-                  <td>
-                    <h3 className="table-id">{product._id}</h3>
-                  </td>
-                  <td>
-                    <h3 className="table-status">
-                      <button className="button-enter table__btn-status">
-                        <img src={check} alt="" />
-                        Да
-                      </button>
-                    </h3>
-                  </td>
-                  <td>
-                    <h3 className="table-first-check">{created_at}</h3>
-                  </td>
-                  <td>
-                    <h3 className="table-last-check">{updated_at}</h3>
-                  </td>
-                  <td>
-                    <div className="table-accordeon">
-                      <h3 className="table-count">2</h3>
-                      <button className="accordeon-btn">
-                        <img src={accordeon} alt="" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr key={product._id} className="table__full-info">
-                  <td>
-                    <div className="full-info__source">
-                      <h4>Источник QR-кода</h4>
-                      <p>Сгенерирован в ручную </p>
-                    </div>
-                  </td>
-                  <td colSpan="2">
-                    <div className="full-info__description">
-                      <h4>Описание</h4>
-                      <p>
-                        {getDescription(product.product.template_id)}
-                        {description}
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <img
-                      className="full-info__preview"
-                      src={product.product.photo}
-                      alt=""
-                    />
-                  </td>
-                  <td colSpan="3">
-                    <div className="full-info__qr-code">
-                      <Image id={product._id} />
-                      <div className="qr-code__qr-options">
-                        <h3> Выберите формат файла</h3>
-                        <div className="qr-options__buttons">
-                          <button
-                            htmlFor="create-photo"
-                            className="btn-download"
-                          >
-                            <img src={download} alt="" />
-                            <a download={true} href="">
-                              Загрузить
-                            </a>
-                            <img src={arrow} alt="" />
-                          </button>
-                          <ButtonDisableQr
-                            handlClick={() => {
-                              diableQr(product._id);
-                            }}
-                            text="Отключить QR-код"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                <Accordion product={product} />
               </>
             );
           })}

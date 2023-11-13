@@ -22,7 +22,6 @@ export default function ProductInfo() {
     updated_at: "",
     _id: "",
   });
-  const [photos, setPhoto] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   // get description from template
