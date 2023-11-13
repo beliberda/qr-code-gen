@@ -3,16 +3,13 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "index";
 
-const PrivateRoute = (props) => {
+const PrivateRoute = () => {
   const { store } = useContext(Context);
-  //   if (store.isLoadingAuth) {
-  //     return <div>Checking auth...</div>;
-  //   }
-  if (store.isAuth) {
+
+  if (store.isAuth || localStorage.getItem("token")) {
     return <Outlet />;
   } else {
-    // return <Outlet />;
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 };
 

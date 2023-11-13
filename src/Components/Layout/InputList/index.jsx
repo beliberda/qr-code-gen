@@ -7,7 +7,6 @@ import arrow from "assets/images/icons/arrow-sort.svg";
 import UserService from "Components/services/UserService";
 import readFile from "Components/utils/toImage";
 import { Context } from "index";
-// import { Context } from "index";
 
 const InputList = () => {
   const { store } = useContext(Context);
