@@ -15,7 +15,7 @@ export default function CheckProduct() {
   };
   useEffect(() => {
     window.addEventListener("message", (event) => {
-      if (event.origin === "https://manekenbrand.com/") {
+      if (event.origin === "https://manekenbrand.com/checking/") {
         console.log(event.data);
         console.log(event.data.slice(event.data.indexOf("=") + 1));
       } else {
