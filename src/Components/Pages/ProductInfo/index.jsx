@@ -58,7 +58,8 @@ export default function ProductInfo() {
   }, [searchParams]);
   return (
     <>
-      <Header />
+      {document.referrer === "https://manekenbrand.com/" ? <> </> : <Header />}
+
       <main className="main container product-info__content">
         <div className="product-info__top">
           <h1>Проверка подлинности товара</h1>

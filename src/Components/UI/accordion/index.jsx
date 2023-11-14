@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./style.css";
 import { dateFormat } from "Components/utils/dateFormat";
-import { Image } from "../Image";
+import { ImageQr } from "../Image";
 import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
 import check from "assets/images/icons/icon-check.svg";
@@ -19,9 +19,6 @@ const Accordion = ({ product, i }) => {
   const [isActive, setIsActive] = useState(false);
   const [description, setDescription] = useState("");
 
-  const diableQr = (id) => {
-    const response = UserService.disabledQr(id);
-  };
   const getDescription = (id) => {
     const response = UserService.getTemplate(id);
     response
@@ -32,6 +29,11 @@ const Accordion = ({ product, i }) => {
         Catch(error);
       });
   };
+  // let image = new Image();
+  // if (product.product.photo.length !== 0) {
+  //   image.src = `data:image/png;base64,${product.product.photo[0]}`;
+  // }
+
   return (
     <>
       <tr key={i} className="table-info">
@@ -99,31 +101,17 @@ const Accordion = ({ product, i }) => {
           <td>
             <img
               className="full-info__preview"
-              src={product.product.photo}
+              src={
+                product.product.photo[0].indexOf("http") !== -1
+                  ? product.product.photo[0]
+                  : `data:image/png;base64,${product.product.photo[0]}`
+              }
               alt=""
             />
           </td>
           <td colSpan="3">
             <div className="full-info__qr-code">
-              <Image id={product._id} />
-              <div className="qr-code__qr-options">
-                <h3> Выберите формат файла</h3>
-                <div className="qr-options__buttons">
-                  <button htmlFor="create-photo" className="btn-download">
-                    <img src={download} alt="" />
-                    <a download href={store.qrSrc}>
-                      Загрузить
-                    </a>
-                    <img src={arrow} alt="" />
-                  </button>
-                  <ButtonDisableQr
-                    handlClick={() => {
-                      diableQr(product._id);
-                    }}
-                    text="Отключить QR-код"
-                  />
-                </div>
-              </div>
+              {product._id !== undefined && <ImageQr id={product._id} />}
             </div>
           </td>
         </tr>

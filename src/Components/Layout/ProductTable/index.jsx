@@ -1,15 +1,8 @@
 import "./style.css";
-import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
-import check from "assets/images/icons/icon-check.svg";
-import accordeon from "assets/images/icons/accordeon-arrow.svg";
 import { useEffect, useState } from "react";
-
-import { ButtonDisableQr } from "Components/UI/buttons";
 import UserService from "Components/services/UserService";
-import { Image } from "Components/UI/Image";
 import { Catch } from "Components/utils/catch";
-import { dateFormat } from "Components/utils/dateFormat";
 import { Accordion } from "Components/UI/accordion";
 
 const ProductTable = () => {

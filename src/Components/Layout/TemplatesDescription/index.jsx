@@ -8,7 +8,7 @@ import { observer } from "mobx-react-lite";
 const inputMass = [
   "название товара",
   "категория товара",
-  "размера товара",
+  "размер товара",
   "ссылка на товар",
 ];
 const ModalTemplatesDescription = () => {

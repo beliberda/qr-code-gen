@@ -33,13 +33,13 @@ export default class UserService {
           r: 0,
           g: 0,
           b: 0,
-          a: 100,
+          a: 255,
         },
         background_color: {
-          r: 0,
-          g: 0,
-          b: 0,
-          a: 0,
+          r: 255,
+          g: 255,
+          b: 255,
+          a: 255,
         },
       },
       {
@@ -85,7 +85,7 @@ export default class UserService {
     return $api.get(`template`, {
       params: {
         limit: 10,
-        page: 1
+        page: 0
       }
     });
   }

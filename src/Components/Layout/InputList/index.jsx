@@ -8,6 +8,7 @@ import UserService from "Components/services/UserService";
 import readFile from "Components/utils/toImage";
 import { Context } from "index";
 import { useNavigate } from "react-router-dom";
+import imageUploaded from "Components/utils/toBase64";
 
 const InputList = () => {
   const navigate = useNavigate();
@@ -96,9 +97,11 @@ const InputList = () => {
   const uploadMultiFiles = (e) => {
     const files = Array.from(e.target.files);
     setFileSelected(files);
-    setQrData({ ...qrData, photo: files });
+    setQrData({ ...qrData, photo: imageUploaded() });
   };
-
+  useEffect(() => {
+    console.log(qrData);
+  }, [qrData]);
   // Получение qr кода
   const generateQrCode = (id) => {
     const response = UserService.getGeneratedQr(id);

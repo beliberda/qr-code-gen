@@ -18,9 +18,12 @@ export default function CheckProduct() {
       Check(searchParams.get("eid"));
     }
   }, []);
+
+  console.log(document.referrer);
   return (
     <>
-      <Header />
+      {document.referrer === "https://manekenbrand.com/" ? <> </> : <Header />}
+
       <Banner title="Проверка" titleSpan="подлинности" title2="товара" />
       <main className="check-product container">
         <section className="check-product__content">
