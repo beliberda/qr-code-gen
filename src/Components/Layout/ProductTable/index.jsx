@@ -43,7 +43,7 @@ const ProductTable = () => {
           </th>
           <th className="table__head-th">
             <div className="head-th__block">
-              <h2>ID продукта</h2>
+              <h2>EID продукта</h2>
               <div className="filter-sort">
                 <img src={arrow} alt="" />
               </div>

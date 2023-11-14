@@ -42,8 +42,6 @@ export default function ProductInfo() {
     response
       .then((res) => {
         setProductInfo(res.data.product);
-        console.log(res.data);
-        console.log(productInfo.photo.length);
         return res.data.product;
       })
       .catch(() => {

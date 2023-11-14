@@ -2,11 +2,8 @@ import { useState } from "react";
 import "./style.css";
 import { dateFormat } from "Components/utils/dateFormat";
 import { ImageQr } from "../Image";
-import download from "assets/images/icons/download-create.svg";
-import arrow from "assets/images/icons/arrow-sort.svg";
 import check from "assets/images/icons/icon-check.svg";
 import accordeon from "assets/images/icons/accordeon-arrow.svg";
-import { ButtonDisableQr } from "../buttons";
 import UserService from "Components/services/UserService";
 import { Catch } from "Components/utils/catch";
 import { useContext } from "react";
@@ -62,7 +59,7 @@ const Accordion = ({ product, i }) => {
         </td>
         <td>
           <div className="table-accordeon">
-            <h3 className="table-count">2</h3>
+            <h3 className="table-count">{product.use_count}</h3>
             <button
               onClick={() => {
                 setIsActive(!isActive);

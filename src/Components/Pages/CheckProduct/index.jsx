@@ -11,7 +11,8 @@ export default function CheckProduct() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const Check = (search) => {
-    navigate(`/checking/?${search}`);
+    console.log();
+    navigate(`/checking/?eid=${search}`);
   };
   useEffect(() => {
     if (searchParams.get("eid") !== null) {
@@ -40,7 +41,7 @@ export default function CheckProduct() {
             <button
               onClick={() => {
                 if (searchParams.get("eid") !== null) {
-                  Check();
+                  Check(searchParams.get("eid"));
                 }
               }}
               className="button-enter"

@@ -63,6 +63,16 @@
 .input-generate {
   gap: 6px !important;
 }
+
+.download-photo__modal-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;
+}
+.modal-links__input {
+  border-bottom: 1px solid var(--dark);
+}
 @media (max-width: 768px) {
   .input-list {
     grid-template-columns: 1fr;

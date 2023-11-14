@@ -62,8 +62,13 @@ const InputList = () => {
     },
   ];
 
-  const [id, setId] = useState("");
+  // photo links
+  const [inputLinkList, setInputLinkList] = useState([""]);
+  const [photos, setPhotos] = useState([]);
+  const [isModal, setIsModal] = useState(false);
 
+  const [id, setId] = useState("");
+  //data for fetch
   const [qrData, setQrData] = useState({
     name: "" || null,
     template_id: "" || null,
@@ -72,7 +77,7 @@ const InputList = () => {
     size: "" || null,
     photo: [""],
   });
-
+  //qr codeimage
   const [qrCode, setQrCode] = useState(null);
   const handleClick = (e) => {
     const value = e.target.value;
@@ -93,6 +98,8 @@ const InputList = () => {
     });
     console.log(qrData);
   };
+
+  // load files
   const [fileSelected, setFileSelected] = useState([]);
   const uploadMultiFiles = (e) => {
     const files = Array.from(e.target.files);
@@ -100,8 +107,9 @@ const InputList = () => {
     setQrData({ ...qrData, photo: imageUploaded() });
   };
   useEffect(() => {
+    setQrData({ ...qrData, photo: photos });
     console.log(qrData);
-  }, [qrData]);
+  }, [photos]);
   // Получение qr кода
   const generateQrCode = (id) => {
     const response = UserService.getGeneratedQr(id);
@@ -115,8 +123,8 @@ const InputList = () => {
         console.log(error);
       });
   };
-  // create product
 
+  // create product
   const saveQrCode = () => {
     const response = UserService.fetchSaveProduct(qrData);
     response
@@ -176,17 +184,53 @@ const InputList = () => {
       <div className="create-bottom">
         <div className="create__download">
           <h2 className="create__download-photo">Фотографии товара</h2>
-          <input
+          {/* <input
             onChange={uploadMultiFiles}
             type="file"
             id="create-photo"
             multiple
-          />
-          <label htmlFor="create-photo" className="btn-download">
+          /> */}
+          {/* <label htmlFor="create-photo" className="btn-download">
             <img src={download} alt="" />
             Загрузить
             <img src={arrow} alt="" />
-          </label>
+          </label> */}
+          {/* <button onClick={setIsModal} className="btn-download">
+            <img src={download} alt="" />
+            Загрузить
+            <img src={arrow} alt="" />
+          </button> */}
+          <div className="download-photo__modal-links">
+            <input
+              className="modal-links__input"
+              onChange={(e) => {
+                setPhotos([...photos, e.target.value]);
+                console.log(photos);
+              }}
+              type="text"
+            />
+            {inputLinkList.map((e) => {
+              return (
+                <input
+                  className="modal-links__input"
+                  onChange={(e) => {
+                    setPhotos([...photos, e.target.value]);
+                    console.log(photos);
+                  }}
+                  type="text"
+                />
+              );
+            })}
+
+            <button
+              onClick={() => {
+                setInputLinkList([...inputLinkList, ""]);
+                console.log(inputLinkList);
+              }}
+            >
+              Добавить поле
+            </button>
+          </div>
         </div>
         <button onClick={() => navigate("/user/1")} className="create-save">
           Сохранить
