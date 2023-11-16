@@ -18,6 +18,10 @@
 .create__download-photo {
   margin-bottom: 22px;
 }
+.create__download {
+  width: 100%;
+  max-width: 560px;
+}
 #create-photo {
   display: none;
 }

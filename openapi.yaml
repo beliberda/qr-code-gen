@@ -3,7 +3,7 @@ info:
   title: QR Generator
   version: ver 1.0
 servers:
-  - url: https://localhost:8225
+  - url: https://qrchecker.manekenbrand.com/api/v1
 tags:
   - name: User
     description: Запросы по пользователям
@@ -261,15 +261,30 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/QR"
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  example: 65046106121361691e6861de
+                count:
+                  type: integer
+                  example: 1
       responses:
         201:
           description: Success
           content:
-            text/schema:
+            application/json:
               schema:
-                type: string
-                example: 65046106121361691e6861de
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      example: 65046106121361691e6861de
+                    eid:
+                      type: string
+                      example: 724aa8b572f5497baeb1904178abdd14db2d3ca8177e73cc03e4594406cc9ff1
         400:
           description: Плохой запрос
           content:

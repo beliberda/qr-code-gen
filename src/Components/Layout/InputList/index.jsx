@@ -2,13 +2,12 @@ import "./style.css";
 import { Select } from "Components/UI/Select";
 import gen from "assets/images/icons/generate.svg";
 import { useContext, useEffect, useState } from "react";
-import download from "assets/images/icons/download-create.svg";
-import arrow from "assets/images/icons/arrow-sort.svg";
 import UserService from "Components/services/UserService";
 import readFile from "Components/utils/toImage";
 import { Context } from "index";
 import { useNavigate } from "react-router-dom";
 import imageUploaded from "Components/utils/toBase64";
+import { Catch } from "Components/utils/catch";
 
 const InputList = () => {
   const navigate = useNavigate();
@@ -63,7 +62,7 @@ const InputList = () => {
   ];
 
   // photo links
-  const [inputLinkList, setInputLinkList] = useState([""]);
+  const [inputLinkList, setInputLinkList] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [isModal, setIsModal] = useState(false);
 
@@ -81,10 +80,14 @@ const InputList = () => {
   const [qrCode, setQrCode] = useState(null);
   const handleClick = (e) => {
     const value = e.target.value;
-    console.log(e.target.name);
     if (e.target.name === "template_id") {
-      const template = templateList.filter((x) => x.text === e.target.value);
-      console.log(template);
+      const template = templateList.filter((x) => {
+        return (
+          x.text.replace(/[^a-zа-яё]/gi, "") ===
+          e.target.value.replace(/[^a-zа-яё]/gi, "")
+        );
+      });
+
       setQrData({
         ...qrData,
         [e.target.name]: template[0]._id,
@@ -132,21 +135,21 @@ const InputList = () => {
         console.log("create product", res);
         return res.data;
       })
-      .then((id) => {
-        const response = UserService.createQr(id);
+      .then((data) => {
+        const response = UserService.createQr(data);
         response
           .then((res) => {
             console.log(res);
             return res.data;
           })
-          .then((id) => {
-            generateQrCode(id);
-            setId(id);
+          .then((data) => {
+            generateQrCode(data[0]._id);
+            setId(data[0].id);
           });
       })
 
       .catch((error) => {
-        console.log(error);
+        Catch(error);
       });
   };
 
@@ -208,6 +211,7 @@ const InputList = () => {
                 console.log(photos);
               }}
               type="text"
+              placeholder="Вставьте ссылку на изображение"
             />
             {inputLinkList.map((e) => {
               return (

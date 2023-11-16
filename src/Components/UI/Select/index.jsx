@@ -20,6 +20,7 @@ const Select = ({
       onChange={handleClick}
       name={name}
       value={value}
+      autoComplete="off"
     />
     <datalist id={name}>
       {options.map((option) => {

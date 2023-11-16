@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./style.css";
-import { dateFormat } from "Components/utils/dateFormat";
+import {
+  dateFormat,
+  replaceTemplateAttribute,
+} from "Components/utils/dateFormat";
 import { ImageQr } from "../Image";
 import check from "assets/images/icons/icon-check.svg";
 import accordeon from "assets/images/icons/accordeon-arrow.svg";
@@ -20,7 +23,9 @@ const Accordion = ({ product, i }) => {
     const response = UserService.getTemplate(id);
     response
       .then((res) => {
-        setDescription(res.data.text);
+        setDescription(
+          replaceTemplateAttribute(product.product, res.data.text)
+        );
       })
       .catch((error) => {
         Catch(error);
