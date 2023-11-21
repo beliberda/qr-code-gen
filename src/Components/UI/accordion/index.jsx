@@ -31,10 +31,6 @@ const Accordion = ({ product, i }) => {
         Catch(error);
       });
   };
-  // let image = new Image();
-  // if (product.product.photo.length !== 0) {
-  //   image.src = `data:image/png;base64,${product.product.photo[0]}`;
-  // }
 
   return (
     <>
