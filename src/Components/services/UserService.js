@@ -74,6 +74,9 @@ export default class UserService {
   static async disabledQr(id) {
     return $api.put(`product/${id}`, {});
   }
+  static async deleteQr(id) {
+    return $api.delete(`qr/${id}`)
+  }
   // templates
   static async editTemplate(id, text) {
     return $api.put(`template/${id}`, { text: text });

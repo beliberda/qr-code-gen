@@ -4,6 +4,8 @@ import { useContext } from "react";
 import { ButtonDisableQr } from "./buttons";
 import download from "assets/images/icons/download-create.svg";
 import arrow from "assets/images/icons/arrow-sort.svg";
+import del from "assets/images/icons/delete.svg";
+
 const { default: UserService } = require("Components/services/UserService");
 const { default: readFile } = require("Components/utils/toImage");
 const { useState, useEffect } = require("react");
@@ -17,6 +19,9 @@ function newTabImage(src) {
 }
 const diableQr = (id) => {
   const response = UserService.disabledQr(id);
+};
+const deleteQr = (id) => {
+  const response = UserService.deleteQr(id);
 };
 const ImageQr = ({ id }) => {
   const [qrCode, setQrCode] = useState();
@@ -62,6 +67,13 @@ const ImageQr = ({ id }) => {
               diableQr(id);
             }}
             text="Отключить QR-код"
+          />
+          <img
+            onClick={() => {
+              deleteQr(id);
+            }}
+            src={del}
+            alt=""
           />
         </div>
       </div>
