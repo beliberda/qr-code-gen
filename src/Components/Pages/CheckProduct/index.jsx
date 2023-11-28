@@ -5,22 +5,39 @@ import scan from "assets/images/icons/scan-qr.svg";
 import { Banner } from "Components/UI/banner";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import UserService from "Components/services/UserService";
 export default function CheckProduct() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [eid, setEid] = useState(searchParams.get("eid"));
+  const [isNotFound, setIsNotFound] = useState(false);
 
   const Check = (search) => {
-    console.log();
-    navigate(`/checking/?eid=${search}`);
+    const response = UserService.getQrCheck(search);
+    response
+      .then(() => {
+        navigate(`/checking/?eid=${search}`);
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          setIsNotFound(true);
+          setTimeout(() => {
+            setIsNotFound(false);
+          }, 5000);
+        }
+        if (error.response.status === 403) {
+          navigate(`/notfound`);
+        }
+      });
   };
   useEffect(() => {
+    console.log(searchParams.get("eid"));
     if (searchParams.get("eid") !== null) {
       Check(searchParams.get("eid"));
     }
   }, []);
 
-  console.log(document.referrer);
   return (
     <>
       {document.referrer === "https://manekenbrand.com/" ? <> </> : <Header />}
@@ -29,14 +46,28 @@ export default function CheckProduct() {
       <main className="check-product container">
         <section className="check-product__content">
           <div className="check-product__input-block">
-            <div className="check-product__input">
+            <div
+              className={
+                !isNotFound
+                  ? "check-product__input"
+                  : "check-product__input --error"
+              }
+            >
               <h2 className="input-block__title">идентификационный номер</h2>
               <input
-                onChange={(e) => setSearchParams({ eid: e.target.value })}
+                onChange={(e) => {
+                  setEid(e.value);
+                  setSearchParams({ eid: e.target.value });
+                }}
+                value={eid}
                 type="text"
-                value={searchParams.get("eid") ? searchParams.get("eid") : ""}
                 placeholder="Введите идентификатор товара"
               />
+              {isNotFound && (
+                <p className="input-block__error-text">
+                  ID не найден, попробуйте ввести еще раз
+                </p>
+              )}
             </div>
             <button
               onClick={() => {

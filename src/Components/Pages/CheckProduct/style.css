@@ -11,6 +11,8 @@
   gap: 10px;
   width: 100%;
   max-width: 548px;
+  position: relative;
+  align-self: center;
 }
 .check-product__input {
   display: flex;
@@ -41,6 +43,21 @@
 #load-photo {
   display: none;
 }
+
+.--error {
+  border-bottom: 1px solid var(--red);
+}
+.--error input {
+  color: var(--red);
+}
+
+.input-block__error-text {
+  color: var(--red);
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+}
+
 @media (max-width: 600px) {
   .check-product__input-block {
     flex-wrap: wrap;

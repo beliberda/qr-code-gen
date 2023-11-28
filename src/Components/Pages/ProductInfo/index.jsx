@@ -42,6 +42,7 @@ export default function ProductInfo() {
     response
       .then((res) => {
         setProductInfo(res.data.product);
+        console.log("Qr code", res);
         return res.data.product;
       })
       .catch(() => {
@@ -78,7 +79,7 @@ export default function ProductInfo() {
           </div>
           <div className="product-info__gallery">
             <div className="gallery-list">
-              {productInfo.photo.length > 1 ? (
+              {productInfo?.photo?.length > 1 ? (
                 productInfo.photo.map((item, i) => {
                   if (i <= 4) {
                     return (
@@ -91,26 +92,30 @@ export default function ProductInfo() {
                         />
                       </>
                     );
-                    return <></>;
                   }
+                  return <></>;
                 })
               ) : (
                 <></>
               )}
             </div>
             <div className="gallery__main-photo">
-              {productInfo.photo.length > 1 ? (
+              {productInfo?.photo?.length > 1 ? (
                 <img className="main-photo__arrow" src={arrowLeft} alt="" />
               ) : (
                 <></>
               )}
+              {productInfo?.photo ? (
+                <img
+                  className="main-photo__photo"
+                  src={productInfo?.photo}
+                  alt=""
+                />
+              ) : (
+                <h4>no photo</h4>
+              )}
 
-              <img
-                className="main-photo__photo"
-                src={productInfo.photo}
-                alt=""
-              />
-              {productInfo.photo.length > 1 ? (
+              {productInfo?.photo?.length > 1 ? (
                 <img className="main-photo__arrow" src={arrowRight} alt="" />
               ) : (
                 <></>

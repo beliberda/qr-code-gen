@@ -15,18 +15,22 @@ function newTabImage(src) {
   image.src = src;
   let w = window.open("", "_blank");
   w.document.write(image.outerHTML);
-  // w.document.close();
 }
-const diableQr = (id) => {
-  const response = UserService.disabledQr(id);
-};
-const deleteQr = (id) => {
-  const response = UserService.deleteQr(id);
-};
+
 const ImageQr = ({ id }) => {
   const [qrCode, setQrCode] = useState();
   const { store } = useContext(Context);
-  console.log("qrId", id);
+  const [disable, setIsDisable] = useState(false);
+
+  const deleteQr = (id) => {
+    const response = UserService.deleteQr(id);
+  };
+  const diableQr = (id) => {
+    const response = UserService.disabledQr(id);
+    response.then(() => {
+      setIsDisable(true);
+    });
+  };
   useEffect(() => {
     const response = UserService.getGeneratedQr(id);
     response
@@ -35,7 +39,6 @@ const ImageQr = ({ id }) => {
         const file = new File([blob], "image", { type: blob.type });
         readFile(file, setQrCode, qrCode);
         store.setQrSrc(qrCode);
-        console.log("qrcode src", qrCode);
       })
       .catch((error) => {
         Catch(error);
@@ -66,9 +69,10 @@ const ImageQr = ({ id }) => {
             handlClick={() => {
               diableQr(id);
             }}
-            text="Отключить QR-код"
+            text={!disable ? "Отключить QR-код" : "Отключено"}
           />
           <img
+            className="deleteQr"
             onClick={() => {
               deleteQr(id);
             }}

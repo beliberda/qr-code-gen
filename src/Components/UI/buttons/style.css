@@ -46,6 +46,16 @@ button {
 .button-disable-qr:hover path {
   fill: var(--white);
 }
+
+.btn-not-found {
+  padding: 6px 8px;
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 @media (max-width: 600px) {
   .button-enter {
     width: 100%;
