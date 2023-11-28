@@ -1,5 +1,8 @@
 import { ButtonNotFound } from "Components/UI/buttons";
 import "./style.css";
+import scan from "assets/images/icons/scan-qr.svg";
+import QrScanner from "qr-scanner";
+
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import UserService from "Components/services/UserService";
@@ -9,6 +12,21 @@ export default function NotFound() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [eid, setEid] = useState(searchParams.get("eid"));
   const [isNotFound, setIsNotFound] = useState(false);
+
+  const handleChange = async (e) => {
+    const file = e.target.files[0];
+
+    await QrScanner.scanImage(file)
+      .then((result) => {
+        const urlParams = new URLSearchParams(
+          result.slice(result.indexOf("?"))
+        );
+        setEid(urlParams.get("eid"));
+      })
+      .catch((error) => {
+        console.log(error || "No QR code found.");
+      });
+  };
 
   const Check = (search) => {
     const response = UserService.getQrCheck(search);
@@ -78,7 +96,21 @@ export default function NotFound() {
           >
             Проверить
           </button>
-          {/* <ButtonDefault text="Проверить" /> */}
+        </div>
+        <div className="check-product__download-block">
+          <input
+            id="load-photo"
+            type="file"
+            className="check-product__download-photo"
+            accept=".png, .jpg, .jpeg"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+          <label className="load-photo" htmlFor="load-photo">
+            <img src={scan} alt="" />
+            Загрузить или сделать фотографию
+          </label>
         </div>
       </main>
     </>
