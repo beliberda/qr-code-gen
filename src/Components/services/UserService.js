@@ -4,11 +4,11 @@ export default class UserService {
   static fetchUsers() {
     return $api.get("/users");
   }
-  static async getQr() {
+  static async getQr(page) {
     const params = {
       disabled: false,
       limit: 10,
-      page: 0,
+      page: page,
       sort_by: "created_at",
     };
     return $api.get(`qr/`, {
