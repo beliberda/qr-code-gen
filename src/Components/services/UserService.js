@@ -87,7 +87,7 @@ export default class UserService {
   static async getTemplates() {
     return $api.get(`template`, {
       params: {
-        limit: 10,
+        limit: 5,
         page: 0
       }
     });

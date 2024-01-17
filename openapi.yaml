@@ -85,9 +85,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/User"
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
         400:
           description: Плохой запрос
           content:
@@ -338,9 +344,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/QR"
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/QR"
         400:
           description: Плохой запрос
           content:
@@ -615,9 +627,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Product"
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
         400:
           description: Плохой запрос
           content:
@@ -791,9 +809,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Template"
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Template"
         400:
           description: Плохой запрос
           content:

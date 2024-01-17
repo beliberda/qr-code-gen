@@ -46,7 +46,7 @@ export default function ProductInfo() {
         return res.data.product;
       })
       .catch(() => {
-        navigate(`/`);
+        navigate(`/notfound`);
       })
       .then((res) => {
         getDescription(res.template_id);

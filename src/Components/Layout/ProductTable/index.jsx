@@ -9,12 +9,13 @@ import { ButtonDefault } from "Components/UI/buttons";
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-
+  const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
     const getQr = UserService.getQr(page);
     getQr
       .then((res) => {
         console.log("qr:", res, page);
+        setTotalPages(res.headers["Content-Length"]);
         setProducts(res.data);
       })
       .catch((error) => {
@@ -114,7 +115,7 @@ const ProductTable = () => {
         <button className="pagination__current-page">{page}</button>
         <ButtonDefault
           handlClick={() => {
-            if (page < 100) {
+            if (page < totalPages) {
               setPage(page + 1);
             }
           }}
