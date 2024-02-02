@@ -27,7 +27,6 @@ export default class Store {
   }
   setModal() {
     this.isModal = this.isModal ? false : true;
-    console.log(this.isModal);
   }
   setTemplates(templates) {
     this.templates = templates;
@@ -54,7 +53,6 @@ export default class Store {
       this.setAuthorization(response.headers.authorization);
       this.setAuth(true);
       this.setUser(response.data.user);
-      // console.log("login", response);
     } catch (error) {
       console.log(error);
     }

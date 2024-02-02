@@ -32,7 +32,7 @@ export default function NotFound() {
     const response = UserService.getQrCheck(search);
     response
       .then(() => {
-        navigate(`/checking/?eid=${search}`);
+        navigate(`/checking/product/?eid=${search}`);
       })
       .catch((error) => {
         if (error.response.status === 404) {

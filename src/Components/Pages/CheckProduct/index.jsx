@@ -33,7 +33,7 @@ export default function CheckProduct() {
     const response = UserService.getQrCheck(search);
     response
       .then(() => {
-        navigate(`/checking/?eid=${search}`);
+        navigate(`/checking/product/?eid=${search}`);
       })
       .catch((error) => {
         if (error?.response?.status === 404) {
@@ -48,7 +48,6 @@ export default function CheckProduct() {
       });
   };
   useEffect(() => {
-    console.log(searchParams.get("eid"));
     if (searchParams.get("eid") !== null) {
       Check(searchParams.get("eid"));
     }

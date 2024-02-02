@@ -16,9 +16,10 @@ function App() {
     <HashRouter basename="/">
       <Routes>
         <Route path="/" element={<CheckProduct />} />
+        <Route path="/checking" element={<CheckProduct />} />
         <Route path="/login" element={<Login />} />
 
-        <Route path="/checking/" element={<ProductInfo />} />
+        <Route path="/checking/product/" element={<ProductInfo />} />
 
         <Route path="/user" element={<PrivateRoute />}>
           <Route path="/user/:id" element={<ListProducts />} />

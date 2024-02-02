@@ -39,10 +39,10 @@ const Accordion = ({ product, i }) => {
           <h3 className="table-date">{created_at}</h3>
         </td>
         <td>
-          <h3 className="table-name">{product.product.name}</h3>
+          <h3 className="table-name">{product?.product?.name}</h3>
         </td>
         <td>
-          <h3 className="table-id">{product._id}</h3>
+          <h3 className="table-id">{product?._id}</h3>
         </td>
         <td>
           <h3 className="table-status">
@@ -60,11 +60,10 @@ const Accordion = ({ product, i }) => {
         </td>
         <td>
           <div className="table-accordeon">
-            <h3 className="table-count">{product.use_count}</h3>
+            <h3 className="table-count">{product?.use_count}</h3>
             <button
               onClick={() => {
                 setIsActive(!isActive);
-                console.log(isActive);
               }}
               className="accordeon-btn"
             >
@@ -91,7 +90,7 @@ const Accordion = ({ product, i }) => {
             <div className="full-info__description">
               <h4>Описание</h4>
               <p>
-                {getDescription(product.product.template_id)}
+                {getDescription(product?.product?.template_id)}
                 {description}
               </p>
             </div>
@@ -100,9 +99,9 @@ const Accordion = ({ product, i }) => {
             <img
               className="full-info__preview"
               src={
-                product.product.photo[0].indexOf("http") !== -1
-                  ? product.product.photo[0]
-                  : `data:image/png;base64,${product.product.photo[0]}`
+                product?.product?.photo[0].indexOf("http") !== -1
+                  ? product?.product?.photo[0]
+                  : `data:image/png;base64,${product?.product?.photo[0]}`
               }
               alt=""
             />
