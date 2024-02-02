@@ -24,7 +24,7 @@ const Accordion = ({ product, i }) => {
     response
       .then((res) => {
         setDescription(
-          replaceTemplateAttribute(product.product, res.data.text)
+          replaceTemplateAttribute(product.product, res.data?.text)
         );
       })
       .catch((error) => {

@@ -1,6 +1,6 @@
 import "./style.css";
 import arrow from "assets/images/icons/arrow-sort.svg";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserService from "Components/services/UserService";
 import { Catch } from "Components/utils/catch";
 import { Accordion } from "Components/UI/accordion";
@@ -15,8 +15,8 @@ const ProductTable = () => {
     getQr
       .then((res) => {
         console.log("qr:", res, page);
-        setTotalPages(res.headers["Content-Length"]);
-        setProducts(res.data);
+        setTotalPages(res.data.total);
+        setProducts(res.data.items);
       })
       .catch((error) => {
         Catch(error);
@@ -93,9 +93,9 @@ const ProductTable = () => {
           <tbody>
             {products.map((product, i) => {
               return (
-                <>
+                <React.Fragment key={i}>
                   <Accordion product={product} />
-                </>
+                </React.Fragment>
               );
             })}
           </tbody>
