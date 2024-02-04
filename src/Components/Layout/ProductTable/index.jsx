@@ -10,6 +10,9 @@ const ProductTable = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [searchEid, setSearchEid] = useState("");
+  const [searchProduct, setSearchProduct] = useState(null);
+
   useEffect(() => {
     const getQr = UserService.getQr(page);
     getQr
@@ -17,14 +20,45 @@ const ProductTable = () => {
         console.log("qr:", res, page);
         setTotalPages(res.data.total);
         setProducts(res.data.items);
+        // setProducts(res.data);
       })
       .catch((error) => {
         Catch(error);
       });
   }, [page]);
 
+  const SearchQr = (eid) => {
+    UserService.getQrById(eid)
+      .then((res) => {
+        console.log(res);
+        setSearchProduct(res.data);
+      })
+      .catch((error) => {
+        Catch(error);
+      });
+  };
+
   return (
     <>
+      <div className="table__search-product">
+        <input
+          value={searchEid}
+          onInput={(e) => {
+            setSearchEid(e.target.value);
+          }}
+          type="text"
+          placeholder="Введите eid продукта"
+        />
+        <ButtonDefault
+          handlClick={() => {
+            SearchQr(searchEid);
+          }}
+          text="Найти"
+          font={14}
+          padding={10}
+        />
+      </div>
+
       <table className="table">
         <thead>
           <tr>
@@ -91,6 +125,8 @@ const ProductTable = () => {
         </thead>
         {products ? (
           <tbody>
+            {searchProduct && <Accordion product={searchProduct} />}
+            <tr></tr>
             {products.map((product, i) => {
               return (
                 <React.Fragment key={i}>

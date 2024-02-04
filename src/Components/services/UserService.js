@@ -21,7 +21,7 @@ export default class UserService {
   static async getQrById(id) {
     return $api.get(`/qr/${id}`, {
       // headers: headers,
-      params: { eid: id },
+      // params: { eid: id },
     });
   }
   static async getGeneratedQr(id) {
