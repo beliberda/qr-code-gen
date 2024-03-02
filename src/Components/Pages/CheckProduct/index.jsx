@@ -25,6 +25,10 @@ export default function CheckProduct() {
         setSearchParams({ eid: urlParams.get("eid") });
       })
       .catch((error) => {
+        setIsNotFound(true);
+        setTimeout(() => {
+          setIsNotFound(false);
+        }, 5000);
         console.log(error || "No QR code found.");
       });
   };
