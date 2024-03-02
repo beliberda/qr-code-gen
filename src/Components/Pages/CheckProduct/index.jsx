@@ -98,7 +98,6 @@ export default function CheckProduct() {
             >
               Проверить
             </button>
-            {/* <ButtonDefault text="Проверить" /> */}
           </div>
           <div className="check-product__download-block">
             <input

@@ -12,7 +12,7 @@ import { Catch } from "Components/utils/catch";
 import { useContext } from "react";
 import { Context } from "index";
 
-const Accordion = ({ product, i }) => {
+const Accordion = ({ product, i, isSearch = false }) => {
   let created_at = dateFormat(new Date(product.created_at));
   let updated_at = dateFormat(new Date(product.updated_at));
   const { store } = useContext(Context);
@@ -34,7 +34,10 @@ const Accordion = ({ product, i }) => {
 
   return (
     <>
-      <tr key={i} className="table-info">
+      <tr
+        key={i}
+        className={isSearch ? "table-info table-info-search" : "table-info"}
+      >
         <td>
           <h3 className="table-date">{created_at}</h3>
         </td>

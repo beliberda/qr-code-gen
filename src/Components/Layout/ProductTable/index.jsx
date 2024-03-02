@@ -28,14 +28,20 @@ const ProductTable = () => {
   }, [page]);
 
   const SearchQr = (eid) => {
-    UserService.getQrById(eid)
-      .then((res) => {
-        console.log(res);
-        setSearchProduct(res.data);
-      })
-      .catch((error) => {
-        Catch(error);
-      });
+    if (searchEid.length != 0) {
+      UserService.getQrById(eid)
+        .then((res) => {
+          console.log(res);
+          setSearchProduct(res.data);
+        })
+        .catch((error) => {
+          setSearchEid("Eid не найден");
+          setTimeout(() => {
+            setSearchEid("Введите eid продукта");
+          }, 3000);
+          Catch(error);
+        });
+    }
   };
 
   return (
@@ -125,8 +131,9 @@ const ProductTable = () => {
         </thead>
         {products ? (
           <tbody>
-            {searchProduct && <Accordion product={searchProduct} />}
-            <tr></tr>
+            {searchProduct && (
+              <Accordion isSearch={true} product={searchProduct} />
+            )}
             {products.map((product, i) => {
               return (
                 <React.Fragment key={i}>

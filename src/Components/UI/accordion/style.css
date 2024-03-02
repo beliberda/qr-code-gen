@@ -1,11 +1,17 @@
+.table-info-search {
+  border: 2px solid var(--green);
+}
+
 .deleteQr {
   width: 20px;
   cursor: pointer;
   transition: 0.3s;
 }
+
 .deleteQr:hover {
   transform: scale(1.05);
 }
+
 .deleteQr:active {
   transform: scale(1);
 }
