@@ -2,7 +2,7 @@ import { Header } from "Components/Layout/Header";
 import "./style.css";
 import scan from "assets/images/icons/scan-qr.svg";
 import { Banner } from "Components/UI/banner";
-import QrScanner from "qr-scanner";
+// import QrScanner from "qr-scanner";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserService from "Components/services/UserService";
@@ -13,32 +13,31 @@ export default function CheckProduct() {
   const [eid, setEid] = useState(searchParams.get("eid"));
 
   const [isNotFound, setIsNotFound] = useState(false);
-
   const [isEnabled, setIsEnabled] = useState(false);
   // qr Scanner
 
   // scan Image
-  const handleChange = async (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-    await QrScanner.scanImage(file, {
-      returnDetailedScanResult: false,
-    })
-      .then((result) => {
-        console.log(result);
-        let url = result?.data;
-        const urlParams = new URLSearchParams(url.slice(url.indexOf("?")));
-        setEid(urlParams.get("eid"));
-        setSearchParams({ eid: urlParams.get("eid") });
-      })
-      .catch((error) => {
-        setIsNotFound(true);
-        setTimeout(() => {
-          setIsNotFound(false);
-        }, 5000);
-        console.log(error || "No QR code found.");
-      });
-  };
+  // const handleChange = async (e) => {
+  //   const file = e.target.files[0];
+  //   console.log(file);
+  //   await QrScanner.scanImage(file, {
+  //     returnDetailedScanResult: false,
+  //   })
+  //     .then((result) => {
+  //       console.log(result);
+  //       let url = result?.data;
+  //       const urlParams = new URLSearchParams(url.slice(url.indexOf("?")));
+  //       setEid(urlParams.get("eid"));
+  //       setSearchParams({ eid: urlParams.get("eid") });
+  //     })
+  //     .catch((error) => {
+  //       setIsNotFound(true);
+  //       setTimeout(() => {
+  //         setIsNotFound(false);
+  //       }, 5000);
+  //       console.log(error || "No QR code found.");
+  //     });
+  // };
 
   const Check = (search) => {
     const response = UserService.getQrCheck(search);
@@ -58,10 +57,10 @@ export default function CheckProduct() {
         }
       });
   };
+
   useEffect(() => {
     const config = { fps: 10, qrbox: { width: 200, height: 200 } };
     const html5QrCode = new Html5Qrcode("qrCodeContainer");
-
     const qrScannerStop = () => {
       if (html5QrCode && html5QrCode.isScanning) {
         html5QrCode
@@ -85,6 +84,7 @@ export default function CheckProduct() {
     } else {
       qrScannerStop();
     }
+
     return () => {
       qrScannerStop();
     };
@@ -144,9 +144,6 @@ export default function CheckProduct() {
               type="file"
               className="check-product__download-photo"
               accept=".png, .jpg, .jpeg"
-              onChange={(e) => {
-                handleChange(e);
-              }}
             />
             <button
               onClick={() => {
@@ -167,7 +164,7 @@ export default function CheckProduct() {
                   onClick={() => setIsEnabled(!isEnabled)}
                   className="start-scanner"
                 >
-                  Закрыть
+                  X
                 </button>
               </>
             )}
