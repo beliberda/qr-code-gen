@@ -6,6 +6,7 @@ import QrScanner from "qr-scanner";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserService from "Components/services/UserService";
+import { Html5Qrcode } from "html5-qrcode";
 export default function CheckProduct() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,14 +14,20 @@ export default function CheckProduct() {
 
   const [isNotFound, setIsNotFound] = useState(false);
 
+  const [isEnabled, setIsEnabled] = useState(false);
+  // qr Scanner
+
+  // scan Image
   const handleChange = async (e) => {
     const file = e.target.files[0];
-
-    await QrScanner.scanImage(file)
+    console.log(file);
+    await QrScanner.scanImage(file, {
+      returnDetailedScanResult: false,
+    })
       .then((result) => {
-        const urlParams = new URLSearchParams(
-          result.slice(result.indexOf("?"))
-        );
+        console.log(result);
+        let url = result?.data;
+        const urlParams = new URLSearchParams(url.slice(url.indexOf("?")));
         setEid(urlParams.get("eid"));
         setSearchParams({ eid: urlParams.get("eid") });
       })
@@ -52,6 +59,38 @@ export default function CheckProduct() {
       });
   };
   useEffect(() => {
+    const config = { fps: 10, qrbox: { width: 200, height: 200 } };
+    const html5QrCode = new Html5Qrcode("qrCodeContainer");
+
+    const qrScannerStop = () => {
+      if (html5QrCode && html5QrCode.isScanning) {
+        html5QrCode
+          .stop()
+          .then(() => console.log("scanner stop"))
+          .catch(() => {
+            "scanner error";
+          });
+      }
+    };
+    const qrCodeSuccess = (decodedText) => {
+      const urlParams = new URLSearchParams(
+        decodedText.slice(decodedText.indexOf("?"))
+      );
+      setEid(urlParams.get("eid"));
+      setIsEnabled(false);
+    };
+
+    if (isEnabled) {
+      html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccess);
+    } else {
+      qrScannerStop();
+    }
+    return () => {
+      qrScannerStop();
+    };
+  }, [isEnabled]);
+
+  useEffect(() => {
     if (searchParams.get("eid") !== null) {
       Check(searchParams.get("eid"));
     }
@@ -82,12 +121,12 @@ export default function CheckProduct() {
                 type="text"
                 placeholder="Введите идентификатор товара"
               />
-              {isNotFound && (
-                <p className="input-block__error-text">
-                  ID не найден, попробуйте ввести еще раз
-                </p>
-              )}
             </div>
+            {isNotFound && (
+              <p className="error-text">
+                qr code не обнаружен, попробуйте еще раз
+              </p>
+            )}
             <button
               onClick={() => {
                 if (searchParams.get("eid") !== null) {
@@ -109,10 +148,29 @@ export default function CheckProduct() {
                 handleChange(e);
               }}
             />
-            <label className="load-photo" htmlFor="load-photo">
+            <button
+              onClick={() => {
+                setIsEnabled(!isEnabled);
+              }}
+              className="load-photo"
+              htmlFor="load-photo"
+            >
               <img src={scan} alt="" />
-              Загрузить или сделать фотографию
-            </label>
+              Отсканировать
+            </button>
+            <div style={{ display: !isEnabled && "none" }} className="scanner">
+              <div id="qrCodeContainer"></div>
+            </div>
+            {isEnabled && (
+              <>
+                <button
+                  onClick={() => setIsEnabled(!isEnabled)}
+                  className="start-scanner"
+                >
+                  Закрыть
+                </button>
+              </>
+            )}
           </div>
         </section>
       </main>

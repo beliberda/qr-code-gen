@@ -5,6 +5,7 @@
   align-items: center;
   padding-bottom: 270px;
 }
+
 .check-product__input-block {
   align-items: end;
   display: flex;
@@ -14,6 +15,7 @@
   position: relative;
   align-self: center;
 }
+
 .check-product__input {
   display: flex;
   width: 100vw;
@@ -23,6 +25,7 @@
   gap: 22px;
   border-bottom: 1px solid var(--dark);
 }
+
 .load-photo {
   margin-top: 40px;
   display: flex;
@@ -40,6 +43,7 @@
   gap: 6px;
   cursor: pointer;
 }
+
 #load-photo {
   display: none;
 }
@@ -47,6 +51,7 @@
 .--error {
   border-bottom: 1px solid var(--red);
 }
+
 .--error input {
   color: var(--red);
 }
@@ -58,14 +63,67 @@
   left: 0;
 }
 
+.error-text {
+  color: var(--red);
+}
+
+
+/* scanner  */
+.scanner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+#qrCodeContainer {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+
+#qr-shaded-region {
+  border-width: 50px !important;
+}
+
+video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto !important;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.start-scanner {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+
+}
+
+
 @media (max-width: 600px) {
   .check-product__input-block {
     flex-wrap: wrap;
     gap: 50px;
   }
+
   .check-product__input {
     width: 100%;
   }
+
   .load-photo {
     margin-top: 20px;
     height: 55px;

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/axios": "^0.14.0",
     "axios": "^1.5.1",
+    "html5-qrcode": "^2.3.8",
     "mobx": "^6.10.2",
     "mobx-react-lite": "^4.0.5",
     "qr-scanner": "^1.4.2",
