@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 40px;
 }
+
 .not-found__top {
   display: flex;
   justify-content: space-between;
@@ -11,15 +12,24 @@
   padding-top: 30px;
   border-top: 1px solid rgba(24, 24, 24, 0.2);
 }
+
 .not-found__bottom {
   border: 1px solid rgba(24, 24, 24, 0.2);
   padding: 33px 30px;
   display: flex;
   justify-content: center;
 }
+
 .not-found__bottom p {
   max-width: 494px;
   width: 100%;
   text-align: center;
   cursor: pointer;
+}
+
+.check-product__download-block {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  align-self: center;
 }

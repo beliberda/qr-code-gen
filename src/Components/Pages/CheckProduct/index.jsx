@@ -14,35 +14,11 @@ export default function CheckProduct() {
 
   const [isNotFound, setIsNotFound] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
-  // qr Scanner
-
-  // scan Image
-  // const handleChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   console.log(file);
-  //   await QrScanner.scanImage(file, {
-  //     returnDetailedScanResult: false,
-  //   })
-  //     .then((result) => {
-  //       console.log(result);
-  //       let url = result?.data;
-  //       const urlParams = new URLSearchParams(url.slice(url.indexOf("?")));
-  //       setEid(urlParams.get("eid"));
-  //       setSearchParams({ eid: urlParams.get("eid") });
-  //     })
-  //     .catch((error) => {
-  //       setIsNotFound(true);
-  //       setTimeout(() => {
-  //         setIsNotFound(false);
-  //       }, 5000);
-  //       console.log(error || "No QR code found.");
-  //     });
-  // };
 
   const Check = (search) => {
-    const response = UserService.getQrCheck(search);
-    response
+    const response = UserService.getQrCheck(search)
       .then(() => {
+        console.log("navigate");
         navigate(`/checking/product/?eid=${search}`);
       })
       .catch((error) => {
@@ -57,7 +33,12 @@ export default function CheckProduct() {
         }
       });
   };
-
+  useEffect(() => {
+    if (eid) {
+      Check(eid);
+    }
+  }, [eid]);
+  // qr Scanner
   useEffect(() => {
     const config = { fps: 10, qrbox: { width: 200, height: 200 } };
     const html5QrCode = new Html5Qrcode("qrCodeContainer");
@@ -76,6 +57,7 @@ export default function CheckProduct() {
         decodedText.slice(decodedText.indexOf("?"))
       );
       setEid(urlParams.get("eid"));
+      setSearchParams({ eid: urlParams.get("eid") });
       setIsEnabled(false);
     };
 
@@ -89,12 +71,6 @@ export default function CheckProduct() {
       qrScannerStop();
     };
   }, [isEnabled]);
-
-  useEffect(() => {
-    if (searchParams.get("eid") !== null) {
-      Check(searchParams.get("eid"));
-    }
-  }, []);
 
   return (
     <>
@@ -139,12 +115,6 @@ export default function CheckProduct() {
             </button>
           </div>
           <div className="check-product__download-block">
-            <input
-              id="load-photo"
-              type="file"
-              className="check-product__download-photo"
-              accept=".png, .jpg, .jpeg"
-            />
             <button
               onClick={() => {
                 setIsEnabled(!isEnabled);

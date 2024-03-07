@@ -4,16 +4,16 @@ import logout from "assets/images/icons/logout.svg";
 import "./style.css";
 import { useContext } from "react";
 import { Context } from "index";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Header = (props) => {
   const { store } = useContext(Context);
   const navigate = useNavigate();
   return (
     <header className="header container">
-      {/* <Link to="/login">
+      <Link to="/">
         <img src={logo} alt="maneken" />
-      </Link> */}
-      <img src={logo} alt="maneken" />
+      </Link>
+      {/* <img src={logo} alt="maneken" /> */}
       {props.isAdmin ? (
         <div className="header__info">
           <div className="user-block">
